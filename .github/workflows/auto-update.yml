@@ -37,7 +37,7 @@ jobs:
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           
           # 一次性添加所有可能变化的文件
-          git add archive.html index.html reading/* author-words.md
+          git add archive.html index.html author-words.md
           
           # 检查是否有文件变化，有变化才提交
           if git diff --staged --quiet; then
