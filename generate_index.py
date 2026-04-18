@@ -19,7 +19,7 @@ def generate_index():
         if series_name not in series_dict:
             series_dict[series_name] = []
         # 核心修改：链接指向阅读页，而不是直接指向PDF
-        base_name = item['file_name'].replace('.pdf', '')
+        base_name = item['file_name'].replace('.pdf', '').replace(".txt", "")
         item['href'] = f"reading/{base_name}.html"  # 修改这里
         series_dict[series_name].append(item)
     
