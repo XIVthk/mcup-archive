@@ -1,0 +1,48 @@
+name: Auto Update Archive
+
+on:
+  push:
+    branches: [ "main" ]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}  # 关键：使用有写权限的token
+
+      - name: Set up Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install dependencies
+        run: pip install jinja2
+
+      - name: Run generation scripts
+        run: |
+          python generate_archive.py
+          python generate_index.py
+          python generate_text_pages.py
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          
+          # 一次性添加所有可能变化的文件
+          git add archive.html index.html reading/* author-words.md
+          
+          # 检查是否有文件变化，有变化才提交
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "CI: Auto-update from ${{ github.sha }} [skip actions]"
+            git push
+          fi

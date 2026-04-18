@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="zh" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XVIthk - Fifteen的文库</title>
+    <style>
+        :root {
+            /* 浅色主题变量 */
+            --bg-primary-light: #ffffff;
+            --bg-secondary-light: #f5f5f5;
+            --text-primary-light: #333333;
+            --text-secondary-light: #666666;
+            --accent-light: #58a6ff;
+            --accent-hover-light: #79c0ff;
+
+            /* 深色主题变量（保持你原来的配色） */
+            --bg-primary-dark: #0d1117;
+            --bg-secondary-dark: #161b22;
+            --text-primary-dark: #e6edf3;
+            --text-secondary-dark: #7d8590;
+            --accent-dark: #58a6ff;
+            --accent-hover-dark: #79c0ff;
+
+            /* 默认使用深色主题 */
+            --bg-primary: var(--bg-primary-dark);
+            --bg-secondary: var(--bg-secondary-dark);
+            --text-primary: var(--text-primary-dark);
+            --text-secondary: var(--text-secondary-dark);
+            --accent: var(--accent-dark);
+            --accent-hover: var(--accent-hover-dark);
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: var(--bg-primary-dark);
+            --bg-secondary: var(--bg-secondary-dark);
+            --text-primary: var(--text-primary-dark);
+            --text-secondary: var(--text-secondary-dark);
+            --accent: var(--accent-dark);
+            --accent-hover: var(--accent-hover-dark);
+        }
+
+        [data-theme="light"] {
+            --bg-primary: var(--bg-primary-light);
+            --bg-secondary: var(--bg-secondary-light);
+            --text-primary: var(--text-primary-light);
+            --text-secondary: var(--text-secondary-light);
+            --accent: var(--accent-light);
+            --accent-hover: var(--accent-hover-light);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 0;
+            margin: 0;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--text-secondary);
+            position: relative;
+        }
+        .site-title {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+            letter-spacing: 1px;
+        }
+        .site-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+        .warning {
+            background-color: rgba(88, 166, 255, 0.1);
+            border-left: 4px solid var(--accent);
+            padding: 1rem;
+            margin-bottom: 2rem;
+            border-radius: 0 4px 4px 0;
+        }
+        .works-list {
+            list-style: none;
+        }
+        .work-item {
+            background-color: var(--bg-secondary);
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border: 1px solid var(--text-secondary);
+        }
+        .work-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+        .work-title {
+            padding: 1.2rem;
+            background-color: var(--bg-secondary);
+            border-bottom: 1px solid var(--text-secondary);
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+        }
+        .work-title::before {
+            content: "📖";
+            margin-right: 0.8rem;
+            font-size: 1.1rem;
+        }
+        .chapter-list {
+            list-style: none;
+            padding: 0.5rem 0;
+        }
+        .chapter-item {
+            padding: 0.8rem 1.2rem;
+            border-bottom: 1px solid var(--text-secondary);
+        }
+        .chapter-item:last-child {
+            border-bottom: none;
+        }
+        .chapter-link {
+            color: var(--text-primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            transition: color 0.2s ease;
+        }
+        .chapter-link:hover {
+            color: var(--accent-hover);
+        }
+        .chapter-link::before {
+            content: "→";
+            margin-right: 0.8rem;
+            color: var(--accent);
+            font-weight: bold;
+        }
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--text-secondary);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 1.5rem;
+            }
+            .site-title {
+                font-size: 2rem;
+            }
+        }
+        .nav-button {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-bottom: 1.5rem;
+        }
+        .nav-button:hover {
+            background-color: var(--accent-hover);
+            text-decoration: none;
+        }
+        .theme-btn {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: var(--bg-secondary);
+            border: 1px solid var(--text-secondary);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.1);
+            background: var(--accent);
+            color: white;
+        }
+
+        .author-words {
+            background-color: var(--bg-secondary);
+            border-left: 4px solid var(--accent);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative; /* 为浮动名片提供定位上下文 */
+        }
+
+        .author-card {
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background-color: var(--accent);
+            color: white;
+            padding: 4px 12px;
+            font-size: 0.9rem;
+            z-index: 10;
+            /* 移除圆角，使用直角 */
+            border-radius: 0;
+            /* 添加一点阴影使其更突出 */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            /* 添加透明度 */
+            opacity: 0.9;
+            /* 添加淡入动画 */
+            animation: fadeIn 1s ease-out;
+            /* 添加悬停效果 */
+            transition: all 0.3s ease;
+        }
+
+        /* 添加淡入动画 */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 0.9;
+                transform: translateY(0);
+            }
+        }
+
+        .author-card:hover {
+            opacity: 1;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .author-content {
+            white-space: pre-line; /* 保留换行符 */
+            line-height: 1.6;
+        }
+
+        .author-words h1, .author-words h2, .author-words h3 {
+            color: var(--accent);
+            margin-top: 0;
+        }
+
+        .author-words p {
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .author-words ul, .author-words ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .author-words li {
+            margin-bottom: 0.5rem;
+        }
+
+        .author-words a {
+            color: var(--accent);
+            text-decoration: underline;
+        }
+
+        .loading-text {
+            text-align: center;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        /* 为主题切换添加平滑过渡效果 */
+        body, .container, header, footer, 
+        .work-item, .work-title, .chapter-item,
+        .author-words, .warning, table, th, td,
+        .theme-btn, .nav-button, .back-link {
+            transition: background-color 0.4s ease-in-out, 
+                        color 0.4s ease-in-out, 
+                        border-color 0.4s ease-in-out;
+        }
+
+        /* 确保按钮的变换动画不受影响 */
+        .theme-btn:hover, .nav-button:hover, .back-link:hover {
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="site-title">XVIthk</h1>
+            <button id="theme-toggle" class="theme-btn">🌙</button>
+            <p class="site-subtitle">Fifteen 的文库</p>
+            <a href="archive.html" class="nav-button">📚 浏览完整目录</a>
+        </header>
+
+        <!-- ▼▼▼ 作者的话栏目 ▼▼▼ -->
+        <section class="author-words" id="author-words-container">
+            <div class="author-card">作者/Fifteen</div>
+            <div class="loading-text">正在加载作者的最新唠叨...</div>
+        </section>
+        <!-- ▲▲▲ 作者的话栏目 ▲▲▲ -->
+
+        <div class="warning">
+            <strong>⚠️ 警告</strong>: 本站内容包含成人元素，请确保您已年满18岁并自愿承担阅读风险。
+        </div>
+
+        <main>
+            <ul class="works-list">
+                <!-- 这个循环会为每个系列创建一个分组 -->
+                {% for series_name, items in series_dict.items() %}
+                <li class="work-item">
+                    <div class="work-title">{{ series_name }}</div>
+                    <ul class="chapter-list">
+                        <!-- 这个循环会为系列里的每个作品创建一个链接 -->
+                        {% for item in items %}
+                        <li class="chapter-item"><a href="{{ item.href }}" class="chapter-link">{{ item.display_title }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                {% endfor %}
+            </ul>
+        </main>
+
+        <footer>
+            <p>© 2025 Fifteen's Archive. 请理性阅读。</p>
+        </footer>
+
+        <script>
+            // 获取切换按钮
+            const themeToggle = document.getElementById('theme-toggle');
+            
+            // 检查本地存储中是否有保存的主题偏好
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                document.documentElement.setAttribute('data-theme', savedTheme);
+                updateButtonText(savedTheme);
+            } else {
+                // 如果没有保存的偏好，默认使用深色主题
+                document.documentElement.setAttribute('data-theme', 'dark');
+                updateButtonText('dark');
+            }
+            
+            // 主题切换函数
+            function toggleTheme() {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                
+                // 应用新主题
+                document.documentElement.setAttribute('data-theme', newTheme);
+                
+                // 保存用户偏好
+                localStorage.setItem('theme', newTheme);
+                
+                // 更新按钮文本
+                updateButtonText(newTheme);
+            }
+            
+            // 更新按钮显示
+            function updateButtonText(theme) {
+                themeToggle.textContent = theme === 'dark' ? '🌙' : '☀️';
+            }
+            
+            // 添加点击事件监听
+            themeToggle.addEventListener('click', toggleTheme);
+
+            // ▼▼▼ 动态加载作者的话 ▼▼▼
+            async function loadAuthorsWords() {
+                try {
+                    // 尝试获取 author-words.md 文件
+                    const response = await fetch('author-words.md');
+                    if (!response.ok) {
+                        throw new Error('文件加载失败');
+                    }
+                    const markdownText = await response.text();
+                    
+                    // 直接显示原始文本（不解析Markdown）
+                    const container = document.getElementById('author-words-container');
+                    container.querySelector('.loading-text').style.display = 'none';
+                    container.innerHTML += `<div class="author-content">${markdownText}</div>`;
+                    
+                } catch (error) {
+                    console.error('加载作者的话时出错:', error);
+                    const container = document.getElementById('author-words-container');
+                    container.querySelector('.loading-text').textContent = '站长今天似乎没什么要说的。';
+                }
+            }
+
+            // 页面加载完成后执行
+            document.addEventListener('DOMContentLoaded', function() {
+                // 加载作者的话
+                loadAuthorsWords();
+            });
+            // ▲▲▲ 动态加载作者的话 ▲▲▲
+        </script>
+    </div>
+</body>
+</html>

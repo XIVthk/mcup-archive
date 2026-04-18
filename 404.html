@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>页面未找到 - XVIthk</title>
+    <style>
+        /* 继承你主页的CSS变量，确保主题一致 */
+        :root {
+            --bg-primary: #0d1117;
+            --bg-secondary: #161b22;
+            --text-primary: #e6edf3;
+            --text-secondary: #7d8590;
+            --accent: #58a6ff;
+            --accent-hover: #79c0ff;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 2rem;
+            text-align: center;
+            overflow: hidden;
+        }
+        .container {
+            max-width: 600px;
+        }
+        .error-code {
+            font-size: 6rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: var(--accent);
+            line-height: 1;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
+            animation-delay: 0.3s;
+        }
+        .error-message {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: var(--text-secondary);
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
+            animation-delay: 0.6s;
+        }
+        .home-link {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
+            animation-delay: 1.2s;
+        }
+        .home-link:hover {
+            background-color: var(--accent-hover);
+            text-decoration: none;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .emoji {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            display: block;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
+            animation-delay: 0.1s;
+        }
+        p {
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        p:nth-of-type(1) {
+            animation-delay: 0.8s;
+        }
+        p:nth-of-type(2) {
+            animation-delay: 1s;
+        }
+        
+        /* 淡入动画 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* 背景装饰元素 */
+        .bg-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+            opacity: 0.05;
+            z-index: -1;
+            animation: pulse 15s infinite alternate;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.03;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 0.05;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 背景装饰元素 -->
+    <div class="bg-circle" style="width: 300px; height: 300px; top: 10%; left: 15%; animation-delay: 0s;"></div>
+    <div class="bg-circle" style="width: 200px; height: 200px; bottom: 15%; right: 20%; animation-delay: 2s;"></div>
+    <div class="bg-circle" style="width: 150px; height: 150px; top: 40%; right: 30%; animation-delay: 4s;"></div>
+    
+    <div class="container">
+        <span class="emoji">x_x</span>
+        <h1 class="error-code">404</h1>
+        <p class="error-message">唔……你似乎迷失在了深渊。</p>
+        <p>你寻找的页面已被吞噬，或从未存在。</p>
+        <p>该页面不存在或无法访问，请访问其他站点或刷新重试。</p>
+        <p style="margin-top: 2rem;">
+            <a href="https://xivthk.github.io" class="home-link">↩ 返回首页</a>
+        </p>
+    </div>
+
+    <script>
+        // 页面加载后添加动画类
+        document.addEventListener('DOMContentLoaded', function() {
+            // 为每个p元素设置不同的动画延迟
+            const paragraphs = document.querySelectorAll('p');
+            paragraphs.forEach((p, index) => {
+                // 已经通过CSS设置了延迟，这里不需要额外设置
+            });
+        });
+    </script>
+</body>
+</html>
