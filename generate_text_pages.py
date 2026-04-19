@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 import os
 import shutil
+import markdown  # 需要先安装: pip install markdown
 from jinja2 import Template
 
 # 【配置区域】
-TXT_SOURCE_DIR = "novels"       # 您的TXT文件存放目录
-PDF_SOURCE_DIR = "novels"        # 您的PDF文件存放目录
+SOURCE_DIR = "novels"           # 源文件目录（支持 .txt 和 .md）
 TEMPLATE_FILE = "templates/text_reading_template.html"
 OUTPUT_DIR = "reading"           # 生成的阅读页存放目录
 
@@ -20,35 +20,64 @@ def generate_reading_pages():
         template_content = f.read()
     template = Template(template_content)
 
-    # 2. 遍历所有TXT文件
-    for filename in os.listdir(TXT_SOURCE_DIR):
-        if not filename.endswith('.txt'):
-            continue  # 跳过非TXT文件
-
+    # 2. 遍历所有支持的文件（.txt 和 .md）
+    supported_extensions = ('.txt', '.md')
+    files = [f for f in os.listdir(SOURCE_DIR) if f.endswith(supported_extensions)]
+    
+    for filename in files:
         print(f"处理中: {filename}")
 
-        # 3. 准备模板变量
-        base_name = filename.replace('.txt', '')
-        txt_url = f"../{TXT_SOURCE_DIR}/{filename}"
-        pdf_url = f"../{PDF_SOURCE_DIR}/{base_name}.pdf"
+        # 获取基础名称（不含扩展名）
+        base_name = os.path.splitext(filename)[0]
+        file_ext = os.path.splitext(filename)[1]
+        file_path = os.path.join(SOURCE_DIR, filename)
+        
+        # 读取原始内容
+        with open(file_path, 'r', encoding='utf-8') as f:
+            raw_content = f.read()
+        
+        # 根据扩展名决定是否渲染 Markdown
+        if file_ext == '.md':
+            # 将 Markdown 转换为 HTML
+            html_content = markdown.markdown(raw_content, extensions=[
+                'extra',        # 表格、脚注等扩展
+                'codehilite',   # 代码高亮（可选）
+                'toc',          # 目录
+                'nl2br',        # 换行转 <br>
+            ])
+            content_type = 'markdown'
+        else:
+            # TXT 文件：保持纯文本，但保留换行
+            html_content = f'<div class="plain-text">{raw_content.replace(chr(10), "<br>")}</div>'
+            content_type = 'plain'
+        
+        # 准备模板变量
+        txt_url = f"../{SOURCE_DIR}/{filename}"
+        pdf_url = f"../{SOURCE_DIR}/{base_name}.pdf"
+        
+        # 检查 PDF 是否存在
+        pdf_exists = os.path.exists(os.path.join(SOURCE_DIR, f"{base_name}.pdf"))
 
-        # 4. 渲染HTML
-        html_content = template.render(
+        # 渲染 HTML
+        html_output = template.render(
             title=base_name,
+            content=html_content,
+            content_type=content_type,
             txt_url=txt_url,
-            pdf_url=pdf_url
+            pdf_url=pdf_url if pdf_exists else "#",
+            pdf_exists=pdf_exists
         )
 
-        # 5. 写入文件
+        # 写入文件
         output_filename = f"{base_name}.html"
         output_path = os.path.join(OUTPUT_DIR, output_filename)
 
         with open(output_path, 'w', encoding='utf-8') as f:
-            f.write(html_content)
+            f.write(html_output)
 
-        print(f"✅ 已生成: {output_path}")
+        print(f"✅ 已生成: {output_path} (类型: {content_type})")
 
-    print("\n🎉 所有文本阅读页生成完毕！")
+    print(f"\n🎉 所有阅读页生成完毕！共处理 {len(files)} 个文件。")
 
 if __name__ == '__main__':
     generate_reading_pages()

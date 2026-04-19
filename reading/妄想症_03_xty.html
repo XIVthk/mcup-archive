@@ -134,7 +134,7 @@
             gap: 1rem;
         }
 
-        /* ✨ 返回链接 - 纯文本样式，带下划线动画 */
+        /* 返回链接 - 纯文本样式 */
         .back-link {
             color: var(--accent);
             text-decoration: none;
@@ -167,7 +167,7 @@
             color: var(--accent-hover);
         }
 
-        /* 下载按钮保持按钮样式 */
+        /* 下载按钮 */
         .dl-button {
             background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
             color: white;
@@ -186,17 +186,14 @@
             filter: brightness(1.05);
         }
 
+        /* ========== 阅读内容区域 - 支持 Markdown 样式 ========== */
         .text-content-container {
             max-width: 800px;
             margin: 2rem auto;
             padding: 0 2rem 4rem;
-            white-space: pre-wrap;
-            text-align: left;
-            font-size: 1.1rem;
-            line-height: 1.8;
-            animation: contentSlideUp 0.5s ease-out;
             position: relative;
             z-index: 1;
+            animation: contentSlideUp 0.5s ease-out;
         }
 
         @keyframes contentSlideUp {
@@ -208,6 +205,125 @@
                 opacity: 1;
                 transform: translateY(0);
             }
+        }
+
+        /* Markdown 内容样式 */
+        .markdown-body {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        /* 标题样式 */
+        .markdown-body h1 {
+            font-size: 2rem;
+            margin: 1.5rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent);
+            color: var(--accent);
+        }
+        .markdown-body h2 {
+            font-size: 1.6rem;
+            margin: 1.2rem 0 0.8rem;
+            color: var(--accent);
+        }
+        .markdown-body h3 {
+            font-size: 1.3rem;
+            margin: 1rem 0 0.6rem;
+        }
+        .markdown-body h4, .markdown-body h5, .markdown-body h6 {
+            margin: 0.8rem 0 0.5rem;
+        }
+
+        /* 段落 */
+        .markdown-body p {
+            margin: 0.8rem 0;
+        }
+
+        /* 列表 */
+        .markdown-body ul, .markdown-body ol {
+            margin: 0.8rem 0;
+            padding-left: 2rem;
+        }
+        .markdown-body li {
+            margin: 0.3rem 0;
+        }
+
+        /* 代码块 */
+        .markdown-body pre {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        .markdown-body code {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'Consolas', monospace;
+            font-size: 0.9em;
+        }
+        .markdown-body pre code {
+            background: none;
+            padding: 0;
+        }
+
+        /* 引用 */
+        .markdown-body blockquote {
+            border-left: 4px solid var(--accent);
+            margin: 1rem 0;
+            padding: 0.5rem 1rem;
+            background: rgba(94, 114, 228, 0.1);
+            border-radius: 0 8px 8px 0;
+        }
+
+        /* 表格 */
+        .markdown-body table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 1rem 0;
+        }
+        .markdown-body th, .markdown-body td {
+            border: 1px solid var(--text-secondary);
+            padding: 0.5rem;
+            text-align: left;
+        }
+        .markdown-body th {
+            background: rgba(94, 114, 228, 0.2);
+        }
+
+        /* 链接 */
+        .markdown-body a {
+            color: var(--accent);
+            text-decoration: none;
+            border-bottom: 1px dashed var(--accent);
+        }
+        .markdown-body a:hover {
+            color: var(--accent-hover);
+            border-bottom-style: solid;
+        }
+
+        /* 图片 */
+        .markdown-body img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        /* 分割线 */
+        .markdown-body hr {
+            border: none;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            margin: 2rem 0;
+        }
+
+        /* 纯文本样式 */
+        .plain-text {
+            white-space: pre-wrap;
+            font-size: 1.1rem;
+            line-height: 1.8;
         }
 
         .theme-btn {
@@ -271,27 +387,6 @@
         ::-webkit-scrollbar-thumb:hover {
             background: var(--accent-hover);
         }
-
-        .loading-spinner {
-            text-align: center;
-            padding: 3rem;
-            color: var(--text-secondary);
-        }
-        .loading-spinner::after {
-            content: '';
-            display: inline-block;
-            width: 30px;
-            height: 30px;
-            margin-left: 10px;
-            border: 2px solid var(--accent);
-            border-top-color: transparent;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            vertical-align: middle;
-        }
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
     </style>
 </head>
 <body>
@@ -311,8 +406,122 @@
         </div>
     </div>
 
+    <!-- 内容直接由服务端渲染 -->
     <div class="text-content-container" id="text-content">
-        <div class="loading-spinner">正在加载内容</div>
+        <p>03# 夏天y: 自罪妄想<br />
+    夏天y在Cen房门口。<br />
+    他站在那里，看着Cen往后缩着，然后一动不动，他微微张开了嘴。<br />
+    「Cen？」<br />
+    「……」Cen没说话，他听不清什么东西，也看不清什么东西，但他能知道有个人在门口，而那个人他不认识，至少对于当时的他，不认识。<br />
+    「……我不过来了。」<br />
+    Cen没回话，他猛地站了起来，往门口冲——「咚！」——夏天y被撞到了地上。走廊本就不宽，夏天y的头狠狠地撞在了墙上，加速度让本就带着动力的Cen顶到了夏天y的腹部。<br />
+    「唔——！」<br />
+    「……」Cen还是不说话，他好像晕在了夏天y的怀里。<br />
+    「哈、……唔唔……头……」<br />
+    「Cen……？……Cen！」<br />
+    Cen真的晕了过去。精神连续几天的紧绷，加上堆砌而起的情绪突然爆发让他的意识无法继续坚持，但他的身体还在抖，不是冷的那种。<br />
+    夏天y自己的头也流了点血，没有大碍。他抱起Cen，抱到Cen的床上，自己简单包扎了一下，打了个纱布，自己回了房间。<br />
+​<br />
+    他为什么撞我？<br />
+    ……他怕我？<br />
+    他为什么要怕我？<br />
+    他是不是觉得不撞开我，他就会死？<br />
+    我做了什么让他害怕的事？我做了什么让他觉得我「危险」的事？<br />
+    ……想不起来。但是……<br />
+<strong>我一定做了什么……</strong><br />
+    是不记得了吗……快想啊……<br />
+​<br />
+    夏天y想了十几分钟，他找遍了脑子里的每一个记忆，没找到任何一个「自己做了什么事让Cen害怕自己」的片段，搜索结果是不存在。<br />
+    ……难道是因为自己揍击派对打了他一拳？<br />
+    ……难道是因为自己在那次录制抢了他的龙？<br />
+    ……难道是因为自己上次拒绝他一起录视频？<br />
+​<br />
+    他根本找不到证据，但那对他来说恰好是因为他内心的狠毒竟然把证据藏得如此深入，他觉得自己真不是东西。不是「我没做」，是「我肯定做了，但我忘了」，那就说明自己对Cen做了坏事，而且导致Cen现在开始害怕自己了。<br />
+    不管做了什么，该怎么办？夏天y不是特别细腻的人，他不会姐姐们那样无微不至的关心，而且本来他的年龄就最小，虽然经历了大风大浪，但无论如何自己还是没经历过这种事情——亲手毁掉了一段得之不易的友情。<br />
+​<br />
+    [私聊] 夏天y &lt;-&gt; 赵子龙<br />
+    夏天y: 我是不是做错了什么？BadCen怎么这么怕我？<br />
+    赵子龙: ？<br />
+    夏天y: ？？？<br />
+    赵子龙: 他怕你？他出门了？什么情况？？？<br />
+    赵子龙: 我现在上来找你<br />
+​<br />
+    夏天y坐在床上，他没哭，但心里已经给自己下达了有罪判决书，他自己绝对做错了什么无法挽回的事情，而且他不知道该怎么处理。<br />
+    赵子龙推开门，看着坐在床上眼神空洞的老板。<br />
+    「你咋了？头上怎么还绑了绷带？」<br />
+    「我刚刚没忍住，就用钥匙开了Cen的门，然后他就……他一看到我就特别慌……然后我、我就往前走，他就直接朝我撞了过来……我把他逼到撞我……Cen宁愿把自己撞晕也不愿意和我待在一起……呜呜……」<br />
+    「头没事吧？」赵子龙摸了摸夏天y头上的绷带，「Cen现在怎么样了？在哪？」<br />
+    「他在自己房间……」<br />
+    「……他可能只是压力太大……」<br />
+    「压力太大为什么要撞我……就是因为他不想看到我，他想逃跑，他觉得我危险……我是不是做了什么对不起他的事情……我真的不记得了……」<br />
+    「……」<br />
+    赵子龙没再说话，夏天y看着他，眼睛里已经没有泪光了。<br />
+    「所以我确实做了什么对吗……」<br />
+    「你想多了……Cen这几天确实不对劲，你没发现他——」<br />
+    「他绝食！他好几天不出房门，都是因为我！因为他不敢见我！」<br />
+    「他可能只是太累了……」<br />
+    「不可能、不可能……」<br />
+    「唉……我去看看Cen，好不好？」赵子龙顿了顿，感觉自己的说法不太妥当，「我叫歌子姐去看看Cen，行不行？」<br />
+    「……」夏天y没说话，他不知道说什么，但嘴还是张着的。赵子龙已经掏出了手机。<br />
+​<br />
+    [私聊] 赵子龙 &lt;-&gt; 五歌<br />
+    赵子龙: 歌子姐 Cen晕他房间里了 你去帮忙看看<br />
+    五歌: ？？？？？哈？<br />
+    赵子龙: 我也不知道 我在盘问王哥<br />
+    五歌: ……你们<br />
+    五歌: 算了 我去看看<br />
+​<br />
+    五歌走上楼的时候，孙悟空的门是开着的，半城正在被他抱着。<br />
+    ……天门怎么全是男同啊。<br />
+    她走到Cen房门口，门没锁，也不是开着的，是夏天y在的时候的状态，五歌看到了墙上的那摊血迹。<br />
+    ？？？番茄汁吗。<br />
+    她拉开Cen的房门，Cen晕着，还晕在床上。<br />
+    「……Cen？」<br />
+    Cen没醒，电脑上还是那个熟悉的屏保，房间依旧是冷色调，但是BadCen没醒，是晕厥的状态。五歌探了探他的呼吸，还在，微弱的。<br />
+​<br />
+    [私聊] 五歌 &lt;-&gt; 赵子龙<br />
+    五歌: 还活着<br />
+    赵子龙: ？我知道他还活着！我是问他咋了<br />
+    五歌: 他不醒我哪知道<br />
+    五歌: 等吧 等他醒了再说<br />
+    五歌: 你盘问出什么来了？<br />
+    赵子龙: 他不说话<br />
+    五歌: ？<br />
+    赵子龙: [Photo]<br />
+    五歌: ……你们自己解决 我在Cen房间守着他<br />
+​<br />
+    夏天y是没说话，他缩在床上，不知道怎么办。<br />
+    我该怎么赎罪……<br />
+    他会不会跟我绝交……<br />
+    我犯了什么错……<br />
+​<br />
+    Cen醒来，已经是晚上了。晚饭没人做，也没有外卖，六谷和王少栋自己出去吃的。<br />
+    五歌睡在了一边的桌子上，她没陷入深度睡眠，只是轻轻地呼吸着。<br />
+    Cen刚醒来，脑内的线还是一团乱麻。他记得自己晕过去的时候身边的气息是熟悉的、温暖的那种，但是正是那种熟悉感让他更加害怕。<br />
+    他开始左顾右盼，就看到了睡在桌上的五歌。<br />
+    「……唔！！！不、……」<br />
+    Cen不敢说话。他知道，这群人已经打算对他下手了，现在已经把五歌派来监视他了，就是为了不让他到处乱跑，不让他——这只已经落入陷阱的羔羊——再长出翅膀飞走。<br />
+    五歌醒了，是那种被惊醒的醒了。她听到了Cen发出的动静，然后就醒了。<br />
+    「Cen！你醒啦——」<br />
+    「我不要、我不要……不要、不要杀我……」Cen捂住耳朵，不想听她的声音。他看到五歌的笑容，觉得愈发恐怖、扭曲、不妙。<br />
+    「……Cen？」<br />
+    Cen的眼睛也是失神空洞的，但跟夏天y的那种「带点忏悔的空洞」不同，他的底色是恐惧。他没把自己的脸给任何人看，身上是常穿的卫衣，但现如此这身衣服上也沾上了夏天y的味道。<br />
+    「我走，我走。我们没有要杀你。」五歌也吓坏了。这是什么情况？她想过很多情况，唯独没想过Cen开口会是求饶，而且是求「别杀我」。<br />
+    她站起身，退出房间，关上房门，意思是：你想出来就出来，我们没有限制你，没有要杀你，而且我被吓到了。<br />
+​<br />
+    五歌离开房间，转入了夏天y房间。<br />
+    「……Cen醒了，他说『不要杀我』。」<br />
+    「……？？？？？」赵子龙懵了。到底什么情况？他现在还没从夏天y那里得知到半分有关于Cen的有效信息，现在唯一一句可能让他弄清楚形势的话是「不要杀我」。<br />
+    「……他醒了？他有说我吗？我……我到底做错了什么……」<br />
+    「他连我的名字都不会想提起了吧……」<br />
+​<br />
+    半城像是一只傀儡一样，只要待在孙悟空的怀里就没办法出来了。门早就被关上了，孙悟空也已经把半城吃干抹净，半城的意识也已经放弃了抵抗，现在坐在床上的只是他的肉体，孙悟空坐在他旁边。<br />
+    「……」<br />
+    孙悟空起身：「……我去倒水。」<br />
+    「……嗷……」<br />
+    孙悟空刚下楼，就碰见了六谷和王少栋。<br />
+    「空哥——Cen他怎么样了？」<br />
+    「Cen？我不知道。」</p>
     </div>
 
     <script>
@@ -341,17 +550,19 @@
         themeToggle.addEventListener('click', toggleTheme);
 
         // ========== 字体大小控制 ==========
-        const contentElement = document.getElementById('text-content');
+        const contentContainer = document.getElementById('text-content');
         const smallerBtn = document.getElementById('font-smaller');
         const resetBtn = document.getElementById('font-reset');
         const largerBtn = document.getElementById('font-larger');
         
+        // 获取内容元素（可能是 .markdown-body 或 .plain-text）
+        let textElement = contentContainer.querySelector('.markdown-body') || contentContainer.querySelector('.plain-text') || contentContainer;
+        
         let fontSize = parseInt(localStorage.getItem('readerFontSize')) || 18;
-        let textDiv = null;  // 实际存放文本的 div
         
         function applyFontSize() {
-            if (textDiv) {
-                textDiv.style.fontSize = fontSize + 'px';
+            if (textElement) {
+                textElement.style.fontSize = fontSize + 'px';
             }
         }
         
@@ -360,8 +571,8 @@
             fontSize = Math.max(14, Math.min(28, fontSize));
             applyFontSize();
             localStorage.setItem('readerFontSize', fontSize);
-            contentElement.style.transform = 'scale(1.01)';
-            setTimeout(() => { contentElement.style.transform = ''; }, 200);
+            contentContainer.style.transform = 'scale(1.01)';
+            setTimeout(() => { contentContainer.style.transform = ''; }, 200);
         }
         
         smallerBtn.addEventListener('click', () => adjustFontSize(-2));
@@ -371,16 +582,13 @@
             applyFontSize();
             localStorage.setItem('readerFontSize', fontSize);
         });
+        
+        applyFontSize();
 
-        // ========== 阅读进度（修复 101% bug） ==========
-        let textLoaded = false;
-        let restoreAttempted = false;
-        let scrollListenerAttached = false;
-
+        // ========== 阅读进度 ==========
         function updateProgressBar() {
             const winScroll = document.documentElement.scrollTop;
             const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            // 防止 height <= 0 时计算出无限大或超过 100
             let scrolled = 0;
             if (height > 0) {
                 scrolled = Math.min(100, Math.max(0, (winScroll / height) * 100));
@@ -389,123 +597,55 @@
         }
         
         function saveReadingProgress() {
-            if (!textLoaded) return;
-            
             const scrollPosition = window.scrollY;
             const pageHeight = document.body.scrollHeight - window.innerHeight;
             if (pageHeight <= 0) return;
-            
-            // 限制在 0-100 之间
-            let percentage = Math.round((scrollPosition / pageHeight) * 100);
-            percentage = Math.min(100, Math.max(0, percentage));
-            
-            const pageKey = 'progress_' + window.location.pathname;
-            localStorage.setItem(pageKey, percentage);
+            let percentage = Math.min(100, Math.max(0, Math.round((scrollPosition / pageHeight) * 100)));
+            localStorage.setItem('progress_' + window.location.pathname, percentage);
         }
         
         function restoreReadingProgress() {
-            if (restoreAttempted || !textLoaded) return;
-            restoreAttempted = true;
-            
-            const pageKey = 'progress_' + window.location.pathname;
-            const savedProgress = localStorage.getItem(pageKey);
-            
-            if (savedProgress !== null && savedProgress !== '0') {
+            const savedProgress = localStorage.getItem('progress_' + window.location.pathname);
+            if (savedProgress && savedProgress !== '0') {
                 let progress = parseInt(savedProgress);
-                // 合法性检查
-                if (isNaN(progress)) progress = 0;
                 progress = Math.min(100, Math.max(0, progress));
-                
-                // 等待页面完全渲染后再计算高度
                 setTimeout(() => {
                     const pageHeight = document.body.scrollHeight - window.innerHeight;
-                    if (pageHeight <= 0) {
-                        // 高度还是0？再等一次
+                    if (pageHeight > 0 && progress > 0 && progress < 100) {
+                        window.scrollTo({ top: (progress / 100) * pageHeight, behavior: 'smooth' });
+                        
+                        // 显示提示
+                        const toast = document.createElement('div');
+                        toast.textContent = `📖 已恢复至 ${progress}% 处`;
+                        toast.style.cssText = `
+                            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+                            background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+                            color: white; padding: 8px 20px; border-radius: 30px;
+                            z-index: 1000; font-size: 0.9rem; opacity: 0;
+                            transition: opacity 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+                        `;
+                        document.body.appendChild(toast);
+                        setTimeout(() => toast.style.opacity = '1', 10);
                         setTimeout(() => {
-                            const pageHeightRetry = document.body.scrollHeight - window.innerHeight;
-                            if (pageHeightRetry > 0 && progress > 0 && progress < 100) {
-                                const scrollPosition = (progress / 100) * pageHeightRetry;
-                                window.scrollTo({ top: scrollPosition, behavior: 'smooth' });
-                                showToast(`📖 已恢复至 ${progress}% 处`);
-                            }
-                        }, 200);
-                        return;
+                            toast.style.opacity = '0';
+                            setTimeout(() => toast.remove(), 300);
+                        }, 2500);
                     }
-                    
-                    if (progress > 0 && progress < 100) {
-                        const scrollPosition = (progress / 100) * pageHeight;
-                        window.scrollTo({ top: scrollPosition, behavior: 'smooth' });
-                        showToast(`📖 已恢复至 ${progress}% 处`);
-                    }
-                }, 150);
+                }, 200);
             }
         }
         
-        function showToast(message) {
-            const toast = document.createElement('div');
-            toast.textContent = message;
-            toast.style.cssText = `
-                position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-                background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
-                color: white; padding: 8px 20px; border-radius: 30px;
-                z-index: 1000; font-size: 0.9rem; opacity: 0;
-                transition: opacity 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            `;
-            document.body.appendChild(toast);
-            setTimeout(() => toast.style.opacity = '1', 10);
-            setTimeout(() => {
-                toast.style.opacity = '0';
-                setTimeout(() => toast.remove(), 300);
-            }, 2500);
-        }
-
-        // ========== 加载文本内容 ==========
-        async function loadTextContent() {
-            try {
-                const response = await fetch("../novels/妄想症_03_xty.txt");
-                if (!response.ok) throw new Error('网络响应异常');
-                const text = await response.text();
-                
-                // 创建内容容器
-                textDiv = document.createElement('div');
-                textDiv.style.fontSize = fontSize + 'px';
-                textDiv.innerText = text;
-                
-                // 清空加载动画，填入内容
-                contentElement.innerHTML = '';
-                contentElement.appendChild(textDiv);
-                
-                textLoaded = true;
-                
-                // 内容加载完成后恢复进度
-                restoreReadingProgress();
-                
-                // 添加滚动监听（只添加一次）
-                if (!scrollListenerAttached) {
-                    window.addEventListener('scroll', () => {
-                        updateProgressBar();
-                        clearTimeout(window._saveTimeout);
-                        window._saveTimeout = setTimeout(saveReadingProgress, 800);
-                    });
-                    scrollListenerAttached = true;
-                }
-                
-                // 初始化进度条
-                updateProgressBar();
-                
-            } catch (error) {
-                console.error('加载文本失败:', error);
-                contentElement.innerHTML = `
-                    <p style="color: lightcoral; text-align: center;">
-                        ❌ 加载失败，请<a href="../novels/妄想症_03_xty.pdf" download style="color: var(--accent);">下载PDF</a>阅读。
-                    </p>
-                `;
-                textLoaded = true;
-            }
-        }
-
-        // 页面启动
-        loadTextContent();
+        let saveTimeout;
+        window.addEventListener('scroll', () => {
+            updateProgressBar();
+            clearTimeout(saveTimeout);
+            saveTimeout = setTimeout(saveReadingProgress, 800);
+        });
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            updateProgressBar();
+            restoreReadingProgress();
+        });
     </script>
 </body>
 </html>
