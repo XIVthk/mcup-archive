@@ -106,7 +106,6 @@
             list-style: none;
         }
 
-        /* ✨ 卡片悬停 3D 效果 */
         .work-item {
             background-color: var(--bg-secondary);
             border-radius: var(--card-radius);
@@ -134,7 +133,6 @@
             border-color: var(--accent);
         }
 
-        /* ✨ 渐变边框效果（悬停时） */
         .work-item:hover .work-title {
             background: linear-gradient(135deg, rgba(52, 152, 219, 0.15), rgba(155, 89, 182, 0.15));
         }
@@ -174,6 +172,10 @@
         .chapter-item:hover {
             background: var(--accent-glow);
             padding-left: 1.6rem;
+        }
+
+        .chapter-item:last-child {
+            border-bottom: none;
         }
 
         .chapter-link {
@@ -257,7 +259,6 @@
             box-shadow: 0 4px 12px var(--accent-glow);
         }
 
-        /* ✨ 作者的话栏目增强 */
         .author-words {
             background-color: var(--bg-secondary);
             border-left: 4px solid var(--accent);
@@ -309,7 +310,6 @@
             font-style: italic;
         }
 
-        /* 平滑过渡 */
         body, .container, header, footer, 
         .work-item, .work-title, .chapter-item,
         .author-words, .warning, .theme-btn, .nav-button {
@@ -338,8 +338,22 @@
         </div>
 
         <main>
-            <ul class="works-list" id="works-list">
-                <!-- 内容由模板渲染 -->
+            <ul class="works-list">
+                <!-- ✅ 关键修复：Jinja2 循环保留 -->
+                
+                <li class="work-item">
+                    <div class="work-title">妄想症Paranoia</div>
+                    <ul class="chapter-list">
+                        
+                        <li class="chapter-item"><a href="reading/妄想症_01_BadCen.html" class="chapter-link">妄想症#01 - Cen</a></li>
+                        
+                        <li class="chapter-item"><a href="reading/妄想症_02_swk_bc.html" class="chapter-link">妄想症#02 - 孙悟空、空城</a></li>
+                        
+                        <li class="chapter-item"><a href="reading/妄想症_03_xty.html" class="chapter-link">妄想症#03 - 夏天y</a></li>
+                        
+                    </ul>
+                </li>
+                
             </ul>
         </main>
 
@@ -394,7 +408,7 @@
             }
         }
 
-        // ✨ 为卡片添加动画延迟索引
+        // 为卡片添加动画延迟索引
         function setCardDelay() {
             const cards = document.querySelectorAll('.work-item');
             cards.forEach((card, index) => {
