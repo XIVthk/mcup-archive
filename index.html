@@ -6,32 +6,26 @@
     <title>MCUP Archive - XVIthk</title>
     <style>
         :root {
-            /* 浅色主题变量 */
             --bg-primary-light: #f8f9fa;
             --bg-secondary-light: #ffffff;
             --text-primary-light: #2c3e50;
             --text-secondary-light: #6c757d;
-            
-            /* 深色主题变量 */
             --bg-primary-dark: #0a0e17;
             --bg-secondary-dark: #141a26;
             --text-primary-dark: #e6edf3;
             --text-secondary-dark: #8b9bae;
-            
-            /* 默认使用深色主题 */
             --bg-primary: var(--bg-primary-dark);
             --bg-secondary: var(--bg-secondary-dark);
             --text-primary: var(--text-primary-dark);
             --text-secondary: var(--text-secondary-dark);
-            
-            /* 渐变强调色（从Cen蓝到BC紫） */
-            --accent-start: #3498db;   /* Cen冷蓝 */
-            --accent-end: #9b59b6;     /* BC紫色 */
-            --accent: #5e72e4;          /* 备用单色，取渐变中间值 */
-            --accent-hover: #6a7df4;    /* 悬停色 */
+            --accent-start: #3498db;
+            --accent-end: #9b59b6;
+            --accent: #5e72e4;
+            --accent-hover: #6a7df4;
+            --accent-glow: rgba(94, 114, 228, 0.25);
+            --card-radius: 16px;
         }
 
-        /* 深色主题下保持渐变感 */
         [data-theme="dark"] {
             --bg-primary: var(--bg-primary-dark);
             --bg-secondary: var(--bg-secondary-dark);
@@ -44,6 +38,13 @@
             --bg-secondary: var(--bg-secondary-light);
             --text-primary: var(--text-primary-light);
             --text-secondary: var(--text-secondary-light);
+            --accent-glow: rgba(94, 114, 228, 0.12);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
@@ -54,12 +55,20 @@
             padding: 0;
             margin: 0;
             min-height: 100vh;
+            animation: pageFadeIn 0.5s ease-out;
         }
+
+        @keyframes pageFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
         .container {
             max-width: 800px;
             margin: 0 auto;
             padding: 2rem;
         }
+
         header {
             text-align: center;
             margin-bottom: 3rem;
@@ -67,80 +76,130 @@
             border-bottom: 1px solid var(--text-secondary);
             position: relative;
         }
+
         .site-title {
             font-size: 2.5rem;
             margin-bottom: 0.5rem;
-            color: var(--accent);
+            background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
             letter-spacing: 1px;
         }
+
         .site-subtitle {
             color: var(--text-secondary);
             font-size: 1.1rem;
             margin-bottom: 1.5rem;
         }
+
         .warning {
-            background-color: rgba(88, 166, 255, 0.1);
+            background: linear-gradient(135deg, rgba(88, 166, 255, 0.08), rgba(155, 89, 182, 0.08));
             border-left: 4px solid var(--accent);
             padding: 1rem;
             margin-bottom: 2rem;
-            border-radius: 0 4px 4px 0;
+            border-radius: 0 12px 12px 0;
+            backdrop-filter: blur(4px);
         }
+
         .works-list {
             list-style: none;
         }
+
+        /* ✨ 卡片悬停 3D 效果 */
         .work-item {
             background-color: var(--bg-secondary);
-            border-radius: 8px;
+            border-radius: var(--card-radius);
             margin-bottom: 1.5rem;
             overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            border: 1px solid var(--text-secondary);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            border: 1px solid rgba(var(--text-secondary), 0.2);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: cardReveal 0.5s ease-out forwards;
+            animation-delay: calc(var(--card-index, 0) * 0.08s);
         }
+
+        @keyframes cardReveal {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         .work-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            transform: translateY(-6px) scale(1.01);
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.3);
+            border-color: var(--accent);
         }
+
+        /* ✨ 渐变边框效果（悬停时） */
+        .work-item:hover .work-title {
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.15), rgba(155, 89, 182, 0.15));
+        }
+
         .work-title {
             padding: 1.2rem;
             background-color: var(--bg-secondary);
-            border-bottom: 1px solid var(--text-secondary);
+            border-bottom: 1px solid rgba(var(--text-secondary), 0.3);
             font-size: 1.3rem;
             display: flex;
             align-items: center;
+            transition: background 0.3s ease;
         }
+
         .work-title::before {
             content: "📖";
             margin-right: 0.8rem;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
         }
+
+        .work-item:hover .work-title::before {
+            transform: scale(1.1) rotate(5deg);
+        }
+
         .chapter-list {
             list-style: none;
             padding: 0.5rem 0;
         }
+
         .chapter-item {
             padding: 0.8rem 1.2rem;
-            border-bottom: 1px solid var(--text-secondary);
+            border-bottom: 1px solid rgba(var(--text-secondary), 0.15);
+            transition: all 0.25s ease;
         }
-        .chapter-item:last-child {
-            border-bottom: none;
+
+        .chapter-item:hover {
+            background: var(--accent-glow);
+            padding-left: 1.6rem;
         }
+
         .chapter-link {
             color: var(--text-primary);
             text-decoration: none;
             display: flex;
             align-items: center;
-            transition: color 0.2s ease;
+            transition: all 0.25s ease;
         }
+
         .chapter-link:hover {
             color: var(--accent-hover);
         }
+
         .chapter-link::before {
             content: "→";
             margin-right: 0.8rem;
             color: var(--accent);
             font-weight: bold;
+            transition: transform 0.25s ease;
         }
+
+        .chapter-link:hover::before {
+            transform: translateX(4px);
+        }
+
         footer {
             text-align: center;
             margin-top: 3rem;
@@ -149,27 +208,30 @@
             color: var(--text-secondary);
             font-size: 0.9rem;
         }
+
         @media (max-width: 600px) {
-            .container {
-                padding: 1.5rem;
-            }
-            .site-title {
-                font-size: 2rem;
-            }
+            .container { padding: 1.5rem; }
+            .site-title { font-size: 2rem; }
         }
+
         .nav-button {
             display: inline-block;
-            background-color: var(--accent);
+            background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
             color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
+            padding: 0.6rem 1.2rem;
+            border-radius: 30px;
             text-decoration: none;
             margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
         }
+
         .nav-button:hover {
-            background-color: var(--accent-hover);
-            text-decoration: none;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px var(--accent-glow);
+            filter: brightness(1.05);
         }
+
         .theme-btn {
             position: absolute;
             top: 0;
@@ -177,98 +239,68 @@
             background: var(--bg-secondary);
             border: 1px solid var(--text-secondary);
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
             cursor: pointer;
             font-size: 1.2rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
         }
 
         .theme-btn:hover {
-            transform: scale(1.1);
+            transform: scale(1.1) rotate(15deg);
             background: var(--accent);
             color: white;
+            border-color: transparent;
+            box-shadow: 0 4px 12px var(--accent-glow);
         }
 
+        /* ✨ 作者的话栏目增强 */
         .author-words {
             background-color: var(--bg-secondary);
             border-left: 4px solid var(--accent);
-            border-radius: 8px;
+            border-radius: var(--card-radius);
             padding: 1.5rem;
             margin-bottom: 2rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            position: relative; /* 为浮动名片提供定位上下文 */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .author-words:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 16px 30px rgba(0, 0, 0, 0.2);
         }
 
         .author-card {
             position: absolute;
             top: -12px;
             left: 20px;
-            background-color: var(--accent);
+            background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
             color: white;
-            padding: 4px 12px;
-            font-size: 0.9rem;
-            z-index: 10;
-            /* 移除圆角，使用直角 */
-            border-radius: 0;
-            /* 添加一点阴影使其更突出 */
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            /* 添加透明度 */
-            opacity: 0.9;
-            /* 添加淡入动画 */
-            animation: fadeIn 1s ease-out;
-            /* 添加悬停效果 */
-            transition: all 0.3s ease;
+            padding: 4px 16px;
+            font-size: 0.85rem;
+            border-radius: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            animation: badgeGlow 2s ease-in-out infinite;
         }
 
-        /* 添加淡入动画 */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 0.9;
-                transform: translateY(0);
-            }
-        }
-
-        .author-card:hover {
-            opacity: 1;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        @keyframes badgeGlow {
+            0%, 100% { box-shadow: 0 2px 8px rgba(94, 114, 228, 0.3); }
+            50% { box-shadow: 0 2px 16px rgba(94, 114, 228, 0.6); }
         }
 
         .author-content {
-            white-space: pre-line; /* 保留换行符 */
+            white-space: pre-line;
             line-height: 1.6;
+            animation: contentFadeIn 0.5s ease-out;
         }
 
-        .author-words h1, .author-words h2, .author-words h3 {
-            color: var(--accent);
-            margin-top: 0;
-        }
-
-        .author-words p {
-            line-height: 1.6;
-            margin-bottom: 1rem;
-        }
-
-        .author-words ul, .author-words ol {
-            padding-left: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .author-words li {
-            margin-bottom: 0.5rem;
-        }
-
-        .author-words a {
-            color: var(--accent);
-            text-decoration: underline;
+        @keyframes contentFadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .loading-text {
@@ -277,19 +309,13 @@
             font-style: italic;
         }
 
-        /* 为主题切换添加平滑过渡效果 */
+        /* 平滑过渡 */
         body, .container, header, footer, 
         .work-item, .work-title, .chapter-item,
-        .author-words, .warning, table, th, td,
-        .theme-btn, .nav-button, .back-link {
+        .author-words, .warning, .theme-btn, .nav-button {
             transition: background-color 0.4s ease-in-out, 
                         color 0.4s ease-in-out, 
                         border-color 0.4s ease-in-out;
-        }
-
-        /* 确保按钮的变换动画不受影响 */
-        .theme-btn:hover, .nav-button:hover, .back-link:hover {
-            transition: all 0.3s ease;
         }
     </style>
 </head>
@@ -302,109 +328,84 @@
             <a href="archive.html" class="nav-button">📚 浏览完整目录</a>
         </header>
 
-        <!-- ▼▼▼ 作者的话栏目 ▼▼▼ -->
         <section class="author-words" id="author-words-container">
             <div class="author-card">📢 公告板</div>
             <div class="loading-text">正在加载作者的最新唠叨...</div>
         </section>
-        <!-- ▲▲▲ 作者的话栏目 ▲▲▲ -->
 
         <div class="warning">
             <strong>⚠️ 警告</strong>: 本站内容包含成人元素，请确保您已年满18岁并自愿承担阅读风险。
         </div>
 
         <main>
-            <ul class="works-list">
-                <!-- 这个循环会为每个系列创建一个分组 -->
-                
-                <li class="work-item">
-                    <div class="work-title">妄想症Paranoia</div>
-                    <ul class="chapter-list">
-                        <!-- 这个循环会为系列里的每个作品创建一个链接 -->
-                        
-                        <li class="chapter-item"><a href="reading/妄想症_01_BadCen.html" class="chapter-link">妄想症#01 - Cen</a></li>
-                        
-                        <li class="chapter-item"><a href="reading/妄想症_02_swk_bc.html" class="chapter-link">妄想症#02 - 孙悟空、空城</a></li>
-                        
-                        <li class="chapter-item"><a href="reading/妄想症_03_xty.html" class="chapter-link">妄想症#03 - 夏天y</a></li>
-                        
-                    </ul>
-                </li>
-                
+            <ul class="works-list" id="works-list">
+                <!-- 内容由模板渲染 -->
             </ul>
         </main>
 
         <footer>
             <p>© 2026 XVIthk. 请理性阅读。</p>
         </footer>
-
-        <script>
-            // 获取切换按钮
-            const themeToggle = document.getElementById('theme-toggle');
-            
-            // 检查本地存储中是否有保存的主题偏好
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme) {
-                document.documentElement.setAttribute('data-theme', savedTheme);
-                updateButtonText(savedTheme);
-            } else {
-                // 如果没有保存的偏好，默认使用深色主题
-                document.documentElement.setAttribute('data-theme', 'dark');
-                updateButtonText('dark');
-            }
-            
-            // 主题切换函数
-            function toggleTheme() {
-                const currentTheme = document.documentElement.getAttribute('data-theme');
-                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-                
-                // 应用新主题
-                document.documentElement.setAttribute('data-theme', newTheme);
-                
-                // 保存用户偏好
-                localStorage.setItem('theme', newTheme);
-                
-                // 更新按钮文本
-                updateButtonText(newTheme);
-            }
-            
-            // 更新按钮显示
-            function updateButtonText(theme) {
-                themeToggle.textContent = theme === 'dark' ? '🌙' : '☀️';
-            }
-            
-            // 添加点击事件监听
-            themeToggle.addEventListener('click', toggleTheme);
-
-            // ▼▼▼ 动态加载作者的话 ▼▼▼
-            async function loadAuthorsWords() {
-                try {
-                    // 尝试获取 author-words.md 文件
-                    const response = await fetch('author-words.md');
-                    if (!response.ok) {
-                        throw new Error('文件加载失败');
-                    }
-                    const markdownText = await response.text();
-                    
-                    // 直接显示原始文本（不解析Markdown）
-                    const container = document.getElementById('author-words-container');
-                    container.querySelector('.loading-text').style.display = 'none';
-                    container.innerHTML += `<div class="author-content">${markdownText}</div>`;
-                    
-                } catch (error) {
-                    console.error('加载作者的话时出错:', error);
-                    const container = document.getElementById('author-words-container');
-                    container.querySelector('.loading-text').textContent = '站长今天似乎没什么要说的。';
-                }
-            }
-
-            // 页面加载完成后执行
-            document.addEventListener('DOMContentLoaded', function() {
-                // 加载作者的话
-                loadAuthorsWords();
-            });
-            // ▲▲▲ 动态加载作者的话 ▲▲▲
-        </script>
     </div>
+
+    <script>
+        // 主题切换
+        const themeToggle = document.getElementById('theme-toggle');
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            updateButtonText(savedTheme);
+        } else {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            updateButtonText('dark');
+        }
+        
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateButtonText(newTheme);
+        }
+        
+        function updateButtonText(theme) {
+            themeToggle.textContent = theme === 'dark' ? '🌙' : '☀️';
+        }
+        
+        themeToggle.addEventListener('click', toggleTheme);
+
+        // 加载作者的话
+        async function loadAuthorsWords() {
+            try {
+                const response = await fetch('author-words.md');
+                if (!response.ok) throw new Error('文件加载失败');
+                const markdownText = await response.text();
+                const container = document.getElementById('author-words-container');
+                const loadingDiv = container.querySelector('.loading-text');
+                loadingDiv.style.display = 'none';
+                const contentDiv = document.createElement('div');
+                contentDiv.className = 'author-content';
+                contentDiv.innerHTML = markdownText.replace(/\n/g, '<br>');
+                container.appendChild(contentDiv);
+            } catch (error) {
+                console.error('加载作者的话时出错:', error);
+                const container = document.getElementById('author-words-container');
+                container.querySelector('.loading-text').textContent = '站长今天似乎没什么要说的。';
+            }
+        }
+
+        // ✨ 为卡片添加动画延迟索引
+        function setCardDelay() {
+            const cards = document.querySelectorAll('.work-item');
+            cards.forEach((card, index) => {
+                card.style.setProperty('--card-index', index);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadAuthorsWords();
+            setCardDelay();
+        });
+    </script>
 </body>
 </html>

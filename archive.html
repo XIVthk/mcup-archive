@@ -6,32 +6,25 @@
     <title>作品目录 - XVIthk</title>
     <style>
         :root {
-            /* 浅色主题变量 */
             --bg-primary-light: #f8f9fa;
             --bg-secondary-light: #ffffff;
             --text-primary-light: #2c3e50;
             --text-secondary-light: #6c757d;
-            
-            /* 深色主题变量 */
             --bg-primary-dark: #0a0e17;
             --bg-secondary-dark: #141a26;
             --text-primary-dark: #e6edf3;
             --text-secondary-dark: #8b9bae;
-            
-            /* 默认使用深色主题 */
             --bg-primary: var(--bg-primary-dark);
             --bg-secondary: var(--bg-secondary-dark);
             --text-primary: var(--text-primary-dark);
             --text-secondary: var(--text-secondary-dark);
-            
-            /* 渐变强调色（从Cen蓝到BC紫） */
-            --accent-start: #3498db;   /* Cen冷蓝 */
-            --accent-end: #9b59b6;     /* BC紫色 */
-            --accent: #5e72e4;          /* 备用单色，取渐变中间值 */
-            --accent-hover: #6a7df4;    /* 悬停色 */
+            --accent-start: #3498db;
+            --accent-end: #9b59b6;
+            --accent: #5e72e4;
+            --accent-hover: #6a7df4;
+            --accent-glow: rgba(94, 114, 228, 0.3);
         }
 
-        /* 深色主题下保持渐变感 */
         [data-theme="dark"] {
             --bg-primary: var(--bg-primary-dark);
             --bg-secondary: var(--bg-secondary-dark);
@@ -44,6 +37,13 @@
             --bg-secondary: var(--bg-secondary-light);
             --text-primary: var(--text-primary-light);
             --text-secondary: var(--text-secondary-light);
+            --accent-glow: rgba(94, 114, 228, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
@@ -53,54 +53,124 @@
             line-height: 1.6;
             margin: 0;
             padding: 2rem;
+            /* ✨ 入场动画 */
+            animation: fadeInUp 0.5s ease-out;
         }
+
+        /* ✨ 淡入上移动画 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ✨ 淡入缩放动画（用于子元素） */
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
         .container {
             max-width: 900px;
             margin: 0 auto;
             position: relative;
         }
+
         h1 {
-            color: var(--accent);
+            background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
             text-align: center;
             margin-bottom: 2rem;
+            font-size: 2rem;
         }
+
         .back-link {
             display: inline-block;
             margin-bottom: 1.5rem;
             color: var(--accent);
             text-decoration: none;
+            position: relative;
+            transition: all 0.3s ease;
         }
+
+        .back-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-start), var(--accent-end));
+            transition: width 0.3s ease;
+        }
+
+        .back-link:hover::after {
+            width: 100%;
+        }
+
         .back-link:hover {
-            text-decoration: underline;
+            transform: translateX(-4px);
         }
+
+        /* ✨ 表格样式增强 */
         table {
             width: 100%;
             border-collapse: collapse;
             background-color: var(--bg-secondary);
-            border-radius: 8px;
+            border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
         }
+
         th, td {
             padding: 1rem;
             text-align: left;
-            border-bottom: 1px solid var(--text-secondary);
+            border-bottom: 1px solid rgba(var(--text-secondary), 0.2);
         }
+
         th {
-            background-color: var(--bg-secondary);
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(155, 89, 182, 0.1));
             font-weight: 600;
         }
-        tr:hover {
-            background-color: rgba(88, 166, 255, 0.05);
+
+        /* ✨ 表格行悬停动画 */
+        tbody tr {
+            transition: all 0.25s ease;
+            animation: fadeInScale 0.4s ease-out backwards;
+            animation-delay: calc(var(--row-index, 0) * 0.03s);
         }
+
+        tbody tr:hover {
+            background: var(--accent-glow);
+            transform: translateX(4px);
+        }
+
         .chapter-link {
             color: var(--accent);
             text-decoration: none;
+            position: relative;
+            transition: all 0.3s ease;
         }
+
         .chapter-link:hover {
             color: var(--accent-hover);
-            text-decoration: underline;
+            letter-spacing: 0.5px;
         }
+
+        /* ✨ 主题按钮增强 */
         .theme-btn {
             position: absolute;
             top: 0;
@@ -108,23 +178,38 @@
             background: var(--bg-secondary);
             border: 1px solid var(--text-secondary);
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
             cursor: pointer;
             font-size: 1.2rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            z-index: 10;
         }
 
         .theme-btn:hover {
-            transform: scale(1.1);
+            transform: scale(1.1) rotate(15deg);
             background: var(--accent);
             color: white;
+            border-color: transparent;
+            box-shadow: 0 4px 12px var(--accent-glow);
         }
 
-        /* 为主题切换添加平滑过渡效果 */
+        /* ✨ 滚动触发动画类（配合 Intersection Observer） */
+        .fade-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 平滑过渡 */
         body, .container, header, footer, 
         .work-item, .work-title, .chapter-item,
         .author-words, .warning, table, th, td,
@@ -132,11 +217,6 @@
             transition: background-color 0.4s ease-in-out, 
                         color 0.4s ease-in-out, 
                         border-color 0.4s ease-in-out;
-        }
-
-        /* 确保按钮的变换动画不受影响 */
-        .theme-btn:hover, .nav-button:hover, .back-link:hover {
-            transition: all 0.3s ease;
         }
     </style>
 </head>
@@ -146,7 +226,7 @@
         <a href="index.html" class="back-link">← 返回首页</a>
         <h1>📚 完整作品目录</h1>
 
-        <table>
+        <table class="fade-on-scroll">
             <thead>
                 <tr>
                     <th>作品名称</th>
@@ -154,7 +234,7 @@
                     <th>格式</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="table-body">
                 
         <tr>
             <td><strong>《妄想症_01_BadCen》</strong></td>
@@ -175,48 +255,57 @@
             <td><a href="reading/妄想症_03_xty.html" class="chapter-link">在线阅读</a></td>
             <td>PDF/TXT</td>
         </tr>
-         
+        
             </tbody>
         </table>
-
-        <script>
-            // 获取切换按钮
-            const themeToggle = document.getElementById('theme-toggle');
-            
-            // 检查本地存储中是否有保存的主题偏好
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme) {
-                document.documentElement.setAttribute('data-theme', savedTheme);
-                updateButtonText(savedTheme);
-            } else {
-                // 如果没有保存的偏好，默认使用深色主题
-                document.documentElement.setAttribute('data-theme', 'dark');
-                updateButtonText('dark');
-            }
-            
-            // 主题切换函数
-            function toggleTheme() {
-                const currentTheme = document.documentElement.getAttribute('data-theme');
-                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-                
-                // 应用新主题
-                document.documentElement.setAttribute('data-theme', newTheme);
-                
-                // 保存用户偏好
-                localStorage.setItem('theme', newTheme);
-                
-                // 更新按钮文本
-                updateButtonText(newTheme);
-            }
-            
-            // 更新按钮显示
-            function updateButtonText(theme) {
-                themeToggle.textContent = theme === 'dark' ? '🌙' : '☀️';
-            }
-            
-            // 添加点击事件监听
-            themeToggle.addEventListener('click', toggleTheme);
-        </script>
     </div>
+
+    <script>
+        // 主题切换（保持不变，略加优化）
+        const themeToggle = document.getElementById('theme-toggle');
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            updateButtonText(savedTheme);
+        } else {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            updateButtonText('dark');
+        }
+        
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateButtonText(newTheme);
+        }
+        
+        function updateButtonText(theme) {
+            themeToggle.textContent = theme === 'dark' ? '🌙' : '☀️';
+        }
+        
+        themeToggle.addEventListener('click', toggleTheme);
+
+        // ✨ 为表格行添加动画延迟索引
+        document.addEventListener('DOMContentLoaded', function() {
+            const rows = document.querySelectorAll('#table-body tr');
+            rows.forEach((row, index) => {
+                row.style.setProperty('--row-index', index);
+            });
+
+            // ✨ 滚动触发动画 (Intersection Observer)
+            const fadeElements = document.querySelectorAll('.fade-on-scroll');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+            
+            fadeElements.forEach(el => observer.observe(el));
+        });
+    </script>
 </body>
 </html>
