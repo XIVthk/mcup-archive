@@ -24,9 +24,6 @@
             --accent-hover: #6a7df4;
             --accent-glow: rgba(94, 114, 228, 0.25);
             --card-radius: 16px;
-            /* 反馈模式颜色 */
-            --feedback-start: #e74c3c;
-            --feedback-end: #c0392b;
         }
 
         [data-theme="dark"] {
@@ -262,154 +259,165 @@
             box-shadow: 0 4px 12px var(--accent-glow);
         }
 
-        /* ========== ✨ 立体公告牌/反馈按钮 ========== */
-        .action-card {
-            position: relative;
+        /* ========== ✨ 立体公告牌样式 ========== */
+        .notice-board {
+            box-shadow: 
+                0 1px 0 rgba(255, 255, 255, 0.08) inset,
+                0 0 0 1px rgba(255, 255, 255, 0.05) inset,
+                0 8px 0 rgba(0, 0, 0, 0.3),
+                0 12px 20px rgba(0, 0, 0, 0.4);
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+            border-radius: 0px;
             margin-bottom: 2rem;
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            overflow: hidden;
         }
 
-        /* 立体浮动按钮 */
-        .action-badge {
-            position: absolute;
-            top: -14px;
-            left: 20px;
-            padding: 8px 20px;
-            font-size: 0.9rem;
-            font-weight: bold;
-            border-radius: 40px;
-            cursor: pointer;
-            z-index: 20;
-            transition: all 0.4s cubic-bezier(0.34, 1.2, 0.64, 1);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(4px);
-            white-space: nowrap;
+        .notice-board:hover {
+            transform: translateY(-4px);
+            box-shadow: 
+                0 1px 0 rgba(255, 255, 255, 0.1) inset,
+                0 0 0 1px rgba(255, 255, 255, 0.08) inset,
+                0 12px 0 rgba(0, 0, 0, 0.3),
+                0 20px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .notice-board-inner {
+            position: relative;
+            padding: 0.8rem 1.5rem;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+            border-bottom: 1px solid rgba(94, 114, 228, 0.4);
             display: flex;
             align-items: center;
-            gap: 6px;
-        }
-
-        /* 默认蓝色渐变 */
-        .action-badge.default-mode {
-            background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
-            color: white;
-            left: 20px;
-            right: auto;
-        }
-
-        /* 反馈模式：番茄红 + 右侧位置 */
-        .action-badge.feedback-mode {
-            background: linear-gradient(135deg, var(--feedback-start), var(--feedback-end));
-            color: white;
-            left: auto;
-            right: 20px;
-        }
-
-        /* 悬浮动画 */
-        .action-badge:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
-        }
-
-        /* 点击波纹效果 */
-        .action-badge:active {
-            transform: translateY(1px) scale(0.98);
-            transition: 0.05s;
-        }
-
-        /* 下方大卡片 */
-        .action-content-card {
-            background-color: var(--bg-secondary);
-            border-radius: var(--card-radius);
-            padding: 1.5rem;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-            border-left: 4px solid var(--accent);
-            min-height: 150px;
-        }
-
-        /* 反馈模式下的边框颜色变化 */
-        .action-content-card.feedback-mode {
-            border-left-color: var(--feedback-start);
-        }
-
-        /* 内容区域动画 */
-        .action-content-inner {
-            animation: contentSwitch 0.3s ease-out;
-        }
-
-        @keyframes contentSwitch {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* 反馈表单样式 */
-        .feedback-form {
-            display: flex;
-            flex-direction: column;
             gap: 12px;
+            backdrop-filter: blur(2px);
         }
 
-        .feedback-form input,
-        .feedback-form textarea {
-            background: var(--bg-primary);
-            border: 1px solid var(--text-secondary);
-            border-radius: 12px;
-            padding: 12px 14px;
+        .notice-icon {
+            font-size: 1.8rem;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+            animation: iconBounce 2s ease-in-out infinite;
+            transform-origin: center;
+        }
+
+        @keyframes iconBounce {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-3px) rotate(5deg); }
+        }
+
+        .notice-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin: 0;
+            background: linear-gradient(135deg, #f0f0f0, #c0c0c0);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: 2px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .notice-glow {
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(94, 114, 228, 0.3), 
+                rgba(155, 89, 182, 0.3),
+                transparent
+            );
+            transition: left 0.6s ease;
+            pointer-events: none;
+        }
+
+        .notice-board:hover .notice-glow {
+            left: 100%;
+        }
+
+        .notice-content {
+            padding: 1.5rem;
+            background: rgba(10, 14, 23, 0.6);
+            backdrop-filter: blur(4px);
+            border-top: 1px solid rgba(94, 114, 228, 0.2);
+            font-size: 0.95rem;
+            line-height: 1.7;
             color: var(--text-primary);
-            font-family: inherit;
-            font-size: 0.95rem;
-            transition: all 0.2s ease;
-        }
-
-        .feedback-form input:focus,
-        .feedback-form textarea:focus {
-            outline: none;
-            border-color: var(--feedback-start);
-            box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2);
-        }
-
-        .feedback-form textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
-
-        .feedback-form button {
-            background: linear-gradient(135deg, var(--feedback-start), var(--feedback-end));
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-size: 0.95rem;
-            font-weight: bold;
             transition: all 0.3s ease;
-            align-self: flex-start;
         }
 
-        .feedback-form button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 14px rgba(231, 76, 60, 0.3);
+        .notice-board:hover .notice-content {
+            background: rgba(10, 14, 23, 0.8);
         }
 
-        /* 普通内容样式 */
-        .normal-content {
+        .loading-text {
+            text-align: center;
+            color: var(--text-secondary);
+            font-style: italic;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .author-content {
+            white-space: pre-line;
             line-height: 1.7;
         }
 
-        .normal-content .loading-text {
-            color: var(--text-secondary);
-            font-style: italic;
+        .author-content p {
+            margin-bottom: 0.8rem;
+        }
+
+        .author-content a {
+            color: var(--accent);
+            text-decoration: none;
+            border-bottom: 1px dashed var(--accent);
+        }
+
+        .author-content a:hover {
+            color: var(--accent-hover);
+            border-bottom-style: solid;
+        }
+
+        /* 浅色主题适配 */
+        [data-theme="light"] .notice-board {
+            background: linear-gradient(135deg, #e8eef4 0%, #dce3ec 50%, #d0d8e4 100%);
+            box-shadow: 
+                0 1px 0 rgba(255, 255, 255, 0.5) inset,
+                0 0 0 1px rgba(255, 255, 255, 0.3) inset,
+                0 8px 0 rgba(0, 0, 0, 0.15),
+                0 12px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="light"] .notice-board-inner {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.03) 0%, rgba(0, 0, 0, 0.01) 100%);
+            border-bottom: 1px solid rgba(94, 114, 228, 0.5);
+        }
+
+        [data-theme="light"] .notice-title {
+            background: linear-gradient(135deg, #2c3e50, #4a627a);
+            background-clip: text;
+            -webkit-background-clip: text;
+        }
+
+        [data-theme="light"] .notice-content {
+            background: rgba(240, 245, 250, 0.7);
+        }
+
+        [data-theme="light"] .notice-board:hover .notice-content {
+            background: rgba(240, 245, 250, 0.9);
         }
 
         body, .container, header, footer, 
         .work-item, .work-title, .chapter-item,
-        .action-content-card, .warning, .theme-btn, .nav-button {
+        .notice-board, .warning, .theme-btn, .nav-button {
             transition: background-color 0.4s ease-in-out, 
                         color 0.4s ease-in-out, 
                         border-color 0.4s ease-in-out;
@@ -425,18 +433,15 @@
             <a href="archive.html" class="nav-button">📚 浏览完整目录</a>
         </header>
 
-        <!-- ✨ 可切换的立体公告牌/反馈区 -->
-        <div class="action-card">
-            <div id="action-badge" class="action-badge default-mode">
-                <span>📢</span> 公告板
+        <!-- ✨ 立体公告牌 -->
+        <div class="notice-board">
+            <div class="notice-board-inner">
+                <div class="notice-icon">📢</div>
+                <h3 class="notice-title">公告板</h3>
+                <div class="notice-glow"></div>
             </div>
-            <div id="action-content-card" class="action-content-card">
-                <div id="action-content-inner" class="action-content-inner">
-                    <!-- 动态内容会填充到这里 -->
-                    <div class="normal-content">
-                        <div class="loading-text">📡 正在加载公告...</div>
-                    </div>
-                </div>
+            <div class="notice-content" id="author-words-container">
+                <div class="loading-text">正在加载...</div>
             </div>
         </div>
 
@@ -469,7 +474,6 @@
     </div>
 
     <script>
-        // ==================== 主题切换 ====================
         const themeToggle = document.getElementById('theme-toggle');
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme) {
@@ -491,9 +495,28 @@
         function updateButtonText(theme) {
             themeToggle.textContent = theme === 'dark' ? '🌙' : '☀️';
         }
+        
         themeToggle.addEventListener('click', toggleTheme);
 
-        // ==================== 卡片动画延迟 ====================
+        async function loadAuthorsWords() {
+            try {
+                const response = await fetch('author-words.md');
+                if (!response.ok) throw new Error('文件加载失败');
+                const markdownText = await response.text();
+                const container = document.getElementById('author-words-container');
+                const loadingDiv = container.querySelector('.loading-text');
+                loadingDiv.style.display = 'none';
+                const contentDiv = document.createElement('div');
+                contentDiv.className = 'author-content';
+                contentDiv.innerHTML = markdownText.replace(/\n/g, '<br>');
+                container.appendChild(contentDiv);
+            } catch (error) {
+                console.error('加载作者的话时出错:', error);
+                const container = document.getElementById('author-words-container');
+                container.querySelector('.loading-text').textContent = '站长今天似乎没什么要说的。';
+            }
+        }
+
         function setCardDelay() {
             const cards = document.querySelectorAll('.work-item');
             cards.forEach((card, index) => {
@@ -501,154 +524,6 @@
             });
         }
 
-        // ==================== 公告/反馈切换逻辑 ====================
-        // 状态管理: false = 公告模式, true = 反馈模式
-        let isFeedbackMode = false;
-        
-        const badge = document.getElementById('action-badge');
-        const contentCard = document.getElementById('action-content-card');
-        const contentInner = document.getElementById('action-content-inner');
-        
-        // 存储原始公告内容（加载后保存）
-        let originalAnnouncementHTML = null;
-        
-        // 加载作者的话（公告内容）
-        async function loadAuthorsWords() {
-            try {
-                const response = await fetch('author-words.md');
-                if (!response.ok) throw new Error('文件加载失败');
-                const markdownText = await response.text();
-                // 保存原始内容
-                originalAnnouncementHTML = `<div class="normal-content">${markdownText.replace(/\n/g, '<br>')}</div>`;
-                if (!isFeedbackMode) {
-                    contentInner.innerHTML = originalAnnouncementHTML;
-                }
-            } catch (error) {
-                console.error('加载作者的话时出错:', error);
-                originalAnnouncementHTML = `<div class="normal-content"><p style="color: var(--text-secondary);">📭 站长今天似乎没什么要说的。</p></div>`;
-                if (!isFeedbackMode) {
-                    contentInner.innerHTML = originalAnnouncementHTML;
-                }
-            }
-        }
-        
-        // 渲染反馈表单
-        function renderFeedbackForm() {
-            return `
-                <div class="feedback-form">
-                    <input type="text" id="feedback-name" placeholder="你的名字（可选）" maxlength="50">
-                    <textarea id="feedback-message" placeholder="请写下你的反馈意见、建议或报错..." required></textarea>
-                    <button id="submit-feedback">📮 提交反馈</button>
-                    <small style="color: var(--text-secondary); font-size: 0.8rem;">💡 反馈会保存在浏览器本地，站长后续会看到~</small>
-                </div>
-            `;
-        }
-        
-        // 保存反馈到 localStorage
-        function saveFeedback(name, message) {
-            const feedbacks = JSON.parse(localStorage.getItem('user_feedbacks') || '[]');
-            feedbacks.push({
-                name: name || '匿名',
-                message: message,
-                timestamp: new Date().toISOString(),
-                page: window.location.pathname
-            });
-            localStorage.setItem('user_feedbacks', JSON.stringify(feedbacks));
-        }
-        
-        // 显示提交成功提示
-        function showToast(message, isError = false) {
-            const toast = document.createElement('div');
-            toast.textContent = message;
-            toast.style.cssText = `
-                position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-                background: ${isError ? '#e74c3c' : 'linear-gradient(135deg, #27ae60, #2ecc71)'};
-                color: white; padding: 10px 24px; border-radius: 40px;
-                z-index: 1000; font-size: 0.9rem; opacity: 0;
-                transition: opacity 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-                white-space: nowrap;
-            `;
-            document.body.appendChild(toast);
-            setTimeout(() => toast.style.opacity = '1', 10);
-            setTimeout(() => {
-                toast.style.opacity = '0';
-                setTimeout(() => toast.remove(), 300);
-            }, 2500);
-        }
-        
-        // 绑定反馈表单提交事件
-        function bindFeedbackEvents() {
-            const submitBtn = document.getElementById('submit-feedback');
-            if (submitBtn) {
-                submitBtn.addEventListener('click', () => {
-                    const nameInput = document.getElementById('feedback-name');
-                    const msgTextarea = document.getElementById('feedback-message');
-                    const message = msgTextarea?.value.trim();
-                    
-                    if (!message) {
-                        showToast('请填写反馈内容~', true);
-                        return;
-                    }
-                    
-                    const name = nameInput?.value.trim() || '';
-                    saveFeedback(name, message);
-                    showToast('✅ 反馈已提交，感谢你的建议！');
-                    
-                    // 清空表单
-                    if (msgTextarea) msgTextarea.value = '';
-                    if (nameInput) nameInput.value = '';
-                    
-                    // 可选：3秒后自动切换回公告模式
-                    setTimeout(() => {
-                        if (isFeedbackMode) {
-                            toggleMode();
-                        }
-                    }, 2000);
-                });
-            }
-        }
-        
-        // 切换模式（带动画）
-        function toggleMode() {
-            isFeedbackMode = !isFeedbackMode;
-            
-            // 1. 切换按钮样式和位置
-            if (isFeedbackMode) {
-                badge.classList.remove('default-mode');
-                badge.classList.add('feedback-mode');
-                badge.innerHTML = '<span>📮</span> 我要反馈...';
-                contentCard.classList.add('feedback-mode');
-            } else {
-                badge.classList.remove('feedback-mode');
-                badge.classList.add('default-mode');
-                badge.innerHTML = '<span>📢</span> 公告板';
-                contentCard.classList.remove('feedback-mode');
-            }
-            
-            // 2. 切换下方内容（带淡入动画）
-            contentInner.style.animation = 'none';
-            contentInner.offsetHeight; // 强制重绘
-            
-            if (isFeedbackMode) {
-                contentInner.innerHTML = renderFeedbackForm();
-                contentInner.style.animation = 'contentSwitch 0.3s ease-out';
-                // 绑定表单事件
-                setTimeout(bindFeedbackEvents, 50);
-            } else {
-                if (originalAnnouncementHTML) {
-                    contentInner.innerHTML = originalAnnouncementHTML;
-                } else {
-                    contentInner.innerHTML = '<div class="normal-content"><div class="loading-text">📡 正在加载公告...</div></div>';
-                    loadAuthorsWords(); // 重新加载
-                }
-                contentInner.style.animation = 'contentSwitch 0.3s ease-out';
-            }
-        }
-        
-        // 绑定点击事件
-        badge.addEventListener('click', toggleMode);
-        
-        // ==================== 初始化 ====================
         document.addEventListener('DOMContentLoaded', function() {
             loadAuthorsWords();
             setCardDelay();
