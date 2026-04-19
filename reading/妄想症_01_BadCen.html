@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>妄想症_01_BadCen - XVIthk Reader</title>
     <style>
+        /* ========== 霞鹜文楷字体 ========== */
+        @import url('https://cdn.jsdelivr.net/npm/lxgw-wenkai-lite-webfont@1.1.0/style.css');
+
         :root {
             --bg-primary-light: #f8f9fa;
             --bg-secondary-light: #ffffff;
@@ -45,9 +48,8 @@
             box-sizing: border-box;
         }
 
-        /* ========== 动态大背景 ========== */
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'LXGW WenKai Lite', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: var(--text-primary);
             margin: 0;
             padding: 0;
@@ -92,7 +94,6 @@
             to { opacity: 1; }
         }
 
-        /* 阅读进度条 */
         .progress-bar {
             position: fixed;
             top: 0;
@@ -134,7 +135,6 @@
             gap: 1rem;
         }
 
-        /* 返回链接 - 纯文本样式 */
         .back-link {
             color: var(--accent);
             text-decoration: none;
@@ -167,7 +167,6 @@
             color: var(--accent-hover);
         }
 
-        /* 下载按钮 */
         .dl-button {
             background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
             color: white;
@@ -186,7 +185,6 @@
             filter: brightness(1.05);
         }
 
-        /* ========== 阅读内容区域 - 支持 Markdown 样式 ========== */
         .text-content-container {
             max-width: 800px;
             margin: 2rem auto;
@@ -207,13 +205,11 @@
             }
         }
 
-        /* Markdown 内容样式 */
         .markdown-body {
             font-size: 1.1rem;
             line-height: 1.8;
         }
 
-        /* 标题样式 */
         .markdown-body h1 {
             font-size: 2rem;
             margin: 1.5rem 0 1rem;
@@ -230,16 +226,9 @@
             font-size: 1.3rem;
             margin: 1rem 0 0.6rem;
         }
-        .markdown-body h4, .markdown-body h5, .markdown-body h6 {
-            margin: 0.8rem 0 0.5rem;
-        }
-
-        /* 段落 */
         .markdown-body p {
             margin: 0.8rem 0;
         }
-
-        /* 列表 */
         .markdown-body ul, .markdown-body ol {
             margin: 0.8rem 0;
             padding-left: 2rem;
@@ -247,8 +236,6 @@
         .markdown-body li {
             margin: 0.3rem 0;
         }
-
-        /* 代码块 */
         .markdown-body pre {
             background: rgba(0, 0, 0, 0.3);
             padding: 1rem;
@@ -267,8 +254,6 @@
             background: none;
             padding: 0;
         }
-
-        /* 引用 */
         .markdown-body blockquote {
             border-left: 4px solid var(--accent);
             margin: 1rem 0;
@@ -276,8 +261,6 @@
             background: rgba(94, 114, 228, 0.1);
             border-radius: 0 8px 8px 0;
         }
-
-        /* 表格 */
         .markdown-body table {
             border-collapse: collapse;
             width: 100%;
@@ -291,8 +274,6 @@
         .markdown-body th {
             background: rgba(94, 114, 228, 0.2);
         }
-
-        /* 链接 */
         .markdown-body a {
             color: var(--accent);
             text-decoration: none;
@@ -302,16 +283,12 @@
             color: var(--accent-hover);
             border-bottom-style: solid;
         }
-
-        /* 图片 */
         .markdown-body img {
             max-width: 100%;
             height: auto;
             border-radius: 8px;
             margin: 1rem 0;
         }
-
-        /* 分割线 */
         .markdown-body hr {
             border: none;
             height: 1px;
@@ -319,7 +296,6 @@
             margin: 2rem 0;
         }
 
-        /* 纯文本样式 */
         .plain-text {
             white-space: pre-wrap;
             font-size: 1.1rem;
@@ -406,20 +382,22 @@
         </div>
     </div>
 
-    <!-- 内容直接由服务端渲染 -->
     <div class="text-content-container" id="text-content">
-        <p>《妄想症Paranoia》 x mcup</p>
-<p>引言<br />
+        <p>《妄想症Paranoia》 x mcup<br />
+​<br />
+引言<br />
 本文将《妄想症Paranoia》系列内的所有妄想症套用到mcups的身上，进行同人创作。<br />
 妄想症Paranoia —— DELA / 雨狸 （ft. 洛天依 / 言和 / 乐正绫）<br />
-mcups —— 包含 BadCen、夏天y、六谷、王少栋、赵子龙、BC、孙悟空、小橙子、大橙子、五歌等</p>
-<p>同人设<br />
+mcups —— 包含 BadCen、夏天y、六谷、王少栋、赵子龙、BC、孙悟空、小橙子、大橙子、五歌等<br />
+​<br />
+同人设<br />
 以上提到的mcups全部都生活在同一个大别墅里，架空于原世界观，这些角色都<strong>未婚单身</strong>（相信我，这个设定没什么存在感），人设可能出现ooc。<br />
 可能出现之前某些<strong>不好的记忆</strong>，慎读！<br />
 引发不适的，是作者的问题，但也没办法……<br />
 本文存在CP倾向：主空城、其他cp作者不能保证，因为我也不知道事情会怎么发展……<br />
-本文<strong>不会出现</strong>故事不完整现象，所有伏笔都会在其他片段回收。相信作者qwq。</p>
-<p>00# 别墅<br />
+本文<strong>不会出现</strong>故事不完整现象，所有伏笔都会在其他片段回收。相信作者qwq。<br />
+​<br />
+00# 别墅<br />
     别墅在郊区，算是大的，每个人都有自己的房间。<br />
     当时说的是，大家住在一起，投稿更好沟通，直播也可以互相串台，Vlog什么的大概也会拍的更多一些。<br />
     王哥有钱，全款拿下。<br />
@@ -521,7 +499,6 @@ mcups —— 包含 BadCen、夏天y、六谷、王少栋、赵子龙、BC、孙
     </div>
 
     <script>
-        // ========== 主题切换 ==========
         const themeToggle = document.getElementById('theme-toggle');
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme) {
@@ -545,13 +522,11 @@ mcups —— 包含 BadCen、夏天y、六谷、王少栋、赵子龙、BC、孙
         }
         themeToggle.addEventListener('click', toggleTheme);
 
-        // ========== 字体大小控制 ==========
         const contentContainer = document.getElementById('text-content');
         const smallerBtn = document.getElementById('font-smaller');
         const resetBtn = document.getElementById('font-reset');
         const largerBtn = document.getElementById('font-larger');
         
-        // 获取内容元素（可能是 .markdown-body 或 .plain-text）
         let textElement = contentContainer.querySelector('.markdown-body') || contentContainer.querySelector('.plain-text') || contentContainer;
         
         let fontSize = parseInt(localStorage.getItem('readerFontSize')) || 18;
@@ -581,7 +556,6 @@ mcups —— 包含 BadCen、夏天y、六谷、王少栋、赵子龙、BC、孙
         
         applyFontSize();
 
-        // ========== 阅读进度 ==========
         function updateProgressBar() {
             const winScroll = document.documentElement.scrollTop;
             const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
@@ -609,8 +583,6 @@ mcups —— 包含 BadCen、夏天y、六谷、王少栋、赵子龙、BC、孙
                     const pageHeight = document.body.scrollHeight - window.innerHeight;
                     if (pageHeight > 0 && progress > 0 && progress < 100) {
                         window.scrollTo({ top: (progress / 100) * pageHeight, behavior: 'smooth' });
-                        
-                        // 显示提示
                         const toast = document.createElement('div');
                         toast.textContent = `📖 已恢复至 ${progress}% 处`;
                         toast.style.cssText = `

@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>作品目录 - XVIthk</title>
     <style>
+        /* ========== 霞鹜文楷字体 ========== */
+        @import url('https://cdn.jsdelivr.net/npm/lxgw-wenkai-lite-webfont@1.1.0/style.css');
+
         :root {
             --bg-primary-light: #f8f9fa;
             --bg-secondary-light: #ffffff;
@@ -46,9 +49,8 @@
             box-sizing: border-box;
         }
 
-        /* ========== ✨ 动态大背景（与首页一致） ========== */
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'LXGW WenKai Lite', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: var(--text-primary);
             line-height: 1.6;
             margin: 0;
@@ -58,7 +60,6 @@
             min-height: 100vh;
         }
 
-        /* 深色主题背景 - 动态星空 + 渐变 + 网格 */
         [data-theme="dark"] body {
             background: 
                 radial-gradient(circle at 20% 30%, rgba(52, 152, 219, 0.08) 0%, transparent 50%),
@@ -67,7 +68,6 @@
                 linear-gradient(135deg, #0a0e17 0%, #0f1320 50%, #0a0e17 100%);
         }
 
-        /* 浅色主题背景 - 柔和光晕 + 网格 */
         [data-theme="light"] body {
             background: 
                 radial-gradient(circle at 20% 30%, rgba(52, 152, 219, 0.05) 0%, transparent 50%),
@@ -76,7 +76,6 @@
                 linear-gradient(135deg, #f8f9fa 0%, #eef2f5 100%);
         }
 
-        /* 深色主题下的浮动粒子 */
         [data-theme="dark"] body::before {
             content: '';
             position: fixed;
@@ -113,7 +112,6 @@
             font-size: 2rem;
         }
 
-        /* ✨ 返回链接样式（与首页 XVIthk 链接一致） */
         .back-link {
             display: inline-block;
             margin-bottom: 1.5rem;
@@ -143,7 +141,6 @@
             color: var(--accent-hover);
         }
 
-        /* ✨ 表格样式增强 */
         table {
             width: 100%;
             border-collapse: collapse;
@@ -164,7 +161,6 @@
             font-weight: 600;
         }
 
-        /* 表格行悬停动画 */
         tbody tr {
             transition: all 0.25s ease;
             animation: fadeInScale 0.4s ease-out backwards;
@@ -199,7 +195,6 @@
             letter-spacing: 0.5px;
         }
 
-        /* ✨ 主题按钮增强 */
         .theme-btn {
             position: absolute;
             top: 0;
@@ -226,7 +221,6 @@
             box-shadow: 0 4px 12px var(--accent-glow);
         }
 
-        /* ========== ✨ 警告框动画（与首页一致） ========== */
         .warning {
             background: linear-gradient(135deg, rgba(88, 166, 255, 0.08), rgba(155, 89, 182, 0.08));
             border-left: 4px solid var(--accent);
@@ -275,7 +269,6 @@
             left: 100%;
         }
 
-        /* 滚动触发动画类 */
         .fade-on-scroll {
             opacity: 0;
             transform: translateY(20px);
@@ -287,7 +280,6 @@
             transform: translateY(0);
         }
 
-        /* 平滑过渡 */
         body, .container, table, th, td,
         .theme-btn, .back-link, .warning {
             transition: background-color 0.4s ease-in-out, 
@@ -302,7 +294,6 @@
         <a href="index.html" class="back-link">← 返回首页</a>
         <h1>📚 完整作品目录</h1>
 
-        <!-- ✨ 警告框（与首页一致） -->
         <div class="warning">
             <strong>⚠️ 警告</strong>: 本站内容包含成人元素，请确保您已年满18岁并自愿承担阅读风险。
         </div>
@@ -322,7 +313,6 @@
     </div>
 
     <script>
-        // 主题切换
         const themeToggle = document.getElementById('theme-toggle');
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme) {
@@ -347,14 +337,12 @@
         
         themeToggle.addEventListener('click', toggleTheme);
 
-        // 为表格行添加动画延迟索引
         document.addEventListener('DOMContentLoaded', function() {
             const rows = document.querySelectorAll('#table-body tr');
             rows.forEach((row, index) => {
                 row.style.setProperty('--row-index', index);
             });
 
-            // 滚动触发动画 (Intersection Observer)
             const fadeElements = document.querySelectorAll('.fade-on-scroll');
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {

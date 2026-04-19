@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>妄想症_03_xty - XVIthk Reader</title>
     <style>
+        /* ========== 霞鹜文楷字体 ========== */
+        @import url('https://cdn.jsdelivr.net/npm/lxgw-wenkai-lite-webfont@1.1.0/style.css');
+
         :root {
             --bg-primary-light: #f8f9fa;
             --bg-secondary-light: #ffffff;
@@ -45,9 +48,8 @@
             box-sizing: border-box;
         }
 
-        /* ========== 动态大背景 ========== */
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'LXGW WenKai Lite', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: var(--text-primary);
             margin: 0;
             padding: 0;
@@ -92,7 +94,6 @@
             to { opacity: 1; }
         }
 
-        /* 阅读进度条 */
         .progress-bar {
             position: fixed;
             top: 0;
@@ -134,7 +135,6 @@
             gap: 1rem;
         }
 
-        /* 返回链接 - 纯文本样式 */
         .back-link {
             color: var(--accent);
             text-decoration: none;
@@ -167,7 +167,6 @@
             color: var(--accent-hover);
         }
 
-        /* 下载按钮 */
         .dl-button {
             background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
             color: white;
@@ -186,7 +185,6 @@
             filter: brightness(1.05);
         }
 
-        /* ========== 阅读内容区域 - 支持 Markdown 样式 ========== */
         .text-content-container {
             max-width: 800px;
             margin: 2rem auto;
@@ -207,13 +205,11 @@
             }
         }
 
-        /* Markdown 内容样式 */
         .markdown-body {
             font-size: 1.1rem;
             line-height: 1.8;
         }
 
-        /* 标题样式 */
         .markdown-body h1 {
             font-size: 2rem;
             margin: 1.5rem 0 1rem;
@@ -230,16 +226,9 @@
             font-size: 1.3rem;
             margin: 1rem 0 0.6rem;
         }
-        .markdown-body h4, .markdown-body h5, .markdown-body h6 {
-            margin: 0.8rem 0 0.5rem;
-        }
-
-        /* 段落 */
         .markdown-body p {
             margin: 0.8rem 0;
         }
-
-        /* 列表 */
         .markdown-body ul, .markdown-body ol {
             margin: 0.8rem 0;
             padding-left: 2rem;
@@ -247,8 +236,6 @@
         .markdown-body li {
             margin: 0.3rem 0;
         }
-
-        /* 代码块 */
         .markdown-body pre {
             background: rgba(0, 0, 0, 0.3);
             padding: 1rem;
@@ -267,8 +254,6 @@
             background: none;
             padding: 0;
         }
-
-        /* 引用 */
         .markdown-body blockquote {
             border-left: 4px solid var(--accent);
             margin: 1rem 0;
@@ -276,8 +261,6 @@
             background: rgba(94, 114, 228, 0.1);
             border-radius: 0 8px 8px 0;
         }
-
-        /* 表格 */
         .markdown-body table {
             border-collapse: collapse;
             width: 100%;
@@ -291,8 +274,6 @@
         .markdown-body th {
             background: rgba(94, 114, 228, 0.2);
         }
-
-        /* 链接 */
         .markdown-body a {
             color: var(--accent);
             text-decoration: none;
@@ -302,16 +283,12 @@
             color: var(--accent-hover);
             border-bottom-style: solid;
         }
-
-        /* 图片 */
         .markdown-body img {
             max-width: 100%;
             height: auto;
             border-radius: 8px;
             margin: 1rem 0;
         }
-
-        /* 分割线 */
         .markdown-body hr {
             border: none;
             height: 1px;
@@ -319,7 +296,6 @@
             margin: 2rem 0;
         }
 
-        /* 纯文本样式 */
         .plain-text {
             white-space: pre-wrap;
             font-size: 1.1rem;
@@ -406,7 +382,6 @@
         </div>
     </div>
 
-    <!-- 内容直接由服务端渲染 -->
     <div class="text-content-container" id="text-content">
         <p>03# 夏天y: 自罪妄想<br />
     夏天y在Cen房门口。<br />
@@ -525,7 +500,6 @@
     </div>
 
     <script>
-        // ========== 主题切换 ==========
         const themeToggle = document.getElementById('theme-toggle');
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme) {
@@ -549,13 +523,11 @@
         }
         themeToggle.addEventListener('click', toggleTheme);
 
-        // ========== 字体大小控制 ==========
         const contentContainer = document.getElementById('text-content');
         const smallerBtn = document.getElementById('font-smaller');
         const resetBtn = document.getElementById('font-reset');
         const largerBtn = document.getElementById('font-larger');
         
-        // 获取内容元素（可能是 .markdown-body 或 .plain-text）
         let textElement = contentContainer.querySelector('.markdown-body') || contentContainer.querySelector('.plain-text') || contentContainer;
         
         let fontSize = parseInt(localStorage.getItem('readerFontSize')) || 18;
@@ -585,7 +557,6 @@
         
         applyFontSize();
 
-        // ========== 阅读进度 ==========
         function updateProgressBar() {
             const winScroll = document.documentElement.scrollTop;
             const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
@@ -613,8 +584,6 @@
                     const pageHeight = document.body.scrollHeight - window.innerHeight;
                     if (pageHeight > 0 && progress > 0 && progress < 100) {
                         window.scrollTo({ top: (progress / 100) * pageHeight, behavior: 'smooth' });
-                        
-                        // 显示提示
                         const toast = document.createElement('div');
                         toast.textContent = `📖 已恢复至 ${progress}% 处`;
                         toast.style.cssText = `
