@@ -24,6 +24,9 @@
             --accent-hover: #6a7df4;
             --accent-glow: rgba(94, 114, 228, 0.25);
             --card-radius: 16px;
+            /* 番茄红 🍅 */
+            --tomato-start: #ff6b6b;
+            --tomato-end: #ee5a24;
         }
 
         [data-theme="dark"] {
@@ -67,6 +70,7 @@
             max-width: 800px;
             margin: 0 auto;
             padding: 2rem;
+            position: relative;
         }
 
         header {
@@ -259,6 +263,7 @@
             box-shadow: 0 4px 12px var(--accent-glow);
         }
 
+        /* ==================== 🎯 立体悬浮按钮 ==================== */
         .author-words {
             background-color: var(--bg-secondary);
             border-left: 4px solid var(--accent);
@@ -268,6 +273,7 @@
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
             position: relative;
             transition: all 0.3s ease;
+            min-height: 120px;
         }
 
         .author-words:hover {
@@ -275,28 +281,101 @@
             box-shadow: 0 16px 30px rgba(0, 0, 0, 0.2);
         }
 
-        .author-card {
+        /* 🎯 立体悬浮按钮 - 独立于大框，可移动 */
+        .floating-badge {
             position: absolute;
-            top: -12px;
+            top: -14px;
             left: 20px;
-            background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
-            color: white;
-            padding: 4px 16px;
+            padding: 6px 18px;
             font-size: 0.85rem;
-            border-radius: 20px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-            animation: badgeGlow 2s ease-in-out infinite;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            z-index: 20;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+            transition: all 0.45s cubic-bezier(0.34, 1.2, 0.64, 1);
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
-        @keyframes badgeGlow {
-            0%, 100% { box-shadow: 0 2px 8px rgba(94, 114, 228, 0.3); }
-            50% { box-shadow: 0 2px 16px rgba(94, 114, 228, 0.6); }
+        /* 3D 立体效果 */
+        .floating-badge::before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            right: 2px;
+            bottom: 2px;
+            border-radius: 28px;
+            background: rgba(255, 255, 255, 0.15);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .floating-badge:hover::before {
+            opacity: 1;
+        }
+
+        /* 默认状态 - 渐变蓝紫 */
+        .floating-badge.default {
+            background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+            color: white;
+            left: 20px;
+            top: -14px;
+            right: auto;
+            bottom: auto;
+        }
+
+        /* 反馈状态 - 番茄红，移动到右下角 */
+        .floating-badge.feedback {
+            background: linear-gradient(135deg, var(--tomato-start), var(--tomato-end));
+            color: white;
+            left: auto;
+            right: 20px;
+            top: auto;
+            bottom: -14px;
+        }
+
+        /* 悬停动画 - 上下浮动 + 发光 */
+        .floating-badge:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35), 0 0 0 2px rgba(255, 255, 255, 0.2) inset;
+        }
+
+        .floating-badge.feedback:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 12px 28px rgba(238, 90, 36, 0.4), 0 0 0 2px rgba(255, 255, 255, 0.2) inset;
+        }
+
+        /* 点击波纹效果 */
+        .floating-badge:active {
+            transform: scale(0.96);
+            transition: transform 0.1s ease;
         }
 
         .author-content {
             white-space: pre-line;
             line-height: 1.6;
             animation: contentFadeIn 0.5s ease-out;
+        }
+
+        /* 反馈模式下的作者的话区域样式变化 */
+        .author-words.feedback-mode {
+            border-left-color: var(--tomato-start);
+            background: linear-gradient(135deg, 
+                rgba(255, 107, 107, 0.05), 
+                rgba(238, 90, 36, 0.02));
+        }
+
+        .feedback-placeholder {
+            text-align: center;
+            color: var(--text-secondary);
+            padding: 1rem;
+            font-style: italic;
         }
 
         @keyframes contentFadeIn {
@@ -310,6 +389,7 @@
             font-style: italic;
         }
 
+        /* 平滑过渡 */
         body, .container, header, footer, 
         .work-item, .work-title, .chapter-item,
         .author-words, .warning, .theme-btn, .nav-button {
@@ -328,9 +408,14 @@
             <a href="archive.html" class="nav-button">📚 浏览完整目录</a>
         </header>
 
+        <!-- 🎯 作者的话区域 - 带可移动立体按钮 -->
         <section class="author-words" id="author-words-container">
-            <div class="author-card">📢 公告板</div>
-            <div class="loading-text">正在加载作者的最新唠叨...</div>
+            <!-- 立体悬浮按钮 - 独立元素 -->
+            <div id="floating-badge" class="floating-badge default">
+                <span>📢</span> 公告板
+            </div>
+            <div class="loading-text" id="author-loading">正在加载作者的最新唠叨...</div>
+            <div id="author-content" style="display: none;"></div>
         </section>
 
         <div class="warning">
@@ -339,7 +424,6 @@
 
         <main>
             <ul class="works-list">
-                <!-- ✅ 关键修复：Jinja2 循环保留 -->
                 {% for series_name, items in series_dict.items() %}
                 <li class="work-item">
                     <div class="work-title">{{ series_name }}</div>
@@ -359,7 +443,7 @@
     </div>
 
     <script>
-        // 主题切换
+        // ==================== 主题切换 ====================
         const themeToggle = document.getElementById('theme-toggle');
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme) {
@@ -381,29 +465,88 @@
         function updateButtonText(theme) {
             themeToggle.textContent = theme === 'dark' ? '🌙' : '☀️';
         }
-        
         themeToggle.addEventListener('click', toggleTheme);
 
+        // ==================== 🎯 立体按钮切换逻辑 ====================
+        let isFeedbackMode = false;
+        const badge = document.getElementById('floating-badge');
+        const authorContainer = document.getElementById('author-words-container');
+        const authorContentDiv = document.getElementById('author-content');
+        const authorLoading = document.getElementById('author-loading');
+        
+        // 存储原始作者的话内容
+        let originalAuthorHTML = '';
+        
+        // 反馈链接（你可以替换成你自己的反馈表单链接）
+        const FEEDBACK_URL = 'https://github.com/yourname/yourrepo/issues/new'; // 修改这里！
+        
         // 加载作者的话
         async function loadAuthorsWords() {
             try {
                 const response = await fetch('author-words.md');
                 if (!response.ok) throw new Error('文件加载失败');
                 const markdownText = await response.text();
-                const container = document.getElementById('author-words-container');
-                const loadingDiv = container.querySelector('.loading-text');
-                loadingDiv.style.display = 'none';
-                const contentDiv = document.createElement('div');
-                contentDiv.className = 'author-content';
-                contentDiv.innerHTML = markdownText.replace(/\n/g, '<br>');
-                container.appendChild(contentDiv);
+                originalAuthorHTML = markdownText.replace(/\n/g, '<br>');
+                authorContentDiv.innerHTML = originalAuthorHTML;
+                authorLoading.style.display = 'none';
+                authorContentDiv.style.display = 'block';
             } catch (error) {
                 console.error('加载作者的话时出错:', error);
-                const container = document.getElementById('author-words-container');
-                container.querySelector('.loading-text').textContent = '站长今天似乎没什么要说的。';
+                authorLoading.textContent = '站长今天似乎没什么要说的。';
+                originalAuthorHTML = '<p>站长今天似乎没什么要说的。</p>';
             }
         }
-
+        
+        // 切换到反馈模式
+        function switchToFeedbackMode() {
+            // 改变按钮样式和位置
+            badge.classList.remove('default');
+            badge.classList.add('feedback');
+            badge.innerHTML = '<span>💬</span> 我要反馈…';
+            
+            // 改变下方大框的样式
+            authorContainer.classList.add('feedback-mode');
+            
+            // 替换内容为反馈提示
+            authorLoading.style.display = 'none';
+            authorContentDiv.style.display = 'block';
+            authorContentDiv.innerHTML = `
+                <div class="feedback-placeholder">
+                    ✨ 感谢你的反馈！ ✨<br><br>
+                    📝 请点击上方「我要反馈…」按钮，<br>
+                    或直接<a href="${FEEDBACK_URL}" target="_blank" style="color: var(--tomato-start);">点击这里</a>前往反馈页面。<br><br>
+                    <small>你的建议会让这个站点变得更好 🍅</small>
+                </div>
+            `;
+        }
+        
+        // 切换回默认模式
+        function switchToDefaultMode() {
+            // 恢复按钮样式和位置
+            badge.classList.remove('feedback');
+            badge.classList.add('default');
+            badge.innerHTML = '<span>📢</span> 公告板';
+            
+            // 恢复大框样式
+            authorContainer.classList.remove('feedback-mode');
+            
+            // 恢复原始内容
+            authorLoading.style.display = 'none';
+            authorContentDiv.style.display = 'block';
+            authorContentDiv.innerHTML = originalAuthorHTML;
+        }
+        
+        // 按钮点击事件 - 切换模式
+        function toggleMode() {
+            if (isFeedbackMode) {
+                switchToDefaultMode();
+                isFeedbackMode = false;
+            } else {
+                switchToFeedbackMode();
+                isFeedbackMode = true;
+            }
+        }
+        
         // 为卡片添加动画延迟索引
         function setCardDelay() {
             const cards = document.querySelectorAll('.work-item');
@@ -411,7 +554,12 @@
                 card.style.setProperty('--card-index', index);
             });
         }
-
+        
+        // 监听按钮点击（包括通过点击反馈链接内的触发）
+        badge.addEventListener('click', toggleMode);
+        
+        // 如果用户点击了反馈内容中的链接，模式不变，正常跳转
+        
         document.addEventListener('DOMContentLoaded', function() {
             loadAuthorsWords();
             setCardDelay();
