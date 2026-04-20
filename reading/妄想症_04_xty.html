@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="zh" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>妄想症_04_xty - XVIthk Reader</title>
+    <style>
+        /* ========== 霞鹜文楷字体 ========== */
+        @import url('https://cdn.jsdelivr.net/npm/lxgw-wenkai-lite-webfont@1.1.0/style.css');
+
+        :root {
+            --bg-primary-light: #f8f9fa;
+            --bg-secondary-light: #ffffff;
+            --text-primary-light: #2c3e50;
+            --text-secondary-light: #6c757d;
+            --bg-primary-dark: #0a0e17;
+            --bg-secondary-dark: #141a26;
+            --text-primary-dark: #e6edf3;
+            --text-secondary-dark: #8b9bae;
+            --bg-primary: var(--bg-primary-dark);
+            --bg-secondary: var(--bg-secondary-dark);
+            --text-primary: var(--text-primary-dark);
+            --text-secondary: var(--text-secondary-dark);
+            --accent-start: #3498db;
+            --accent-end: #9b59b6;
+            --accent: #5e72e4;
+            --accent-hover: #6a7df4;
+            --accent-glow: rgba(94, 114, 228, 0.3);
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: var(--bg-primary-dark);
+            --bg-secondary: var(--bg-secondary-dark);
+            --text-primary: var(--text-primary-dark);
+            --text-secondary: var(--text-secondary-dark);
+        }
+
+        [data-theme="light"] {
+            --bg-primary: var(--bg-primary-light);
+            --bg-secondary: var(--bg-secondary-light);
+            --text-primary: var(--text-primary-light);
+            --text-secondary: var(--text-secondary-light);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'LXGW WenKai Lite', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+            line-height: 1.8;
+            animation: pageFade 0.4s ease-out;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        [data-theme="dark"] body {
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(52, 152, 219, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(155, 89, 182, 0.08) 0%, transparent 50%),
+                repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.01) 0px, rgba(255, 255, 255, 0.01) 2px, transparent 2px, transparent 8px),
+                linear-gradient(135deg, #0a0e17 0%, #0f1320 50%, #0a0e17 100%);
+        }
+
+        [data-theme="light"] body {
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(52, 152, 219, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(155, 89, 182, 0.05) 0%, transparent 50%),
+                repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.01) 0px, rgba(0, 0, 0, 0.01) 2px, transparent 2px, transparent 8px),
+                linear-gradient(135deg, #f8f9fa 0%, #eef2f5 100%);
+        }
+
+        [data-theme="dark"] body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background-image: radial-gradient(2px 2px at 20px 30px, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0));
+            background-size: 40px 40px;
+            background-repeat: repeat;
+            z-index: 0;
+        }
+
+        @keyframes pageFade {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-start), var(--accent-end));
+            z-index: 1001;
+            transition: width 0.1s ease-out;
+            box-shadow: 0 0 8px var(--accent-glow);
+        }
+
+        .reader-header {
+            background-color: rgba(var(--bg-secondary), 0.85);
+            padding: 0.8rem 2rem;
+            position: sticky;
+            top: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--text-secondary);
+            z-index: 100;
+            gap: 1rem;
+            backdrop-filter: blur(12px);
+        }
+
+        .reader-title {
+            background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin: 0;
+            font-size: 1.2rem;
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .back-link {
+            color: var(--accent);
+            text-decoration: none;
+            position: relative;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            background: none;
+            padding: 0;
+            border-radius: 0;
+            box-shadow: none;
+        }
+
+        .back-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-start), var(--accent-end));
+            transition: width 0.3s ease;
+        }
+
+        .back-link:hover::after {
+            width: 100%;
+        }
+
+        .back-link:hover {
+            transform: translateX(-3px);
+            color: var(--accent-hover);
+        }
+
+        .dl-button {
+            background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .dl-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px var(--accent-glow);
+            filter: brightness(1.05);
+        }
+
+        .text-content-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 2rem 4rem;
+            position: relative;
+            z-index: 1;
+            animation: contentSlideUp 0.5s ease-out;
+        }
+
+        @keyframes contentSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .markdown-body {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .markdown-body h1 {
+            font-size: 2rem;
+            margin: 1.5rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent);
+            color: var(--accent);
+        }
+        .markdown-body h2 {
+            font-size: 1.6rem;
+            margin: 1.2rem 0 0.8rem;
+            color: var(--accent);
+        }
+        .markdown-body h3 {
+            font-size: 1.3rem;
+            margin: 1rem 0 0.6rem;
+        }
+        .markdown-body p {
+            margin: 0.8rem 0;
+        }
+        .markdown-body ul, .markdown-body ol {
+            margin: 0.8rem 0;
+            padding-left: 2rem;
+        }
+        .markdown-body li {
+            margin: 0.3rem 0;
+        }
+        .markdown-body pre {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        .markdown-body code {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'Consolas', monospace;
+            font-size: 0.9em;
+        }
+        .markdown-body pre code {
+            background: none;
+            padding: 0;
+        }
+        .markdown-body blockquote {
+            border-left: 4px solid var(--accent);
+            margin: 1rem 0;
+            padding: 0.5rem 1rem;
+            background: rgba(94, 114, 228, 0.1);
+            border-radius: 0 8px 8px 0;
+        }
+        .markdown-body table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 1rem 0;
+        }
+        .markdown-body th, .markdown-body td {
+            border: 1px solid var(--text-secondary);
+            padding: 0.5rem;
+            text-align: left;
+        }
+        .markdown-body th {
+            background: rgba(94, 114, 228, 0.2);
+        }
+        .markdown-body a {
+            color: var(--accent);
+            text-decoration: none;
+            border-bottom: 1px dashed var(--accent);
+        }
+        .markdown-body a:hover {
+            color: var(--accent-hover);
+            border-bottom-style: solid;
+        }
+        .markdown-body img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        .markdown-body hr {
+            border: none;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            margin: 2rem 0;
+        }
+
+        .plain-text {
+            white-space: pre-wrap;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .theme-btn {
+            background: var(--bg-secondary);
+            border: 1px solid var(--text-secondary);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.1) rotate(15deg);
+            background: var(--accent);
+            color: white;
+        }
+
+        .font-controls {
+            display: flex;
+            background-color: var(--bg-secondary);
+            border-radius: 30px;
+            overflow: hidden;
+            border: 1px solid var(--text-secondary);
+        }
+
+        .font-btn {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: bold;
+            transition: all 0.2s ease;
+        }
+
+        .font-btn:hover {
+            background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+            color: white;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-hover);
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progress-bar"></div>
+
+    <div class="reader-header">
+        <a href="../archive.html" class="back-link">← 返回目录</a>
+        <h1 class="reader-title">妄想症_04_xty</h1>
+        <div class="header-controls">
+            <button id="theme-toggle" class="theme-btn">🌙</button>
+            <div class="font-controls">
+                <button id="font-smaller" class="font-btn">A-</button>
+                <button id="font-reset" class="font-btn">A</button>
+                <button id="font-larger" class="font-btn">A+</button>
+            </div>
+            <a href="../novels/妄想症_04_xty.pdf" class="dl-button" download>⬇️ 下载PDF</a>
+        </div>
+    </div>
+
+    <div class="text-content-container" id="text-content">
+        <p>04# 夏天y: 内心被揭露感<br />
+    王少栋和六谷回来的时候天已经差不多黑了，刚打开门，玄关、客厅都是黑的，孙悟空迎面撞过来。<br />
+    「Cen？我不知道。」<br />
+    「那我们去看看。」<br />
+    孙悟空倒完水就上楼了，半城还趴在床上，眼神恢复了几分清醒，看到孙悟空又变得空洞。<br />
+    「空哥……」<br />
+​<br />
+    Cen房间的门早就锁上了，是Cen自己过去锁的。他拉上门栓的那瞬间还在想「我逃不出去了……」。<br />
+    王少栋拉了拉门。<br />
+    「没毛。」<br />
+    「牛逼。」<br />
+    六谷看着面前锁着的门，又转了转头看看四周，然后他发现了正对着Cen门口的墙面上有一块血迹。<br />
+    「栋哥！看这个。这是血吧！」<br />
+    「牛逼啊我六谷。」<br />
+    「所以这谁的？」<br />
+    「我哪知道。」<br />
+​<br />
+    夏天y躺在床上，呼吸基本均匀了。他皱着眉头。不是他想睡，是赵子龙把他强硬放倒在床上，然后掐后颈拍背，强制关机。<br />
+    五歌还没来得及问什么，夏天y就被赵子龙关机了。<br />
+    「……」五歌捂了捂头，「所以到底什么情况？」<br />
+    「我哪知道？？」赵子龙看着睡着的夏天y，又想到到现在他还没见到过的Cen。<br />
+    「他不是你老板吗？？」<br />
+    「不是，老板怎么了？？他不跟我讲我也没办法啊……」<br />
+    「……咳、……」夏天y醒了过来。赵子龙和五歌的声音太大，他被吵醒了。<br />
+    脑子里正在安装前世记忆。<br />
+    无视风险继续安装。<br />
+    「下头y你说清楚到底发生什么了。」五歌等不了，她上前摇夏天y的肩膀。夏天y的眼眶还是红肿的，湿润的。<br />
+    「我、我有罪……我、我害了Cen……你们都知道了、你们什么都知道……我不听、我不要……」<br />
+    「你别摇他了——」赵子龙走过去，拉开五歌。<br />
+    「……」<br />
+    「王哥，我在这，你先别崩溃。」赵子龙把夏天y按回床上。<br />
+    「不、不、我……」夏天y语无伦次，他不常这样，他平时不是这样的。他从来没这样过。他平常是~~稳重~~的、~~关心员工~~的老板，不是这样的。<br />
+    「……」<br />
+    夏天y没有办法表达什么东西。<br />
+    他觉得所有人都知道了他是个十恶不赦的混蛋，所有人都知道了他犯的罪，他自己也知道，但那具体是什么？他不知道，但他相信别人知道，而且别人也不会告诉他。<br />
+    六谷和王少栋在哪？肯定在议论他……<br />
+    小橙子呢？？这个死敌，肯定也在幸灾乐祸……<br />
+    Cen……Cen肯定是因为受不了自己了……Cen也在想自己是大恶人吧……<br />
+    bc一定也知道了吧、bc肯定知道了……<br />
+    「啪。」赵子龙打了夏天y的肩膀一下，「天哥。」<br />
+    「不要！你、你……你……赵子龙，你是不是也觉得我很恶心……」夏天y彻底撕掉了他最后一层包袱，满眼都是泪光——他不是什么经常哭的人，眼睛里蓄满泪水已经是起手式——他不知道自己想得到什么答案。但潜意识会把一切答案转化为——<br />
+    「不是，你不恶心，王熠，你听我说——」<br />
+    「不要……」<br />
+    他听到的东西被自动转化成了「你就是有罪，你自己不知道你对Cen做了什么吗？」<br />
+    「我对不起、我知错了……我认罪……你不要那么冷漠地看着我……」<br />
+    赵子龙的眼神不是冷漠，只是他的常态，可能带着点无奈，但被夏天y解读为冷漠只是因为夏天y的意识容不下什么东西了。<br />
+    他只能看见自己捏造的东西——所有人都在骂他、所有人都在说「夏天y是个罪人」、所有人都在看穿他、洞悉他的内心、掰开每一半、掰碎了、然后不放回去、顺便吐口唾沫，呸一声，说「恶心」。<br />
+    五歌就在一边看着。她的表情跟赵子龙的一模一样。<br />
+    什么情况啊？！！<br />
+    「……你先在这待着，我们出去看看Cen那边，你别乱跑，别伤害自己。」赵子龙松开夏天y，语气是「求求你了」的那种。五歌跟上去。<br />
+    夏天y的内心彻底崩溃掉了。<br />
+    我被监禁了，因为我有罪。<br />
+    他们不让我自己伤害自己，因为我有罪。<br />
+    他们不让我乱跑，因为罪人不配。<br />
+    他们都知道了，我的罪。<br />
+    抽泣。不一会，就停了下来。<br />
+    夏天y不再哭了。他只是空空地躺在床上，看着天花板。他不知道自己该怎么赎罪，但<strong>他们</strong>说不让自己动。<br />
+​<br />
+    Cen的房间是锁着的。赵子龙拿好了夏天y桌上的钥匙，打开了门。<br />
+    Cen没睡，他一直警惕地看着门口。小饼干正在喵喵叫。Cen看到门口的光透进来，又开始反抗。<br />
+    「不要过来！！！」<br />
+    「Cen。」<br />
+    Cen看着赵子龙，眼睛是红肿的，面色憔悴，好像没怎么睡得着。但他确实睡了，现在的憔悴单纯因为他没法稳定心神。他不知道接下来会发生什么，这种未知最磨人，最让人伤心。<br />
+    赵子龙没说话，只是一步又一步地往前走——逼近。<br />
+    对于Cen来说，他看到的不是赵子龙这个人，而是一个黑影，那个黑影有红色的眼睛、带鳞的尾巴、黏湿的粘液，现在正在朝他一步步走来，把他逼仄到失去最后一丝呼吸的希望，然后掐住他的脖子，捏死他的生机，他想的最后一个念头是——<br />
+    他们终于要动手了，而且偏偏是现在。<br />
+    赵子龙抱起了小饼干，然后塞到Cen怀里。<br />
+    「……」<br />
+    赵子龙没说别的话。<br />
+    Cen的手在颤抖着，额头上满是冷汗。过堂风残忍地吹过，他打了个冷颤，赵子龙只是看着他，眼里是担忧，但Cen看不到。<br />
+    「喵呜——」小饼干伸了个懒腰，在Cen怀里叫了一声。<br />
+    「……她饿了。」<br />
+    「……」Cen愣愣地，他的眼神没有焦点，嘴巴里没有声音，大脑没有在转，不是那种「处理了太多东西所以宕机」，是「我还不想死但你要杀我我就认了」。<br />
+    赵子龙没多说，只是转身走了，留下一句话：「厨房里有吃的，我们都吃了。你已经两天没吃东西了，Cen。我求你。」<br />
+​<br />
+    Cen没想到这个。他的脑子还是没转起来，但是信息已经在向内灌输。<br />
+    赵子龙刚刚把猫给他了，他没杀他。他要做什么？要把自己……养到没有防备心，然后再动手？！还是说，他们早就在饭里下了毒，等我下去吃完，中毒，他们就会开始嘲笑我……<br />
+    「Cen老师，连这种低端的手段都会中招啊？」<br />
+​<br />
+    Cen起身了。生理所迫，他两天没有进一滴水，一粒米。<br />
+    反正我迟早都会死的……他们要动手，就动手吧……饭里有毒、死了就好了……<br />
+​<br />
+    他最终下楼了。不是因为「我相信赵子龙」，是因为「我饿了，我要吃东西」。<br />
+    厨房开着灯，整个客厅都开着灯，是六谷开的，六谷现在在自己房间。<br />
+    岛台上是用保温罩罩起来的菜，温度还在隐隐约约地透出来。Cen的眼神还是没有聚焦，他没有目的的盯着前方，但腿已经走到了餐桌旁。<br />
+    没有人。<br />
+    他又开始犹豫。<br />
+    有必要吗？点外卖就好了吧？出去吃也可以……但是，面前就有饭……<br />
+    可是，点外卖还要见到外卖员，外卖员会看到他的脸，而且外卖员会不会也是「他们」的人？外卖员会不会跟他们串通好了？<br />
+    而且，他们说「他们吃过了」……<br />
+​<br />
+    死了就死了。</p>
+    </div>
+
+    <script>
+        const themeToggle = document.getElementById('theme-toggle');
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            updateButtonText(savedTheme);
+        } else {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            updateButtonText('dark');
+        }
+        
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateButtonText(newTheme);
+        }
+        
+        function updateButtonText(theme) {
+            themeToggle.textContent = theme === 'dark' ? '🌙' : '☀️';
+        }
+        themeToggle.addEventListener('click', toggleTheme);
+
+        const contentContainer = document.getElementById('text-content');
+        const smallerBtn = document.getElementById('font-smaller');
+        const resetBtn = document.getElementById('font-reset');
+        const largerBtn = document.getElementById('font-larger');
+        
+        let textElement = contentContainer.querySelector('.markdown-body') || contentContainer.querySelector('.plain-text') || contentContainer;
+        
+        let fontSize = parseInt(localStorage.getItem('readerFontSize')) || 18;
+        
+        function applyFontSize() {
+            if (textElement) {
+                textElement.style.fontSize = fontSize + 'px';
+            }
+        }
+        
+        function adjustFontSize(change) {
+            fontSize += change;
+            fontSize = Math.max(14, Math.min(28, fontSize));
+            applyFontSize();
+            localStorage.setItem('readerFontSize', fontSize);
+            contentContainer.style.transform = 'scale(1.01)';
+            setTimeout(() => { contentContainer.style.transform = ''; }, 200);
+        }
+        
+        smallerBtn.addEventListener('click', () => adjustFontSize(-2));
+        largerBtn.addEventListener('click', () => adjustFontSize(2));
+        resetBtn.addEventListener('click', () => {
+            fontSize = 18;
+            applyFontSize();
+            localStorage.setItem('readerFontSize', fontSize);
+        });
+        
+        applyFontSize();
+
+        function updateProgressBar() {
+            const winScroll = document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            let scrolled = 0;
+            if (height > 0) {
+                scrolled = Math.min(100, Math.max(0, (winScroll / height) * 100));
+            }
+            document.getElementById('progress-bar').style.width = scrolled + '%';
+        }
+        
+        function saveReadingProgress() {
+            const scrollPosition = window.scrollY;
+            const pageHeight = document.body.scrollHeight - window.innerHeight;
+            if (pageHeight <= 0) return;
+            let percentage = Math.min(100, Math.max(0, Math.round((scrollPosition / pageHeight) * 100)));
+            localStorage.setItem('progress_' + window.location.pathname, percentage);
+        }
+        
+        function restoreReadingProgress() {
+            const savedProgress = localStorage.getItem('progress_' + window.location.pathname);
+            if (savedProgress && savedProgress !== '0') {
+                let progress = parseInt(savedProgress);
+                progress = Math.min(100, Math.max(0, progress));
+                setTimeout(() => {
+                    const pageHeight = document.body.scrollHeight - window.innerHeight;
+                    if (pageHeight > 0 && progress > 0 && progress < 100) {
+                        window.scrollTo({ top: (progress / 100) * pageHeight, behavior: 'smooth' });
+                        const toast = document.createElement('div');
+                        toast.textContent = `📖 已恢复至 ${progress}% 处`;
+                        toast.style.cssText = `
+                            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+                            background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+                            color: white; padding: 8px 20px; border-radius: 30px;
+                            z-index: 1000; font-size: 0.9rem; opacity: 0;
+                            transition: opacity 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+                        `;
+                        document.body.appendChild(toast);
+                        setTimeout(() => toast.style.opacity = '1', 10);
+                        setTimeout(() => {
+                            toast.style.opacity = '0';
+                            setTimeout(() => toast.remove(), 300);
+                        }, 2500);
+                    }
+                }, 200);
+            }
+        }
+        
+        let saveTimeout;
+        window.addEventListener('scroll', () => {
+            updateProgressBar();
+            clearTimeout(saveTimeout);
+            saveTimeout = setTimeout(saveReadingProgress, 800);
+        });
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            updateProgressBar();
+            restoreReadingProgress();
+        });
+    </script>
+</body>
+</html>
