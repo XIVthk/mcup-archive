@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="zh" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>妄想症_06_wsd - XVIthk Reader</title>
+    <style>
+        /* ========== 霞鹜文楷字体 ========== */
+        @import url('https://cdn.jsdelivr.net/npm/lxgw-wenkai-lite-webfont@1.1.0/style.css');
+
+        :root {
+            --bg-primary-light: #f8f9fa;
+            --bg-secondary-light: #ffffff;
+            --text-primary-light: #2c3e50;
+            --text-secondary-light: #6c757d;
+            --bg-primary-dark: #0a0e17;
+            --bg-secondary-dark: #141a26;
+            --text-primary-dark: #e6edf3;
+            --text-secondary-dark: #8b9bae;
+            --bg-primary: var(--bg-primary-dark);
+            --bg-secondary: var(--bg-secondary-dark);
+            --text-primary: var(--text-primary-dark);
+            --text-secondary: var(--text-secondary-dark);
+            --accent-start: #3498db;
+            --accent-end: #9b59b6;
+            --accent: #5e72e4;
+            --accent-hover: #6a7df4;
+            --accent-glow: rgba(94, 114, 228, 0.3);
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: var(--bg-primary-dark);
+            --bg-secondary: var(--bg-secondary-dark);
+            --text-primary: var(--text-primary-dark);
+            --text-secondary: var(--text-secondary-dark);
+        }
+
+        [data-theme="light"] {
+            --bg-primary: var(--bg-primary-light);
+            --bg-secondary: var(--bg-secondary-light);
+            --text-primary: var(--text-primary-light);
+            --text-secondary: var(--text-secondary-light);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'LXGW WenKai Lite', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+            line-height: 1.8;
+            animation: pageFade 0.4s ease-out;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        [data-theme="dark"] body {
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(52, 152, 219, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(155, 89, 182, 0.08) 0%, transparent 50%),
+                repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.01) 0px, rgba(255, 255, 255, 0.01) 2px, transparent 2px, transparent 8px),
+                linear-gradient(135deg, #0a0e17 0%, #0f1320 50%, #0a0e17 100%);
+        }
+
+        [data-theme="light"] body {
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(52, 152, 219, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(155, 89, 182, 0.05) 0%, transparent 50%),
+                repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.01) 0px, rgba(0, 0, 0, 0.01) 2px, transparent 2px, transparent 8px),
+                linear-gradient(135deg, #f8f9fa 0%, #eef2f5 100%);
+        }
+
+        [data-theme="dark"] body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background-image: radial-gradient(2px 2px at 20px 30px, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0));
+            background-size: 40px 40px;
+            background-repeat: repeat;
+            z-index: 0;
+        }
+
+        @keyframes pageFade {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-start), var(--accent-end));
+            z-index: 1001;
+            transition: width 0.1s ease-out;
+            box-shadow: 0 0 8px var(--accent-glow);
+        }
+
+        .reader-header {
+            background-color: rgba(var(--bg-secondary), 0.85);
+            padding: 0.8rem 2rem;
+            position: sticky;
+            top: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--text-secondary);
+            z-index: 100;
+            gap: 1rem;
+            backdrop-filter: blur(12px);
+        }
+
+        .reader-title {
+            background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin: 0;
+            font-size: 1.2rem;
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .back-link {
+            color: var(--accent);
+            text-decoration: none;
+            position: relative;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            background: none;
+            padding: 0;
+            border-radius: 0;
+            box-shadow: none;
+        }
+
+        .back-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-start), var(--accent-end));
+            transition: width 0.3s ease;
+        }
+
+        .back-link:hover::after {
+            width: 100%;
+        }
+
+        .back-link:hover {
+            transform: translateX(-3px);
+            color: var(--accent-hover);
+        }
+
+        .dl-button {
+            background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .dl-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px var(--accent-glow);
+            filter: brightness(1.05);
+        }
+
+        .text-content-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 2rem 4rem;
+            position: relative;
+            z-index: 1;
+            animation: contentSlideUp 0.5s ease-out;
+        }
+
+        @keyframes contentSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .markdown-body {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .markdown-body h1 {
+            font-size: 2rem;
+            margin: 1.5rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent);
+            color: var(--accent);
+        }
+        .markdown-body h2 {
+            font-size: 1.6rem;
+            margin: 1.2rem 0 0.8rem;
+            color: var(--accent);
+        }
+        .markdown-body h3 {
+            font-size: 1.3rem;
+            margin: 1rem 0 0.6rem;
+        }
+        .markdown-body p {
+            margin: 0.8rem 0;
+        }
+        .markdown-body ul, .markdown-body ol {
+            margin: 0.8rem 0;
+            padding-left: 2rem;
+        }
+        .markdown-body li {
+            margin: 0.3rem 0;
+        }
+        .markdown-body pre {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        .markdown-body code {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'Consolas', monospace;
+            font-size: 0.9em;
+        }
+        .markdown-body pre code {
+            background: none;
+            padding: 0;
+        }
+        .markdown-body blockquote {
+            border-left: 4px solid var(--accent);
+            margin: 1rem 0;
+            padding: 0.5rem 1rem;
+            background: rgba(94, 114, 228, 0.1);
+            border-radius: 0 8px 8px 0;
+        }
+        .markdown-body table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 1rem 0;
+        }
+        .markdown-body th, .markdown-body td {
+            border: 1px solid var(--text-secondary);
+            padding: 0.5rem;
+            text-align: left;
+        }
+        .markdown-body th {
+            background: rgba(94, 114, 228, 0.2);
+        }
+        .markdown-body a {
+            color: var(--accent);
+            text-decoration: none;
+            border-bottom: 1px dashed var(--accent);
+        }
+        .markdown-body a:hover {
+            color: var(--accent-hover);
+            border-bottom-style: solid;
+        }
+        .markdown-body img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        .markdown-body hr {
+            border: none;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            margin: 2rem 0;
+        }
+
+        .plain-text {
+            white-space: pre-wrap;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .theme-btn {
+            background: var(--bg-secondary);
+            border: 1px solid var(--text-secondary);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.1) rotate(15deg);
+            background: var(--accent);
+            color: white;
+        }
+
+        .font-controls {
+            display: flex;
+            background-color: var(--bg-secondary);
+            border-radius: 30px;
+            overflow: hidden;
+            border: 1px solid var(--text-secondary);
+        }
+
+        .font-btn {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: bold;
+            transition: all 0.2s ease;
+        }
+
+        .font-btn:hover {
+            background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+            color: white;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-hover);
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progress-bar"></div>
+
+    <div class="reader-header">
+        <a href="../archive.html" class="back-link">← 返回目录</a>
+        <h1 class="reader-title">妄想症_06_wsd</h1>
+        <div class="header-controls">
+            <button id="theme-toggle" class="theme-btn">🌙</button>
+            <div class="font-controls">
+                <button id="font-smaller" class="font-btn">A-</button>
+                <button id="font-reset" class="font-btn">A</button>
+                <button id="font-larger" class="font-btn">A+</button>
+            </div>
+            <a href="../novels/妄想症_06_wsd.pdf" class="dl-button" download>⬇️ 下载PDF</a>
+        </div>
+    </div>
+
+    <div class="text-content-container" id="text-content">
+        <p>06# 王少栋: 疑病妄想<br />
+    半城醒来的时候，窗外有阳光透进来，照到他的头发上，和眼睛上，他下意识地躲开了阳光——阳光是无知无情的，他揉了揉异色的眼睛，轻轻站起来。<br />
+    他感觉自己好久没站起来过了，现在站起来也是在被什么东西操控着站起来。自己像是玩家操控的小人正在觉醒自我意识。<br />
+    孙悟空不在，他松了口气。他不知道自己为什么因为孙悟空不在而松了一口气，但他不想细想，因为细想就意味着他要想起昨天的事、前天的事，然后想起自己还隐隐作痛的腰——他已经想到了。<br />
+    他勉强站着。早晨八点，他拉死了窗帘。自己还在孙悟空房间，他不要。他想着：孙悟空一定控制了自己。<br />
+    他不要再被控制了。<br />
+    半城回了自己房间，照了照镜子。头发还是乱糟糟的，眼睛还是无神，聚焦在虚空，脑子不会停转。<br />
+    反抗也是被控制的吧。<br />
+    这一切都是被设定好的程序吧。<br />
+    自己只是一个内存，在被运行吧。<br />
+    他扯开自己的衣服——卫衣，他常穿的卫衣，换上了面料舒适的睡衣。他不知道自己到底是不是在被操控，还是说孙悟空连他穿什么衣服都控制好了。<br />
+​<br />
+    王少栋刚醒没多久。<br />
+    他这几天不对劲，刚搬完家，累，他自己也知道自己有点激动，因为终于能见到Cen老师了。他自己感受这几天心跳都有点快，每天都是在不同时间，他会突然听到自己的心跳声，跳得很快。<br />
+    今天早上起来，他下楼拿了一根水银体温计，五分钟。<br />
+    36.5，没发烧，他也不像发烧的样子，但他就是觉得头很晕。他不想信体温计，因为水银体温计这种依靠热胀冷缩的东西太不稳定。<br />
+    是不是忘记甩了。<br />
+    他甩了甩，又测了一次，36.4。<br />
+    是不是不准。<br />
+    他换了一根新的，又测了一次，36.5。<br />
+    但他真的很头晕。会不会根本不是发烧。<br />
+    他开始上网查。<br />
+    「头晕心跳快是什么病？」<br />
+    「年轻人猝死前兆：……」<br />
+    「你离猝死还有多远？」<br />
+    「我就是这样，后来查出来……」<br />
+    「出现这几种情况，说明你……」<br />
+    他放下手机，起身去倒了杯水。<br />
+    「王少栋，你醒了？醒这么早。」<br />
+    「啊，zzl。」<br />
+    「你怎么了？？头上全是汗。」赵子龙的声音里带着疲惫。Cen赶他走，夏天y头上打绷带，现在王少栋也开始了吗。<br />
+    「……没事，我没事。」王少栋略微有些轻喘，但他没说出来什么。他不想让赵子龙再担心了，赵子龙看着更加难受。<br />
+    「……嗯。」<br />
+​<br />
+    [私聊] 王少栋 &lt;-&gt; 六谷<br />
+    王少栋: 杰哥我难受<br />
+    六谷: ？？<br />
+    王少栋: ……<br />
+    六谷: 我来看看你？<br />
+    王少栋: 我在楼下 但我想先上去了<br />
+    六谷: 没事我在你房间等你<br />
+​<br />
+    六谷在三秒之前还躺在床上。他正在刷Bilibili，看半城新发的视频，哈哈笑٩(ˊᗜˋ*)و。<br />
+    三秒后，他已经披好了睡衣，拉开房门，头转了转左右看了看，然后跑到王少栋的房间。<br />
+    王少栋过了一分钟才上来，他把刚倒的那杯水喝完了。<br />
+    六谷扑到王少栋背上：「咋了啊？」<br />
+    「头晕，心跳快。」<br />
+    「去医院看看？」<br />
+    「我不知道。」<br />
+    「？？」六谷显然没理解「我不知道」是什么回答。<br />
+    「……就是，……」王少栋不知道该怎么表达。他害怕真查出来了什么东西，又害怕查不出什么。<br />
+    六谷从背后抱住他，手臂轻轻缠住他的腰，让王少栋知道他在这里。六谷不理解王少栋现在怎么了，但他看着王少栋的样子确实不是很好。<br />
+    「……那先休息会。」<br />
+    「……我是不是该吃药。」<br />
+    「我不知道啊。我也不是医学系的。」<br />
+    「……」王少栋欲言又止。<br />
+    六谷身上是温暖的，没什么特殊的味道，但是王少栋没法从这诡异的温暖里汲取任何安心。他感觉自己真的病了。他昏昏沉沉的，但不是被迷晕的那种，是头脑自己在发昏。<br />
+    六谷不知道王少栋在想什么，他没有读心术，他只知道栋哥现在不好受。<br />
+    「六谷……我生病了……」<br />
+    「……」六谷摸了摸王少栋的额头，不烫，甚至比他自己的微微冷了些。<br />
+    「帮我量下血压吧……谷神，我心跳好快。」<br />
+    「……我去拿。」<br />
+    六谷跑下楼去，赵子龙还坐在沙发上，看着六谷跑来跑去翻来翻去。「找啥？」<br />
+    「龙哥，我找血压计。」<br />
+    「？？血压计？王少栋怎么了？」<br />
+    「我不知道啊，他就说自己心跳有点快，想量一下血压。」<br />
+    「哦，我给你拿吧。」<br />
+    赵子龙站起身来，从电视上面的柜子深处掏出一个血压计，是气压式的，手动型。<br />
+    「这个准。你去帮他测下，我看他今天早上确实不对劲。我还得去看看王哥。」<br />
+    「王哥？他昨天吃饭了吗？」<br />
+    「吃了，你们上去之后下来吃的。」<br />
+    「啊？他不跟我们一起吃？」<br />
+    「不知道。你先去量吧。」<br />
+    「哦哦。」<br />
+    六谷拿着血压计上楼。打开门，王少栋正在床上迷迷糊糊，勉强地坐着。被声音惊了一下，看到门口是六谷又缓缓迷糊过去。<br />
+    「血压计，测一下。」六谷掀起王少栋的衣袖，把袋子绑上，手里拿着气泵，戴着听诊器。<br />
+    「好紧……六谷、……」<br />
+    「马上测完了。」<br />
+    「……」<br />
+    「130/65，挺正常的啊。你要不睡会？」<br />
+    「不对、我现在能听到我的心跳。」<br />
+    王少栋眼眶是红的，他能听见自己体内的东西在跟他的全身共振，控诉着他一点一滴的「日积月累」，并且嘲讽他「你看，现在要猝死了吧。」<br />
+    「你听……」王少栋把六谷的头按到自己胸口。<br />
+    「咚、咚。」速度正常，有力，不像是生病的样子，但六谷不敢说。他怕是他自己出了问题，王少栋说不定真的病了，只是自己太相信仪器或者自己的耳朵。<br />
+    「……」<br />
+    而且王少栋的样子很虚弱，太像真的病了。<br />
+    王少栋看着他，眼睛里逐渐蓄上了泪水。他记得bsh把他的直播间搞封的时候他都没哭，现在他要哭了。<br />
+    「我靠兄弟你别哭啊。」<br />
+    「六谷我要死了啊啊啊……」<br />
+    「哎呀怎么会呢。」<br />
+    「……」<br />
+​<br />
+    夏天y的精神好多了，他昨天吃了东西，久未摄入营养的身体突然吃下了东西会让他困意更加，现在躺在床上还在睡，而且不是眉头皱着的那种睡。<br />
+    赵子龙打开他的房门，夏天y就睁开了眼睛。他的睡眠不算深，也不算浅，但他的内心还觉得自己不配如此安心的睡下，于是强硬地让他的睡眠更加脆弱。<br />
+    「王哥，醒了？」<br />
+    「嗯。」<br />
+    「想吃什么？」<br />
+    「……你问我吗？」<br />
+    赵子龙东张西望了几秒：「这里还有其他人吗？」<br />
+    「我……我不吃。」<br />
+    「不行。」<br />
+    夏天y没说出来话，他自己觉得昨天吃了东西已是不被允许的了，今天怎么还配说自己想吃什么？而且他确实没什么想吃的东西，也可能是心理作用让他不配想吃任何东西。<br />
+    「赵子龙你别……」<br />
+    「……」赵子龙凝视着夏天y，不允许他再说任何一个「不」。<br />
+​<br />
+    Cen醒了。他早醒了。别墅的隔音很好，但窗户很薄，他早上起来只听见了鸟在窗外叽叽叫，和小饼干的喵喵。<br />
+    他起身，把门打开。<br />
+    他知道昨天自己吃了东西，现在还没死，他不知道是不是侥幸。<br />
+​<br />
+    「……Cen吃早饭了吗？」<br />
+    「Cen？他还没醒吧……？你先说你要吃什么。」<br />
+    「……我真的不知道。你先去问Cen。」<br />
+    「……你最好是。」<br />
+    赵子龙刚打开门，就看见了Cen在前面。<br />
+    「呃，Cen老师你醒了啊。」<br />
+    「……啊。」Cen刚刚听到了夏天y问他吃没吃，而且他们在讨论的东西是吃饭，不是毒药。他们没在害他，Cen自己都不知道这个念头能持续多久。<br />
+    「你……你想吃什么？」<br />
+    「……不知道。」<br />
+    Cen还是没办法面对谁，他转身又回了房间。他不敢，因为赵子龙在他面前还是那个带红色眼睛的黑影，他不敢看。<br />
+    ……可是他们好像没要害我。<br />
+    真的吗。</p>
+    </div>
+
+    <script>
+        const themeToggle = document.getElementById('theme-toggle');
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            updateButtonText(savedTheme);
+        } else {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            updateButtonText('dark');
+        }
+        
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateButtonText(newTheme);
+        }
+        
+        function updateButtonText(theme) {
+            themeToggle.textContent = theme === 'dark' ? '🌙' : '☀️';
+        }
+        themeToggle.addEventListener('click', toggleTheme);
+
+        const contentContainer = document.getElementById('text-content');
+        const smallerBtn = document.getElementById('font-smaller');
+        const resetBtn = document.getElementById('font-reset');
+        const largerBtn = document.getElementById('font-larger');
+        
+        let textElement = contentContainer.querySelector('.markdown-body') || contentContainer.querySelector('.plain-text') || contentContainer;
+        
+        let fontSize = parseInt(localStorage.getItem('readerFontSize')) || 18;
+        
+        function applyFontSize() {
+            if (textElement) {
+                textElement.style.fontSize = fontSize + 'px';
+            }
+        }
+        
+        function adjustFontSize(change) {
+            fontSize += change;
+            fontSize = Math.max(14, Math.min(28, fontSize));
+            applyFontSize();
+            localStorage.setItem('readerFontSize', fontSize);
+            contentContainer.style.transform = 'scale(1.01)';
+            setTimeout(() => { contentContainer.style.transform = ''; }, 200);
+        }
+        
+        smallerBtn.addEventListener('click', () => adjustFontSize(-2));
+        largerBtn.addEventListener('click', () => adjustFontSize(2));
+        resetBtn.addEventListener('click', () => {
+            fontSize = 18;
+            applyFontSize();
+            localStorage.setItem('readerFontSize', fontSize);
+        });
+        
+        applyFontSize();
+
+        function updateProgressBar() {
+            const winScroll = document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            let scrolled = 0;
+            if (height > 0) {
+                scrolled = Math.min(100, Math.max(0, (winScroll / height) * 100));
+            }
+            document.getElementById('progress-bar').style.width = scrolled + '%';
+        }
+        
+        function saveReadingProgress() {
+            const scrollPosition = window.scrollY;
+            const pageHeight = document.body.scrollHeight - window.innerHeight;
+            if (pageHeight <= 0) return;
+            let percentage = Math.min(100, Math.max(0, Math.round((scrollPosition / pageHeight) * 100)));
+            localStorage.setItem('progress_' + window.location.pathname, percentage);
+        }
+        
+        function restoreReadingProgress() {
+            const savedProgress = localStorage.getItem('progress_' + window.location.pathname);
+            if (savedProgress && savedProgress !== '0') {
+                let progress = parseInt(savedProgress);
+                progress = Math.min(100, Math.max(0, progress));
+                setTimeout(() => {
+                    const pageHeight = document.body.scrollHeight - window.innerHeight;
+                    if (pageHeight > 0 && progress > 0 && progress < 100) {
+                        window.scrollTo({ top: (progress / 100) * pageHeight, behavior: 'smooth' });
+                        const toast = document.createElement('div');
+                        toast.textContent = `📖 已恢复至 ${progress}% 处`;
+                        toast.style.cssText = `
+                            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+                            background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+                            color: white; padding: 8px 20px; border-radius: 30px;
+                            z-index: 1000; font-size: 0.9rem; opacity: 0;
+                            transition: opacity 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+                        `;
+                        document.body.appendChild(toast);
+                        setTimeout(() => toast.style.opacity = '1', 10);
+                        setTimeout(() => {
+                            toast.style.opacity = '0';
+                            setTimeout(() => toast.remove(), 300);
+                        }, 2500);
+                    }
+                }, 200);
+            }
+        }
+        
+        let saveTimeout;
+        window.addEventListener('scroll', () => {
+            updateProgressBar();
+            clearTimeout(saveTimeout);
+            saveTimeout = setTimeout(saveReadingProgress, 800);
+        });
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            updateProgressBar();
+            restoreReadingProgress();
+        });
+    </script>
+</body>
+</html>
