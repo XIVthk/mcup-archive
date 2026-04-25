@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="zh" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>妄想症_07_re01 - XVIthk Reader</title>
+    <style>
+        /* ========== 霞鹜文楷字体 ========== */
+        @import url('https://cdn.jsdelivr.net/npm/lxgw-wenkai-lite-webfont@1.1.0/style.css');
+
+        :root {
+            --bg-primary-light: #f8f9fa;
+            --bg-secondary-light: #ffffff;
+            --text-primary-light: #2c3e50;
+            --text-secondary-light: #6c757d;
+            --bg-primary-dark: #0a0e17;
+            --bg-secondary-dark: #141a26;
+            --text-primary-dark: #e6edf3;
+            --text-secondary-dark: #8b9bae;
+            --bg-primary: var(--bg-primary-dark);
+            --bg-secondary: var(--bg-secondary-dark);
+            --text-primary: var(--text-primary-dark);
+            --text-secondary: var(--text-secondary-dark);
+            --accent-start: #3498db;
+            --accent-end: #9b59b6;
+            --accent: #5e72e4;
+            --accent-hover: #6a7df4;
+            --accent-glow: rgba(94, 114, 228, 0.3);
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: var(--bg-primary-dark);
+            --bg-secondary: var(--bg-secondary-dark);
+            --text-primary: var(--text-primary-dark);
+            --text-secondary: var(--text-secondary-dark);
+        }
+
+        [data-theme="light"] {
+            --bg-primary: var(--bg-primary-light);
+            --bg-secondary: var(--bg-secondary-light);
+            --text-primary: var(--text-primary-light);
+            --text-secondary: var(--text-secondary-light);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'LXGW WenKai Lite', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+            line-height: 1.8;
+            animation: pageFade 0.4s ease-out;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        [data-theme="dark"] body {
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(52, 152, 219, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(155, 89, 182, 0.08) 0%, transparent 50%),
+                repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.01) 0px, rgba(255, 255, 255, 0.01) 2px, transparent 2px, transparent 8px),
+                linear-gradient(135deg, #0a0e17 0%, #0f1320 50%, #0a0e17 100%);
+        }
+
+        [data-theme="light"] body {
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(52, 152, 219, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(155, 89, 182, 0.05) 0%, transparent 50%),
+                repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.01) 0px, rgba(0, 0, 0, 0.01) 2px, transparent 2px, transparent 8px),
+                linear-gradient(135deg, #f8f9fa 0%, #eef2f5 100%);
+        }
+
+        [data-theme="dark"] body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background-image: radial-gradient(2px 2px at 20px 30px, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0));
+            background-size: 40px 40px;
+            background-repeat: repeat;
+            z-index: 0;
+        }
+
+        @keyframes pageFade {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-start), var(--accent-end));
+            z-index: 1001;
+            transition: width 0.1s ease-out;
+            box-shadow: 0 0 8px var(--accent-glow);
+        }
+
+        .reader-header {
+            background-color: rgba(var(--bg-secondary), 0.85);
+            padding: 0.8rem 2rem;
+            position: sticky;
+            top: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--text-secondary);
+            z-index: 100;
+            gap: 1rem;
+            backdrop-filter: blur(12px);
+        }
+
+        .reader-title {
+            background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin: 0;
+            font-size: 1.2rem;
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .back-link {
+            color: var(--accent);
+            text-decoration: none;
+            position: relative;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            background: none;
+            padding: 0;
+            border-radius: 0;
+            box-shadow: none;
+        }
+
+        .back-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-start), var(--accent-end));
+            transition: width 0.3s ease;
+        }
+
+        .back-link:hover::after {
+            width: 100%;
+        }
+
+        .back-link:hover {
+            transform: translateX(-3px);
+            color: var(--accent-hover);
+        }
+
+        .dl-button {
+            background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .dl-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px var(--accent-glow);
+            filter: brightness(1.05);
+        }
+
+        .text-content-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 2rem 4rem;
+            position: relative;
+            z-index: 1;
+            animation: contentSlideUp 0.5s ease-out;
+        }
+
+        @keyframes contentSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .markdown-body {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .markdown-body h1 {
+            font-size: 2rem;
+            margin: 1.5rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent);
+            color: var(--accent);
+        }
+        .markdown-body h2 {
+            font-size: 1.6rem;
+            margin: 1.2rem 0 0.8rem;
+            color: var(--accent);
+        }
+        .markdown-body h3 {
+            font-size: 1.3rem;
+            margin: 1rem 0 0.6rem;
+        }
+        .markdown-body p {
+            margin: 0.8rem 0;
+        }
+        .markdown-body ul, .markdown-body ol {
+            margin: 0.8rem 0;
+            padding-left: 2rem;
+        }
+        .markdown-body li {
+            margin: 0.3rem 0;
+        }
+        .markdown-body pre {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        .markdown-body code {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'Consolas', monospace;
+            font-size: 0.9em;
+        }
+        .markdown-body pre code {
+            background: none;
+            padding: 0;
+        }
+        .markdown-body blockquote {
+            border-left: 4px solid var(--accent);
+            margin: 1rem 0;
+            padding: 0.5rem 1rem;
+            background: rgba(94, 114, 228, 0.1);
+            border-radius: 0 8px 8px 0;
+        }
+        .markdown-body table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 1rem 0;
+        }
+        .markdown-body th, .markdown-body td {
+            border: 1px solid var(--text-secondary);
+            padding: 0.5rem;
+            text-align: left;
+        }
+        .markdown-body th {
+            background: rgba(94, 114, 228, 0.2);
+        }
+        .markdown-body a {
+            color: var(--accent);
+            text-decoration: none;
+            border-bottom: 1px dashed var(--accent);
+        }
+        .markdown-body a:hover {
+            color: var(--accent-hover);
+            border-bottom-style: solid;
+        }
+        .markdown-body img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        .markdown-body hr {
+            border: none;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            margin: 2rem 0;
+        }
+
+        .plain-text {
+            white-space: pre-wrap;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .theme-btn {
+            background: var(--bg-secondary);
+            border: 1px solid var(--text-secondary);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.1) rotate(15deg);
+            background: var(--accent);
+            color: white;
+        }
+
+        .font-controls {
+            display: flex;
+            background-color: var(--bg-secondary);
+            border-radius: 30px;
+            overflow: hidden;
+            border: 1px solid var(--text-secondary);
+        }
+
+        .font-btn {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: bold;
+            transition: all 0.2s ease;
+        }
+
+        .font-btn:hover {
+            background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+            color: white;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-hover);
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progress-bar"></div>
+
+    <div class="reader-header">
+        <a href="../archive.html" class="back-link">← 返回目录</a>
+        <h1 class="reader-title">妄想症_07_re01</h1>
+        <div class="header-controls">
+            <button id="theme-toggle" class="theme-btn">🌙</button>
+            <div class="font-controls">
+                <button id="font-smaller" class="font-btn">A-</button>
+                <button id="font-reset" class="font-btn">A</button>
+                <button id="font-larger" class="font-btn">A+</button>
+            </div>
+            <a href="../novels/妄想症_07_re01.pdf" class="dl-button" download>⬇️ 下载PDF</a>
+        </div>
+    </div>
+
+    <div class="text-content-container" id="text-content">
+        <p>07# ♮C<br />
+    Cen的房间，冷、像冰块，床上原本是方块的被子现在早已被妄想蹂躏的失去了形状的规则，Cen没有坐在床上，他拉好窗帘，怕向窗外一看又看到<strong>那个</strong>身影，于是只好坐在窗边，面对窗帘和漆黑的房间——窗帘不透光——吞下所有的情绪，干燥，味同嚼蜡——<br />
+    ——难以下咽。<br />
+    想法不受控制，但他在尝试控制想法不要超出那个他早就尝试划定的的圆圈，即使在很久之前那个边界就已经被漆黑的影子覆盖。<br />
+    所以想法在朝外肆意地分散着，Cen尝到了嘴中的腥甜，又想起<strong>那个</strong>身影也有着猩红的眼睛，跟血一样，他正咬破嘴唇，让另一种更加剧烈的腥取代心里引起他发病的病灶，取代<strong>那个</strong>身影。<br />
+    什么是真的，什么是假的，他也不知道。<br />
+    「心理防御机制，是指个体面临挫折或冲突的紧张情境时，在其内部心理活动中具有的自觉或不自觉地解脱烦恼，减轻内心不安，以恢复心理平衡与稳定的一种适应性倾向。」<br />
+    房间正中间——地面上，Cen感觉环境更加的逼仄，墙壁好像在朝他压来，然后剥夺空气、剥夺重力、剥夺惯性，让他失去逻辑、失去呼吸、失去判断一切的能力，再逐渐将听觉、触觉擦掉，最后变成一个点，活在平面上的一个点。<br />
+    Cen觉得自己马上要晕过去了，因为他的意识正在跟虚拟搏斗。就待在舒适圈里，忘掉<strong>那些</strong>东西吧，忘掉<strong>那个</strong>人吧，活在有穷尽的自由里不好吗，这<strong>世界</strong>没有你想的那么美好。<br />
+    待在<strong>病</strong>里不好吗？<br />
+​<br />
+<strong>还是说，你想回到这个到处都是遮不住的伤疤的世界？</strong><br />
+​<br />
+    Cen流下一滴眼泪，但他自己都没察觉到自己正在流泪。他不想这样的，他是无意识地，被动地在讨厌所有人，在害怕所有人。他还记得之前的自己是对谁都不设防的那个人，为何现在意识正在为他筑起一道不见任何人的防护墙，他不要，这是囚牢，不是保护。<br />
+    人不能违背自己的想法或意志，这是他自己产生的念头，是他经受了折磨、刺激，大脑自己诞生的，那个念头的名字叫妄想。妄想自己正在被所有人针对，妄想赵子龙端来的食物都是下过毒的，妄想所有关心都是假的，所有微笑都是虚假的，妄想所有东西都是害他的，利它的。<br />
+    不要，他要自己拆掉这堵墙，用梯子，爬上去，然后把每块砖头一块一块拆掉，即使他知道<strong>它</strong>会一块一块地补上，生长，最后在墙上缠上砍不断的藤蔓，但他要做，他要做不知道一切的人，他要做西西弗斯。<br />
+    他拉开窗帘，允许阳光照进房间。阳光什么都不知道，但它会从斜上方——更像是早上的角度，从光源的地方——射出来，射进Cen的房间，照亮潜意识的深处，照亮床上的被子，那团乱麻，两团乱麻。<br />
+    窗帘开的不大，但光路永远是自由的，不需要三十厘米，三厘米就够一缕阳光从任何地方照进来，替换房间里原本的黑暗，把Cen原本划定的边界照的更加清晰。<br />
+    昒爽已晞，Cen趴在玻璃上，看着窗外的蓝天。<br />
+    这世界从来没有完美过，这世界上也从来没有完美的地方。<br />
+    哪里没有罪恶，哪里没有孽畜，哪里没有失落。哪里都是不安，哪里都是危险。<br />
+​<br />
+    三十六摄氏度的体温，固体在逐渐溶解，温度到了就会烤干眼泪，融化坚冰，让<strong>它</strong>出现崩裂。名为<strong>恐惧</strong>的毒液正在腐蚀掉一切，Cen站在孤岛上维持着生命与气息，直到他发现水其实并不深，毒液其实不会腐蚀什么，只是他看到的一切被腐蚀了，其实站在水里不会被淹死，也没有人平白无故想要杀死自己。<br />
+    他看着自己的手，是细腻的、人的、是他的手。<br />
+    还怕吗。<br />
+    他走到门口，手搭在门把上，颤抖阻止了他打开房门这个动作，他的一部分在告诉他：不要打开。他还是怕。「知道自己怕」不会自己变成「不怕」。<br />
+    他没开门，手放了下来，环顾几圈，桌上摆着的那个方块头套好像嘴角勾起了几个像素，Cen看着那个头套——他的皮肤一直是那个——却有一股莫名的陌生感。<br />
+    他才想起来自己已经许久没有更新过了，对外的光鲜亮丽和内在自我的腐败大相径庭，他不知道他自己在想什么了，但是BadCen这个名字和他本人已经彻底的分离开了，对他自己来说。<br />
+​<br />
+    十点钟，门外的世界变得更加喧闹了起来，但又不如平时。小橙子她们起来了，正在楼下的沙发上坐着聊天，聊今天去哪里逛逛，吃点什么，还有没有什么题材好录的。<br />
+    Cen不知道该不该出去，他不敢出去，他怕迎面撞上的又是那个黑色的、带粘液的、让他生理性恶心、难受的身影，也不知道自己看待其他人会是什么身影，或许对谁都是那副模样，只是赵子龙给了他「我是龙所以我有尾巴」的错觉。<br />
+    他还记得自己因为害怕攻击了夏天y，但他不知道夏天y是什么情况，只听到夏天y刚刚草草的一句「Cen吃早饭了吗」——他在关心自己，而且是在自己撞了他之后。Cen不知道夏天y是怎样看待他，怎样对他自己。<br />
+    当时他看到的夏天y也是黑色的影子。<br />
+    要出去吗？他不想，他害怕，他知道自己在害怕，他知道自己的害怕原本是不应该有的，他也知道这些害怕的源头到底是什么。<br />
+    就当是好奇。<br />
+    他的手放到门把上的时候，依然是颤抖的，不敢扭开的，但他还是尽力按了按门把。<br />
+    「呼……」他穿着卫衣，外面还套了一件黑色的冲锋衣，温暖让他更有了些安全感，至少「自己还是自己」这个事实被稳稳地按在心里不会变。<br />
+​<br />
+    半城已经好了些。他没见到孙悟空，孙悟空没有到他的房间来，他待在自己房间。<br />
+    他站起身，又坐下去。现在的我是否也被控制着？现在的我遵从的到底是谁的意愿？现在的我……有没有什么真正的愿望？<br />
+    没有。孙悟空会控制他的一切。<br />
+    他想的唯一反抗办法是不看孙悟空，只怕这也是孙悟空的自导自演，故意让自己避开他。<br />
+    「bc。」<br />
+    孙悟空站在门口。他打开了bc的门，看着bc。<br />
+​<br />
+    孙悟空原本坐在房间里。他只是去洗漱，回来就发现bc不见了，空留还保留着一些体温的床铺。<br />
+    「让bc……回来。」<br />
+    他等了十分钟、二十分钟。<br />
+    bc没回来，他没有从门口看到那个他熟悉的紫色身影，于是他想「是我让他——」<br />
+    ……<br />
+    对，是我让他不回来的。<br />
+​<br />
+    其实你根本不想拒绝他吧，张振苏。不然为什么你没有在第一时间跟他说「你不要再控制我了」。半城对自己说。<br />
+    他想不想拒绝孙悟空？这是他第一次陷入思考。<br />
+    孙悟空是什么？是控制他的人，是坏人，是为了得到他可以无限恶劣，用尽一切办法的人。<br />
+    不是不想拒绝他，是「拒绝」这个功能早就被那个控制他的人剥夺了。<br />
+    他没法拒绝。<br />
+    或者说，他根本没产生过那个念头。他根本<strong>没被允许</strong>产生那个念头。<br />
+    孙悟空怎么会控制自己离开他。<br />
+    那现在呢。<br />
+    所以你坦白吧，张振苏，你根本不想拒绝他。<br />
+<strong>你根本连「拒绝」这个词都不会拼写，特别是对他。</strong><br />
+<strong>你只是在逃避这一切，于是把这一切——你对他的一切，他对你的一切都翻译成病，把自己粉饰成受害者，让你更名正言顺地去喜欢他，这样你就可以把自己解读为一个被迫的、被违背志愿的人。</strong><br />
+<strong>好受吗张振苏，把自己放在这样圣母的位置。</strong><br />
+​<br />
+    「……空哥。」<br />
+    「bc。」他又说了一次。<br />
+    「我不知道我怎么了。」<br />
+    「……」</p>
+    </div>
+
+    <script>
+        const themeToggle = document.getElementById('theme-toggle');
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            updateButtonText(savedTheme);
+        } else {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            updateButtonText('dark');
+        }
+        
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateButtonText(newTheme);
+        }
+        
+        function updateButtonText(theme) {
+            themeToggle.textContent = theme === 'dark' ? '🌙' : '☀️';
+        }
+        themeToggle.addEventListener('click', toggleTheme);
+
+        const contentContainer = document.getElementById('text-content');
+        const smallerBtn = document.getElementById('font-smaller');
+        const resetBtn = document.getElementById('font-reset');
+        const largerBtn = document.getElementById('font-larger');
+        
+        let textElement = contentContainer.querySelector('.markdown-body') || contentContainer.querySelector('.plain-text') || contentContainer;
+        
+        let fontSize = parseInt(localStorage.getItem('readerFontSize')) || 18;
+        
+        function applyFontSize() {
+            if (textElement) {
+                textElement.style.fontSize = fontSize + 'px';
+            }
+        }
+        
+        function adjustFontSize(change) {
+            fontSize += change;
+            fontSize = Math.max(14, Math.min(28, fontSize));
+            applyFontSize();
+            localStorage.setItem('readerFontSize', fontSize);
+            contentContainer.style.transform = 'scale(1.01)';
+            setTimeout(() => { contentContainer.style.transform = ''; }, 200);
+        }
+        
+        smallerBtn.addEventListener('click', () => adjustFontSize(-2));
+        largerBtn.addEventListener('click', () => adjustFontSize(2));
+        resetBtn.addEventListener('click', () => {
+            fontSize = 18;
+            applyFontSize();
+            localStorage.setItem('readerFontSize', fontSize);
+        });
+        
+        applyFontSize();
+
+        function updateProgressBar() {
+            const winScroll = document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            let scrolled = 0;
+            if (height > 0) {
+                scrolled = Math.min(100, Math.max(0, (winScroll / height) * 100));
+            }
+            document.getElementById('progress-bar').style.width = scrolled + '%';
+        }
+        
+        function saveReadingProgress() {
+            const scrollPosition = window.scrollY;
+            const pageHeight = document.body.scrollHeight - window.innerHeight;
+            if (pageHeight <= 0) return;
+            let percentage = Math.min(100, Math.max(0, Math.round((scrollPosition / pageHeight) * 100)));
+            localStorage.setItem('progress_' + window.location.pathname, percentage);
+        }
+        
+        function restoreReadingProgress() {
+            const savedProgress = localStorage.getItem('progress_' + window.location.pathname);
+            if (savedProgress && savedProgress !== '0') {
+                let progress = parseInt(savedProgress);
+                progress = Math.min(100, Math.max(0, progress));
+                setTimeout(() => {
+                    const pageHeight = document.body.scrollHeight - window.innerHeight;
+                    if (pageHeight > 0 && progress > 0 && progress < 100) {
+                        window.scrollTo({ top: (progress / 100) * pageHeight, behavior: 'smooth' });
+                        const toast = document.createElement('div');
+                        toast.textContent = `📖 已恢复至 ${progress}% 处`;
+                        toast.style.cssText = `
+                            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+                            background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+                            color: white; padding: 8px 20px; border-radius: 30px;
+                            z-index: 1000; font-size: 0.9rem; opacity: 0;
+                            transition: opacity 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+                        `;
+                        document.body.appendChild(toast);
+                        setTimeout(() => toast.style.opacity = '1', 10);
+                        setTimeout(() => {
+                            toast.style.opacity = '0';
+                            setTimeout(() => toast.remove(), 300);
+                        }, 2500);
+                    }
+                }, 200);
+            }
+        }
+        
+        let saveTimeout;
+        window.addEventListener('scroll', () => {
+            updateProgressBar();
+            clearTimeout(saveTimeout);
+            saveTimeout = setTimeout(saveReadingProgress, 800);
+        });
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            updateProgressBar();
+            restoreReadingProgress();
+        });
+    </script>
+</body>
+</html>
