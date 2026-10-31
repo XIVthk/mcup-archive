@@ -1,34 +1,39 @@
 {
   "novels": [
     {
-      "file_name": "BC有感觉吗_1.txt",
+      "file_name": "BC有感觉吗_1.md",
       "display_title": "BC有感觉吗（一） #r",
       "series": "【All BC】BC有感觉吗"
     },
     {
-      "file_name": "BC有感觉吗_2.txt",
+      "file_name": "BC有感觉吗_2.md",
       "display_title": "BC有感觉吗（二）",
       "series": "【All BC】BC有感觉吗"
     },
     {
-      "file_name": "BC有感觉吗_3.txt",
+      "file_name": "BC有感觉吗_3.md",
       "display_title": "BC有感觉吗（三） #r",
       "series": "【All BC】BC有感觉吗"
     },
     {
-      "file_name": "BC有感觉吗_4.txt",
+      "file_name": "BC有感觉吗_4.md",
       "display_title": "BC有感觉吗（四）",
       "series": "【All BC】BC有感觉吗"
     },
     {
-      "file_name": "BC有感觉吗_5.txt",
+      "file_name": "BC有感觉吗_5.md",
       "display_title": "BC有感觉吗（五）",
       "series": "【All BC】BC有感觉吗"
     },
     {
-      "file_name": "BC有感觉吗_6.txt",
+      "file_name": "BC有感觉吗_6.md",
       "display_title": "BC有感觉吗（六）",
       "series": "【All BC】BC有感觉吗"
+    },
+    {
+      "file_name": "地下恋人就不要买同款啊.md",
+      "display_title": "【空城】地下恋人就不要买同款啊！  #无r",
+      "series": "杂文掺r"
     }
   ]
 }

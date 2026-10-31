@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="zh" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>地下恋人就不要买同款啊 - XVIthk Reader</title>
+    <style>
+        /* ========== 霞鹜文楷字体 ========== */
+        @import url('https://cdn.jsdelivr.net/npm/lxgw-wenkai-lite-webfont@1.1.0/style.css');
+
+        :root {
+            --bg-primary-light: #f8f9fa;
+            --bg-secondary-light: #ffffff;
+            --text-primary-light: #2c3e50;
+            --text-secondary-light: #6c757d;
+            --bg-primary-dark: #0a0e17;
+            --bg-secondary-dark: #141a26;
+            --text-primary-dark: #e6edf3;
+            --text-secondary-dark: #8b9bae;
+            --bg-primary: var(--bg-primary-dark);
+            --bg-secondary: var(--bg-secondary-dark);
+            --text-primary: var(--text-primary-dark);
+            --text-secondary: var(--text-secondary-dark);
+            --accent-start: #3498db;
+            --accent-end: #9b59b6;
+            --accent: #5e72e4;
+            --accent-hover: #6a7df4;
+            --accent-glow: rgba(94, 114, 228, 0.3);
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: var(--bg-primary-dark);
+            --bg-secondary: var(--bg-secondary-dark);
+            --text-primary: var(--text-primary-dark);
+            --text-secondary: var(--text-secondary-dark);
+        }
+
+        [data-theme="light"] {
+            --bg-primary: var(--bg-primary-light);
+            --bg-secondary: var(--bg-secondary-light);
+            --text-primary: var(--text-primary-light);
+            --text-secondary: var(--text-secondary-light);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'LXGW WenKai Lite', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+            line-height: 1.8;
+            animation: pageFade 0.4s ease-out;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        [data-theme="dark"] body {
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(52, 152, 219, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(155, 89, 182, 0.08) 0%, transparent 50%),
+                repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.01) 0px, rgba(255, 255, 255, 0.01) 2px, transparent 2px, transparent 8px),
+                linear-gradient(135deg, #0a0e17 0%, #0f1320 50%, #0a0e17 100%);
+        }
+
+        [data-theme="light"] body {
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(52, 152, 219, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(155, 89, 182, 0.05) 0%, transparent 50%),
+                repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.01) 0px, rgba(0, 0, 0, 0.01) 2px, transparent 2px, transparent 8px),
+                linear-gradient(135deg, #f8f9fa 0%, #eef2f5 100%);
+        }
+
+        [data-theme="dark"] body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background-image: radial-gradient(2px 2px at 20px 30px, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0));
+            background-size: 40px 40px;
+            background-repeat: repeat;
+            z-index: 0;
+        }
+
+        @keyframes pageFade {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-start), var(--accent-end));
+            z-index: 1001;
+            transition: width 0.1s ease-out;
+            box-shadow: 0 0 8px var(--accent-glow);
+        }
+
+        .reader-header {
+            background-color: rgba(var(--bg-secondary), 0.85);
+            padding: 0.8rem 2rem;
+            position: sticky;
+            top: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--text-secondary);
+            z-index: 100;
+            gap: 1rem;
+            backdrop-filter: blur(12px);
+        }
+
+        .reader-title {
+            background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin: 0;
+            font-size: 1.2rem;
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .back-link {
+            color: var(--accent);
+            text-decoration: none;
+            position: relative;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            background: none;
+            padding: 0;
+            border-radius: 0;
+            box-shadow: none;
+        }
+
+        .back-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-start), var(--accent-end));
+            transition: width 0.3s ease;
+        }
+
+        .back-link:hover::after {
+            width: 100%;
+        }
+
+        .back-link:hover {
+            transform: translateX(-3px);
+            color: var(--accent-hover);
+        }
+
+        .text-content-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 2rem 4rem;
+            position: relative;
+            z-index: 1;
+            animation: contentSlideUp 0.5s ease-out;
+        }
+
+        @keyframes contentSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .markdown-body {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .markdown-body h1 {
+            font-size: 2rem;
+            margin: 1.5rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent);
+            color: var(--accent);
+        }
+        .markdown-body h2 {
+            font-size: 1.6rem;
+            margin: 1.2rem 0 0.8rem;
+            color: var(--accent);
+        }
+        .markdown-body h3 {
+            font-size: 1.3rem;
+            margin: 1rem 0 0.6rem;
+        }
+        .markdown-body p {
+            margin: 0.8rem 0;
+        }
+        .markdown-body ul, .markdown-body ol {
+            margin: 0.8rem 0;
+            padding-left: 2rem;
+        }
+        .markdown-body li {
+            margin: 0.3rem 0;
+        }
+        .markdown-body pre {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        .markdown-body code {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'Consolas', monospace;
+            font-size: 0.9em;
+        }
+        .markdown-body pre code {
+            background: none;
+            padding: 0;
+        }
+        .markdown-body blockquote {
+            border-left: 4px solid var(--accent);
+            margin: 1rem 0;
+            padding: 0.5rem 1rem;
+            background: rgba(94, 114, 228, 0.1);
+            border-radius: 0 8px 8px 0;
+        }
+        .markdown-body table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 1rem 0;
+        }
+        .markdown-body th, .markdown-body td {
+            border: 1px solid var(--text-secondary);
+            padding: 0.5rem;
+            text-align: left;
+        }
+        .markdown-body th {
+            background: rgba(94, 114, 228, 0.2);
+        }
+        .markdown-body a {
+            color: var(--accent);
+            text-decoration: none;
+            border-bottom: 1px dashed var(--accent);
+        }
+        .markdown-body a:hover {
+            color: var(--accent-hover);
+            border-bottom-style: solid;
+        }
+        .markdown-body img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        .markdown-body hr {
+            border: none;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            margin: 2rem 0;
+        }
+
+        .plain-text {
+            white-space: pre-wrap;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .theme-btn {
+            background: var(--bg-secondary);
+            border: 1px solid var(--text-secondary);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.1) rotate(15deg);
+            background: var(--accent);
+            color: white;
+        }
+
+        .font-controls {
+            display: flex;
+            background-color: var(--bg-secondary);
+            border-radius: 30px;
+            overflow: hidden;
+            border: 1px solid var(--text-secondary);
+        }
+
+        .font-btn {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: bold;
+            transition: all 0.2s ease;
+        }
+
+        .font-btn:hover {
+            background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+            color: white;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-hover);
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progress-bar"></div>
+
+    <div class="reader-header">
+        <a href="../archive.html" class="back-link">← 返回目录</a>
+        <h1 class="reader-title">地下恋人就不要买同款啊</h1>
+        <div class="header-controls">
+            <button id="theme-toggle" class="theme-btn">🌙</button>
+            <div class="font-controls">
+                <button id="font-smaller" class="font-btn">A-</button>
+                <button id="font-reset" class="font-btn">A</button>
+                <button id="font-larger" class="font-btn">A+</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-content-container" id="text-content">
+        <div class="markdown-body"><p>正文：<br />
+　　在一起了是什么体验？<br />
+　　大概就是，什么东西都要买同款，色系可以不一样但款式必须相同吧？<br />
+　　大概就是，时时刻刻都要形影不离，最小距离一直是负数吧？<br />
+　　上面说的都是正常情侣。<br />
+　　孙悟空对在一起这件事有着全新不同的见解。<br />
+　　跟半城在私底下确认关系之后胆大包天地选择了同居。据他本人所说，这是「为了增进彼此之间的感情和信任」。<br />
+　　其实只是方便了他把意淫变成现实。<br />
+　　成天还要躲躲藏藏的不让公司的同事发现，每天直播、拍视频还要到房间的两个角落防止自己的麦克风收到对方的声音……<br />
+　　睡都没睡过几次。<br />
+　　而他们的老板——竟然连这等最低劣的伪装都没有看穿，甚至连一点不对劲的感觉都没有。<br />
+　　好吧，孙悟空并不能确定夏天y是否有察觉他俩不对劲，但是他希望没有。<br />
+<br />
+　　买同款这个想法一开始是BC提出来的。也不算提出来，他只是自己做主给两人换了一套同款牙刷。<br />
+　　「喂——这是什么啊。」<br />
+　　「新牙刷呀——嘿嘿，空哥，可不是哪里活动中奖送的哦，是我专门买的哦？」<br />
+　　「闲着没事换牙刷干嘛。」<br />
+　　「嗯……因为每天都要刷牙啊。」<br />
+　　「……」<br />
+　　孙悟空无法反驳的样子。<br />
+　　「好吧。」<br />
+　　然后家里的东西就开始陆续变成两套同款的了，两人买东西也开始习惯性点下加号，一次买两份。<br />
+　　孙悟空一度把两人的电脑桌面壁纸换成苦力怕和末影人，被SAO大人狠狠制裁了。<br />
+<br />
+　　第一次「暴露」，是因为粉丝的眼睛实在太细了。确实，同人圈子磕cp抠糖点就是要把每一帧都看清楚。<br />
+　　视频里不小心剪了进去BC和孙悟空分别开F3的画面，虽然是两期不同的视频，一看配置竟然是相同的显卡。<br />
+　　糖点分析在他们当天的定时发布半个小时后加急剪了出来，天下昭告。<br />
+　　你俩怎么用一个显卡，型号都一样？？<br />
+　　巧合巧合。<br />
+　　总之是先这么应付过去了。<br />
+　　「我说C哥，这样下去迟早会出问题的——」<br />
+　　「哎呀有什么关系，只要咱俩死不承认，没人能发现的！」<br />
+　　「……行。」<br />
+　　其实孙悟空也享受着这种暧昧的氛围——毕竟跟恋人用同款是天经地义的事。<br />
+　　但问题是他们现在在地下啊！<br />
+　　还能用天地间的规则来衡量吗？<br />
+<br />
+　　安安稳稳地过了几周。<br />
+　　「我这手机好卡。」孙悟空坐在电竞椅上给BC展示了一下自己卡成PPT的手机，甚至已经很烫手了，「SAO哥，给我换个手机呗。」<br />
+　　BC看了看自己同样用了多年的手机，果断地决定要从银行卡里调用一笔大额资金。<br />
+　　「天呐我男朋友做决定的样子真的好帅啊。」<br />
+　　「男人，现在离不开哥了吧。」声音压沉。<br />
+　　「旧的怎么办？」<br />
+　　「放○○上卖了……」<br />
+　　直到手机到货，孙悟空才反应过来自己好像犯了个大错。<br />
+　　BC这个B，买的肯定是同款啊啊啊！<br />
+　　同款就同款吧，为什么是连颜色都没有区分的同样品牌同样颜色同样款式啊！！这也太同款了吧！<br />
+　　「……这个，会拿错的。」<br />
+　　「拿错怎么了，又没关系。还是你质疑我的审美？！！」<br />
+　　有这样的男朋友是好事还是坏事？？<br />
+<br />
+　　虽然不知道这样下去明天和意外哪个先来，但是孙悟空还是揉揉太阳穴，收下手机，插好卡，下好了需要的软件。<br />
+　　然后明天和意外一起来了。<br />
+<br />
+　　俗话说，早起的鸟儿有虫吃。<br />
+　　不早起的BC有电话接。<br />
+　　现在窗外的鸟儿有虫吃了。<br />
+　　不早起的BC电话也来了。<br />
+　　其实他经常早上有电话接，一般是其他人熬了通宵或者单纯没睡好起得早，然后有事找他——毕竟他在公司的地位可不是装出来的。<br />
+　　但是这个电话来的很不巧。<br />
+　　因为两人昨晚睡得很晚，手机也就放在了同一边的床头柜上，而更不巧的是，孙悟空正好睡在靠着床头柜的一边。<br />
+　　好吧，这一点也不算不巧，因为BC正被他抱着。<br />
+　　差点就是压着了。<br />
+　　总之，手机响了，铃声是新手机的默认铃声，没有更换。<br />
+　　刚被吵起来的孙悟空并没有兴趣去分辨那是谁的手机，毕竟还晕晕的，抓起来看了眼联系人，耳边还是BC的呼吸声。<br />
+　　【老板】<br />
+　　「……喂？」<br />
+　　「喂——孙悟空？？？」<br />
+　　「……嗯？」<br />
+　　「我找BC。」<br />
+　　「你找BC打我电话干什么！」<br />
+　　「我打的是BC电话啊！！！」<br />
+<br />
+完</p></div>
+    </div>
+
+    <script>
+        const themeToggle = document.getElementById('theme-toggle');
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            updateButtonText(savedTheme);
+        } else {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            updateButtonText('dark');
+        }
+        
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateButtonText(newTheme);
+        }
+        
+        function updateButtonText(theme) {
+            themeToggle.textContent = theme === 'dark' ? '🌙' : '☀️';
+        }
+        themeToggle.addEventListener('click', toggleTheme);
+
+        const contentContainer = document.getElementById('text-content');
+        const smallerBtn = document.getElementById('font-smaller');
+        const resetBtn = document.getElementById('font-reset');
+        const largerBtn = document.getElementById('font-larger');
+        
+        let textElement = contentContainer.querySelector('.markdown-body') || contentContainer.querySelector('.plain-text') || contentContainer;
+        
+        let fontSize = parseInt(localStorage.getItem('readerFontSize')) || 18;
+        
+        function applyFontSize() {
+            if (textElement) {
+                textElement.style.fontSize = fontSize + 'px';
+            }
+        }
+        
+        function adjustFontSize(change) {
+            fontSize += change;
+            fontSize = Math.max(14, Math.min(28, fontSize));
+            applyFontSize();
+            localStorage.setItem('readerFontSize', fontSize);
+            contentContainer.style.transform = 'scale(1.01)';
+            setTimeout(() => { contentContainer.style.transform = ''; }, 200);
+        }
+        
+        smallerBtn.addEventListener('click', () => adjustFontSize(-2));
+        largerBtn.addEventListener('click', () => adjustFontSize(2));
+        resetBtn.addEventListener('click', () => {
+            fontSize = 18;
+            applyFontSize();
+            localStorage.setItem('readerFontSize', fontSize);
+        });
+        
+        applyFontSize();
+
+        function updateProgressBar() {
+            const winScroll = document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            let scrolled = 0;
+            if (height > 0) {
+                scrolled = Math.min(100, Math.max(0, (winScroll / height) * 100));
+            }
+            document.getElementById('progress-bar').style.width = scrolled + '%';
+        }
+        
+        function saveReadingProgress() {
+            const scrollPosition = window.scrollY;
+            const pageHeight = document.body.scrollHeight - window.innerHeight;
+            if (pageHeight <= 0) return;
+            let percentage = Math.min(100, Math.max(0, Math.round((scrollPosition / pageHeight) * 100)));
+            localStorage.setItem('progress_' + window.location.pathname, percentage);
+        }
+        
+        function restoreReadingProgress() {
+            const savedProgress = localStorage.getItem('progress_' + window.location.pathname);
+            if (savedProgress && savedProgress !== '0') {
+                let progress = parseInt(savedProgress);
+                progress = Math.min(100, Math.max(0, progress));
+                setTimeout(() => {
+                    const pageHeight = document.body.scrollHeight - window.innerHeight;
+                    if (pageHeight > 0 && progress > 0 && progress < 100) {
+                        window.scrollTo({ top: (progress / 100) * pageHeight, behavior: 'smooth' });
+                        const toast = document.createElement('div');
+                        toast.textContent = `📖 已恢复至 ${progress}% 处`;
+                        toast.style.cssText = `
+                            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+                            background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+                            color: white; padding: 8px 20px; border-radius: 30px;
+                            z-index: 1000; font-size: 0.9rem; opacity: 0;
+                            transition: opacity 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+                        `;
+                        document.body.appendChild(toast);
+                        setTimeout(() => toast.style.opacity = '1', 10);
+                        setTimeout(() => {
+                            toast.style.opacity = '0';
+                            setTimeout(() => toast.remove(), 300);
+                        }, 2500);
+                    }
+                }, 200);
+            }
+        }
+        
+        let saveTimeout;
+        window.addEventListener('scroll', () => {
+            updateProgressBar();
+            clearTimeout(saveTimeout);
+            saveTimeout = setTimeout(saveReadingProgress, 800);
+        });
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            updateProgressBar();
+            restoreReadingProgress();
+        });
+    </script>
+</body>
+</html>
