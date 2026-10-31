@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="zh" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BC有感觉吗_6 - XVIthk Reader</title>
+    <style>
+        /* ========== 霞鹜文楷字体 ========== */
+        @import url('https://cdn.jsdelivr.net/npm/lxgw-wenkai-lite-webfont@1.1.0/style.css');
+
+        :root {
+            --bg-primary-light: #f8f9fa;
+            --bg-secondary-light: #ffffff;
+            --text-primary-light: #2c3e50;
+            --text-secondary-light: #6c757d;
+            --bg-primary-dark: #0a0e17;
+            --bg-secondary-dark: #141a26;
+            --text-primary-dark: #e6edf3;
+            --text-secondary-dark: #8b9bae;
+            --bg-primary: var(--bg-primary-dark);
+            --bg-secondary: var(--bg-secondary-dark);
+            --text-primary: var(--text-primary-dark);
+            --text-secondary: var(--text-secondary-dark);
+            --accent-start: #3498db;
+            --accent-end: #9b59b6;
+            --accent: #5e72e4;
+            --accent-hover: #6a7df4;
+            --accent-glow: rgba(94, 114, 228, 0.3);
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: var(--bg-primary-dark);
+            --bg-secondary: var(--bg-secondary-dark);
+            --text-primary: var(--text-primary-dark);
+            --text-secondary: var(--text-secondary-dark);
+        }
+
+        [data-theme="light"] {
+            --bg-primary: var(--bg-primary-light);
+            --bg-secondary: var(--bg-secondary-light);
+            --text-primary: var(--text-primary-light);
+            --text-secondary: var(--text-secondary-light);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'LXGW WenKai Lite', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+            line-height: 1.8;
+            animation: pageFade 0.4s ease-out;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        [data-theme="dark"] body {
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(52, 152, 219, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(155, 89, 182, 0.08) 0%, transparent 50%),
+                repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.01) 0px, rgba(255, 255, 255, 0.01) 2px, transparent 2px, transparent 8px),
+                linear-gradient(135deg, #0a0e17 0%, #0f1320 50%, #0a0e17 100%);
+        }
+
+        [data-theme="light"] body {
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(52, 152, 219, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(155, 89, 182, 0.05) 0%, transparent 50%),
+                repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.01) 0px, rgba(0, 0, 0, 0.01) 2px, transparent 2px, transparent 8px),
+                linear-gradient(135deg, #f8f9fa 0%, #eef2f5 100%);
+        }
+
+        [data-theme="dark"] body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background-image: radial-gradient(2px 2px at 20px 30px, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0));
+            background-size: 40px 40px;
+            background-repeat: repeat;
+            z-index: 0;
+        }
+
+        @keyframes pageFade {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-start), var(--accent-end));
+            z-index: 1001;
+            transition: width 0.1s ease-out;
+            box-shadow: 0 0 8px var(--accent-glow);
+        }
+
+        .reader-header {
+            background-color: rgba(var(--bg-secondary), 0.85);
+            padding: 0.8rem 2rem;
+            position: sticky;
+            top: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--text-secondary);
+            z-index: 100;
+            gap: 1rem;
+            backdrop-filter: blur(12px);
+        }
+
+        .reader-title {
+            background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin: 0;
+            font-size: 1.2rem;
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .back-link {
+            color: var(--accent);
+            text-decoration: none;
+            position: relative;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            background: none;
+            padding: 0;
+            border-radius: 0;
+            box-shadow: none;
+        }
+
+        .back-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-start), var(--accent-end));
+            transition: width 0.3s ease;
+        }
+
+        .back-link:hover::after {
+            width: 100%;
+        }
+
+        .back-link:hover {
+            transform: translateX(-3px);
+            color: var(--accent-hover);
+        }
+
+        .text-content-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 2rem 4rem;
+            position: relative;
+            z-index: 1;
+            animation: contentSlideUp 0.5s ease-out;
+        }
+
+        @keyframes contentSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .markdown-body {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .markdown-body h1 {
+            font-size: 2rem;
+            margin: 1.5rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent);
+            color: var(--accent);
+        }
+        .markdown-body h2 {
+            font-size: 1.6rem;
+            margin: 1.2rem 0 0.8rem;
+            color: var(--accent);
+        }
+        .markdown-body h3 {
+            font-size: 1.3rem;
+            margin: 1rem 0 0.6rem;
+        }
+        .markdown-body p {
+            margin: 0.8rem 0;
+        }
+        .markdown-body ul, .markdown-body ol {
+            margin: 0.8rem 0;
+            padding-left: 2rem;
+        }
+        .markdown-body li {
+            margin: 0.3rem 0;
+        }
+        .markdown-body pre {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        .markdown-body code {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'Consolas', monospace;
+            font-size: 0.9em;
+        }
+        .markdown-body pre code {
+            background: none;
+            padding: 0;
+        }
+        .markdown-body blockquote {
+            border-left: 4px solid var(--accent);
+            margin: 1rem 0;
+            padding: 0.5rem 1rem;
+            background: rgba(94, 114, 228, 0.1);
+            border-radius: 0 8px 8px 0;
+        }
+        .markdown-body table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 1rem 0;
+        }
+        .markdown-body th, .markdown-body td {
+            border: 1px solid var(--text-secondary);
+            padding: 0.5rem;
+            text-align: left;
+        }
+        .markdown-body th {
+            background: rgba(94, 114, 228, 0.2);
+        }
+        .markdown-body a {
+            color: var(--accent);
+            text-decoration: none;
+            border-bottom: 1px dashed var(--accent);
+        }
+        .markdown-body a:hover {
+            color: var(--accent-hover);
+            border-bottom-style: solid;
+        }
+        .markdown-body img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        .markdown-body hr {
+            border: none;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            margin: 2rem 0;
+        }
+
+        .plain-text {
+            white-space: pre-wrap;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .theme-btn {
+            background: var(--bg-secondary);
+            border: 1px solid var(--text-secondary);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.1) rotate(15deg);
+            background: var(--accent);
+            color: white;
+        }
+
+        .font-controls {
+            display: flex;
+            background-color: var(--bg-secondary);
+            border-radius: 30px;
+            overflow: hidden;
+            border: 1px solid var(--text-secondary);
+        }
+
+        .font-btn {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: bold;
+            transition: all 0.2s ease;
+        }
+
+        .font-btn:hover {
+            background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+            color: white;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-hover);
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progress-bar"></div>
+
+    <div class="reader-header">
+        <a href="../archive.html" class="back-link">← 返回目录</a>
+        <h1 class="reader-title">BC有感觉吗_6</h1>
+        <div class="header-controls">
+            <button id="theme-toggle" class="theme-btn">🌙</button>
+            <div class="font-controls">
+                <button id="font-smaller" class="font-btn">A-</button>
+                <button id="font-reset" class="font-btn">A</button>
+                <button id="font-larger" class="font-btn">A+</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-content-container" id="text-content">
+        <div class="markdown-body"><p>Let's go!↓</p>
+<p>正文：</p>
+<p>14#</p>
+<p>总之，浑浑噩噩地度过了一天。</p>
+<p>晚上BC躺在自己的床上，而旁边的另一张床上蜷缩着两个背靠背的身影。</p>
+<p>「……。」BC瞟了一眼又把眼神收回来，闭上眼睛继续睡觉。</p>
+<p>然后不知道为什么第二天早上自己被两个人包围了，左边一个右边一个。</p>
+<p>起床的时候是七点钟，BC大喊一句。</p>
+<p>「卧槽你们两个的吧，是人吗。」</p>
+<p>孙悟空和王少栋被这一嗓子喊醒了。</p>
+<p>「哎呀，一起睡嘛。我睡不着。」王少栋先说道。</p>
+<p>「我也睡不着，C哥。」</p>
+<p>「在我身边就睡得着了？？我还没说我睡眠浅呢。」</p>
+<p>「那我们俩陪你你正好睡得好。」</p>
+<p>「他妈的，什么歪门邪道啊！！」</p>
+<p>BC坐起来，王少栋和孙悟空也坐起，然后像是做错事了一样互相看了看，低头耷脑。</p>
+<p>「喵～」王少栋轻哼。</p>
+<p>幻听人家疼。</p>
+<p>——</p>
+<p>「今天就回工作室了。」</p>
+<p>「我知道。」BC把睡衣脱掉，换上卫衣，开始收拾行李箱。</p>
+<p>「但是孙悟空。」王少栋想起什么似的喊道。</p>
+<p>「叫我干嘛？」</p>
+<p>「工作室没给你准备房间呀。」</p>
+<p>「啊？！」</p>
+<p>「你自生自灭吧。」</p>
+<p>「你又让我自生自灭？？」</p>
+<p>「不然呢。你自己一开始说不来。」</p>
+<p>「没——关系。我可以跟我C哥睡一起，对吧BC。」孙悟空拍了拍BC的肩膀。</p>
+<p>「啧，要不我把我的房间让给你，我就委屈委屈跟BC一起睡吧。」</p>
+<p>「王少栋，你不能这样委屈自己呀。身为副总，连个房间都没有，像话吗！还是作为员工的我来吧。」</p>
+<p>「哎，有考虑过我的感受吗？」BC收拾完行李，无奈地插了一嘴。「你俩为什么都这么想跟我睡觉啊？」</p>
+<p>「怕你睡不好嘛。」王少栋瞬间夹起了声音。</p>
+<p>「怕我睡不好的这种话也说出来啦？？」</p>
+<p>「那你说吧BC，你让我去哪。」孙悟空也搂住BC。</p>
+<p>「睡。沙。发。」</p>
+<p>「？……」孙悟空气笑了。「BC你睡觉应该不锁门吧。」</p>
+<p>「哎？我真要行使我的权利了。」</p>
+<p>——</p>
+<p>返程的高铁，是来程前就定好的。夏天y订的是散开的。——倒也没那么散，他尽量选了两个两个一组的座位，毕竟按原计划回去的只有八个人，但现在孙悟空也跟着一起了，他就不得不多订一个座位了。</p>
+<p>还好孙悟空说的早了两天，否则真不确定临时买还剩不剩下票。</p>
+<p>糟糕的分票，夏天y是按照入职顺序来安排的。001、002坐一起，004、005坐一起，006、007坐一起，两个替补坐一起——现在孙悟空来了，他自己一个人坐。</p>
+<p>票务信息在旅游之前就发到了群里。</p>
+<p>「C——哥！！」六谷在BC刚打开酒店房门的时候就凑了过来，房间里的另两人看了一眼门外的六谷，然后默契地低头。</p>
+<p>「哎，谷神你有点太热情了。这两天的你都太主动了吧！」</p>
+<p>「哎？出来玩很兴奋呀。」</p>
+<p>「那现在都要回去了……」</p>
+<p>「回去了怎么了。」</p>
+<p>「要工作。」</p>
+<p>啊，要工作了……BC其实今早起来也变得开朗些了，但是一想到马上要回归工作的怀抱，瞬间萎了。又想到他老板，自己并没有给坦白这件事打草稿，不如说他没想过把这件事告诉夏天y。</p>
+<p>「我可没有您副总忙呀——」六谷假装长叹地说到。「你们这房间我光开门都觉得累。两个副总一整晚都在讨论工作的事情吧。」</p>
+<p>「哎呀低调低调。」王少栋在后面来了一句。</p>
+<p>「谁家好人出来玩还工作啊！！BC你带个笔记本有网吗！！」</p>
+<p>「便携式WiFi懂我意思吗？」</p>
+<p>「哎哎？！」</p>
+<p>——</p>
+<p>坐在高铁上。</p>
+<p>六谷一直抱着BC——不知道什么时候六谷跟BC这么好了，也有可能是六谷暗暗地察觉到了BC这几天真的很不对劲；而经过自己这两天的「贴身陪伴」，BC心情明显变得好了些。</p>
+<p>于是六谷坚信自己有治愈人的能力。</p>
+<p>然后他就黏得更死。</p>
+<p>良性循环？</p>
+<p>「喵喵——」其实六谷的声音用来猫叫确实很奇怪。</p>
+<p>「嘿嘿，杰哥你别这样粘着我啦。睡一会。」</p>
+<p>一般来说这个时候BC会骂他贱。</p>
+<p>但是呢，猫猫怎么会管人类的心思呢？面前这个人明显是在口是心非嘛——</p>
+<p>虽然心里是这么想的，但是面上却作出一副委屈样，一边用控诉的眼神盯着半城，一边假惺惺的掉眼泪。</p>
+<p>每每这个时候，半城往往会破功，有些着急的安抚着六谷，可谓是吃软不吃硬。</p>
+<p>而六谷就恰恰好好掌握了这一属性。</p>
+<p>「哎哎哎，我让你靠，让你粘，你别这样。」</p>
+<p>果然，人类都抵抗不住猫猫的撒娇！！</p>
+<p>——</p>
+<p>高铁在这样的氛围下到了站。</p>
+<p>「城队，下车啦——」</p>
+<p>「哎。」</p>
+<p>两人下一起下了车，转身就碰到了一脸黑线的孙悟空。</p>
+<p>「BC——」两人一只手提行李，一只手互相搂着。孙悟空看到六谷这贱样，还靠在BC身上，顿时想上去活动筋骨了。</p>
+<p>「……啧！！」</p>
+<p>不过看着BC确实好了不少的精气神，总归是按下了蠢蠢欲动的双手。</p>
+<p>「……我帮你提行李吧。」孙悟空从BC手边接过行李。</p>
+<p>「空哥你为什么不帮我！嗯？！！」</p>
+<p>你能跟BC比吗。孙悟空在心里说。</p>
+<p>……手边还是接过了六谷的行李。一个人怎么提三个行李箱啊！！！</p>
+<p>王少栋和赵子龙从孙悟空身后走过来，前者直直地朝着BC走过来：「……那我的行李也交给你咯～」</p>
+<p>——四个！！！</p>
+<p>还好赵子龙来了。</p>
+<p>「这些行李箱交给你了！龙哥！」</p>
+<p>「啥？？？」</p>
+<p>孙悟空和王少栋过去跟六谷一起围住BC。</p>
+<p>「你们……诶？现在是什么？我被同事包围了？」</p>
+<p>「……男朋友。」孙悟空小声在BC耳边嘀咕。</p>
+<p>「总之，先回工作室吧。你怎么样。」王少栋问道。</p>
+<p>「我没事。」</p>
+<p>「诶，所以BC有事吗？？」六谷听到王少栋这样稍微严肃了一点的声音，有些不适应。</p>
+<p>「哎，你还不知道啊。……你先别管这么多了，我们先回去。」</p>
+<p>从头至尾夏天y一直站在一旁看着，还好BC被围住了。</p>
+<p>车还停在高铁站。</p>
+<p>——</p>
+<p>工作室。</p>
+<p>「所以你们有人打算给我解释一下吗。」</p>
+<p>说是小会，其实就是夏天y把孙悟空王少栋六谷叫到了会议室。</p>
+<p>「到底什么情况怎么把我也叫来了？」六谷疑惑地看着夏天y，坐在桌前，手里转着一只圆珠笔，「我什么都不知道啊？」</p>
+<p>「你不说你不问我们吗……？」王少栋也疑惑。</p>
+<p>「不行我实在是太想知道了，你懂我意思吧王少栋。这都回来了，BC他还能不能工作，至少这个你们得说清楚吧。」</p>
+<p>「我估计是不能。」孙悟空冷冷地。</p>
+<p>「他妈的到底发生啥了啊！！」</p>
+<p>「关于发生了什么这个问题呢，我不能直白的告诉你……」孙悟空回答。</p>
+<p>「那我自己去问他。」夏天y起身。</p>
+<p>「哎你看你又急。」王少栋连忙稳住夏天y。</p>
+<p>对不起苏哥这事败露了！！！</p>
+<p>「……」</p>
+<p>「好了我们讲完了，你不准去找他。」</p>
+<p>「他妈的啥？！有人欺负我C哥？？？」六谷拍桌子。</p>
+<p>「你也别激动。」</p>
+<p>夏天y从桌边拿起一瓶茶，拧开抿了一口。</p>
+<p>「……。真不报警？」</p>
+<p>「反正他说不报。」</p>
+<p>「……那直播呢？今晚要直播。」</p>
+<p>15#</p>
+<p>「今天回来啦！！兄弟几个缓一天，今天休息！！」</p>
+<p>评论区：</p>
+<p>「哎，今天不播？」</p>
+<p>「团建圆满结束！」</p>
+<p>「祝大家永远不死 /doge」</p>
+<p>——</p>
+<p>BC在自己房间待着，打开笔记本电脑。</p>
+<p>经过几天的休息，身上的伤痕消失了些，还有些仍然在结痂的状态。他把卫衣袖子撸起一些，露出手臂。</p>
+<p>「嘶……」</p>
+<p>「叩叩。」</p>
+<p>「咳咳……请进。」BC的声音稍微夹起，连忙把卫衣拉下来。</p>
+<p>「城队——」六谷扑了过来，「你被谁欺负了！？」着急的语气。</p>
+<p>「……你怎么知道的？」BC愣了，明显又开始有些慌乱起来，手足无措，颤抖起来，但被六谷的气息暂时压住。</p>
+<p>「王少栋他们说的……」六谷一点心眼都没有。</p>
+<p>「咳。」BC没有回复，只是默默呼吸着，尽力平复着，不让自己又掉回虚空。「你别这么紧抓我手腕，痛……」</p>
+<p>「痛？」</p>
+<p>「……你都知道了，就让我自己待会吧杰哥。」</p>
+<p>「不行。今晚要直播，我不放心你在这。」</p>
+<p>「杰哥——你在这我更紧张！我跟你们挂TS，不掉线，行吗？」</p>
+<p>「……行。」六谷半信半疑地走了。</p>
+<p>他正打开门准备往外走，孙悟空站在门口，提着自己的行李。</p>
+<p>「……孙悟空？」</p>
+<p>「怎么？」</p>
+<p>「没事！」六谷往外走去。</p>
+<p>还好王少栋没有把孙悟空对BC做的事情也和盘托出，否则在房间里必定会发生一起惨案。</p>
+<p>「……你来干什么。」</p>
+<p>「我不说我来你房间住吗。正好陪你。」</p>
+<p>「我需要你陪？」</p>
+<p>孙悟空把行李放到一边。</p>
+<p>「我来工作室就是来陪你的，你现在又不要我了。」</p>
+<p>「……算了随你。」</p>
+<p>「我只有笔记本，今晚直播怎么办。」孙悟空好歹也带着笔记本来了，但他带笔记本来旅游的目的完全是为了耍起，跟BC完全不一样。</p>
+<p>「笔记本就笔记本呗，还能不播了？」</p>
+<p>「……行。那你呢。」</p>
+<p>「……什么。」</p>
+<p>「你怎么播。」</p>
+<p>「……我不知道。」</p>
+<p>要不脱敏训练吧。</p>
+<p>夏天y的内心此时和孙悟空是一样的。</p>
+<p>当然可以让他请假，这没关系，但是原因呢？怎么跟观众说？切片组会用什么「骇人听闻」的标题？</p>
+<p>既然BC还在这，不如让他试试看。</p>
+<p>「我去跟王哥商量一下，你先自己待着。」</p>
+<p>其实刚刚的「会议」根本没商讨出来下一步怎么办，只是交换过了信息。</p>
+<p>孙悟空打开房门走出去。</p>
+<p>——</p>
+<p>「……所以，你要不先去尝试见见他，不说话。」</p>
+<p>「王少栋说不让我去见他啊。」</p>
+<p>「你只要不说话应该问题不大，信我的。」</p>
+<p>孙悟空何尝不算心腹大患，夏天y听着这个点子王出的主意感到十分不可靠。眼睛眯起，露出一副不相信的神情。</p>
+<p>「这事现在整个团队里只有我们几个知道？」</p>
+<p>孙悟空掰起手指头，「你、我、王少栋、BC，再加个六谷。别人都不知道。」他压低声音。</p>
+<p>「那现在连讨论的人选都没有啊！我是觉得直接这样见他有点太冲动了。」</p>
+<p>「那他不直播不工作你就好受了？」</p>
+<p>「啧。」</p>
+<p>「咚咚。」</p>
+<p>「哎……请进。」</p>
+<p>门打开的时候，BC正对着门口。</p>
+<p>「……咳。」他绷着身子，不敢动。</p>
+<p>孙悟空站在夏天y身后，把他推进房间。</p>
+<p>夏天y一个趔趄，稍稍张了张嘴，然后立定在BC面前，决心不说一句话。</p>
+<p>「……。」</p>
+<p>BC懵懵的。</p>
+<p>看到夏天y这个样子，他暂时没有把他的声音和他的样子关联在一起，只是懵懵的，也许是在惊讶于自己竟然没有产生不良反应。</p>
+<p>「愣什么，快去啊。」孙悟空又推了一把。</p>
+<p>夏天y下了决心，还是把BC抱起来，抱到自己怀里，让两个人没有直接的面对面对视。</p>
+<p>这个动作是自己出来的，他不知道自己该不该这样抱着自己的员工。</p>
+<p>「哈啊。」</p>
+<p>反正他没推开。</p>
+<p>BC慢慢放松了身体，急促的呼吸慢慢变得平缓。至少是熟悉的气息吧？</p>
+<p>夏天y的存在本身就在释放一个安全的信息：我是好的。我是跟你一边的——类似于同类间释放信息素让对方的疑心消散。</p>
+<p>其实谁都知道试图把容貌和安全感绑定在一起的肌肉记忆在这个情况下行不通，因为直播、拍视频的时候各自在各自的房间里，还是只有声音，那不就是妥妥的二次伤害吗。</p>
+<p>好的，夏天y理解，他知道要遵循徐进。</p>
+<p>「……」一句话都没说，夏天y看着BC的脸。</p>
+<p>深情对视？？</p>
+<p>他掏出手机，打开备忘录。</p>
+<p>【你现在怕我吗？点头摇头】</p>
+<p>BC使劲摇头。</p>
+<p>夏天y点了点头，还是把嘴闭得死死的。</p>
+<p>【今晚请假吗？】</p>
+<p>「……」BC愣住。</p>
+<p>这个问题很要紧。</p>
+<p>他不是没有尝试过听夏天y的声音，但是那次「尝试」的体验并不好。</p>
+<p>看着愣神的BC，夏天y没有逼他给出什么答案，而是收回手机，删掉字，重打。</p>
+<p>【今天停播一天，先带你去医院？】</p>
+<p>「不、不去……」他摇头。</p>
+<p>夏天y赶忙放下手机，又抱紧那人。</p>
+<p>【今天停播一天，】</p>
+<p>只删掉了后半部分。</p>
+<p>——</p>
+<p>夏天y觉得很委屈。</p>
+<p>他一个大男人，声带功能正常，面对一个听力正常的人竟然要使出如此手段才能跟他正常交流？？</p>
+<p>好想说点苦口婆心求BC去医院的话，但是他说不了。</p>
+<p>离开BC的房间。</p>
+<p>停播一天的流程好像复杂，又没那么复杂。其实说到底也就他一句话的事。</p>
+<p>更复杂的是BC的状态。至少现在他能见BC了，这简直是一个巨大的进步。</p>
+<p>房间里只剩下孙悟空和BC。</p>
+<p>「怎么样？」孙悟空亮着眼睛问道，看来是对自己的点子很有自信心。</p>
+<p>BC摇头，表示不知道。</p>
+<p>「跟我也不愿意说话啦？」</p>
+<p>「……不是。」</p>
+<p>貌似在埋怨，为什么要告诉他。</p></div>
+    </div>
+
+    <script>
+        const themeToggle = document.getElementById('theme-toggle');
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            updateButtonText(savedTheme);
+        } else {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            updateButtonText('dark');
+        }
+        
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateButtonText(newTheme);
+        }
+        
+        function updateButtonText(theme) {
+            themeToggle.textContent = theme === 'dark' ? '🌙' : '☀️';
+        }
+        themeToggle.addEventListener('click', toggleTheme);
+
+        const contentContainer = document.getElementById('text-content');
+        const smallerBtn = document.getElementById('font-smaller');
+        const resetBtn = document.getElementById('font-reset');
+        const largerBtn = document.getElementById('font-larger');
+        
+        let textElement = contentContainer.querySelector('.markdown-body') || contentContainer.querySelector('.plain-text') || contentContainer;
+        
+        let fontSize = parseInt(localStorage.getItem('readerFontSize')) || 18;
+        
+        function applyFontSize() {
+            if (textElement) {
+                textElement.style.fontSize = fontSize + 'px';
+            }
+        }
+        
+        function adjustFontSize(change) {
+            fontSize += change;
+            fontSize = Math.max(14, Math.min(28, fontSize));
+            applyFontSize();
+            localStorage.setItem('readerFontSize', fontSize);
+            contentContainer.style.transform = 'scale(1.01)';
+            setTimeout(() => { contentContainer.style.transform = ''; }, 200);
+        }
+        
+        smallerBtn.addEventListener('click', () => adjustFontSize(-2));
+        largerBtn.addEventListener('click', () => adjustFontSize(2));
+        resetBtn.addEventListener('click', () => {
+            fontSize = 18;
+            applyFontSize();
+            localStorage.setItem('readerFontSize', fontSize);
+        });
+        
+        applyFontSize();
+
+        function updateProgressBar() {
+            const winScroll = document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            let scrolled = 0;
+            if (height > 0) {
+                scrolled = Math.min(100, Math.max(0, (winScroll / height) * 100));
+            }
+            document.getElementById('progress-bar').style.width = scrolled + '%';
+        }
+        
+        function saveReadingProgress() {
+            const scrollPosition = window.scrollY;
+            const pageHeight = document.body.scrollHeight - window.innerHeight;
+            if (pageHeight <= 0) return;
+            let percentage = Math.min(100, Math.max(0, Math.round((scrollPosition / pageHeight) * 100)));
+            localStorage.setItem('progress_' + window.location.pathname, percentage);
+        }
+        
+        function restoreReadingProgress() {
+            const savedProgress = localStorage.getItem('progress_' + window.location.pathname);
+            if (savedProgress && savedProgress !== '0') {
+                let progress = parseInt(savedProgress);
+                progress = Math.min(100, Math.max(0, progress));
+                setTimeout(() => {
+                    const pageHeight = document.body.scrollHeight - window.innerHeight;
+                    if (pageHeight > 0 && progress > 0 && progress < 100) {
+                        window.scrollTo({ top: (progress / 100) * pageHeight, behavior: 'smooth' });
+                        const toast = document.createElement('div');
+                        toast.textContent = `📖 已恢复至 ${progress}% 处`;
+                        toast.style.cssText = `
+                            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+                            background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+                            color: white; padding: 8px 20px; border-radius: 30px;
+                            z-index: 1000; font-size: 0.9rem; opacity: 0;
+                            transition: opacity 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+                        `;
+                        document.body.appendChild(toast);
+                        setTimeout(() => toast.style.opacity = '1', 10);
+                        setTimeout(() => {
+                            toast.style.opacity = '0';
+                            setTimeout(() => toast.remove(), 300);
+                        }, 2500);
+                    }
+                }, 200);
+            }
+        }
+        
+        let saveTimeout;
+        window.addEventListener('scroll', () => {
+            updateProgressBar();
+            clearTimeout(saveTimeout);
+            saveTimeout = setTimeout(saveReadingProgress, 800);
+        });
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            updateProgressBar();
+            restoreReadingProgress();
+        });
+    </script>
+</body>
+</html>
