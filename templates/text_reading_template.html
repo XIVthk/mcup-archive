@@ -167,24 +167,6 @@
             color: var(--accent-hover);
         }
 
-        .dl-button {
-            background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 30px;
-            text-decoration: none;
-            font-size: 0.9rem;
-            white-space: nowrap;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-
-        .dl-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px var(--accent-glow);
-            filter: brightness(1.05);
-        }
-
         .text-content-container {
             max-width: 800px;
             margin: 2rem auto;
@@ -378,7 +360,6 @@
                 <button id="font-reset" class="font-btn">A</button>
                 <button id="font-larger" class="font-btn">A+</button>
             </div>
-            <a href="{{ pdf_url }}" class="dl-button" download>⬇️ 下载PDF</a>
         </div>
     </div>
 
